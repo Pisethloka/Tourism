@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { X, ChevronLeft, ChevronRight, Eye } from 'lucide-react';
 import heroAngkor from '../assets/hero_angkor.png';
 import apsaraDancer from '../assets/apsara_dancer.png';
@@ -8,16 +8,8 @@ import galleryForest from '../assets/gallery_forest.png';
 import galleryFruits from '../assets/gallery_fruits.png';
 import bayonBuddha from '../assets/bayon_buddha.png';
 
-interface GalleryItem {
-  id: number;
-  src: string;
-  category: 'CULTURAL' | 'DARK TOURISM' | 'ECO TOURISM';
-  title: string;
-  description: string;
-}
-
-export const Gallery: React.FC = () => {
-  const galleryItems: GalleryItem[] = [
+export const Gallery = () => {
+  const galleryItems = [
     {
       id: 1,
       src: apsaraDancer,
@@ -28,7 +20,7 @@ export const Gallery: React.FC = () => {
     {
       id: 2,
       src: galleryCorridor,
-      category: 'DARK TOURISM', // Brick corridor representing reflective heritage/dark
+      category: 'DARK TOURISM',
       title: 'Monastery Walkway',
       description: 'Sunlight filtering through the brick-lined corridors of ancient ruins.',
     },
@@ -63,14 +55,14 @@ export const Gallery: React.FC = () => {
   ];
 
   const categories = ['ALL PHOTOS', 'CULTURAL', 'DARK TOURISM', 'ECO TOURISM'];
-  const [activeFilter, setActiveFilter] = useState<string>('ALL PHOTOS');
-  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+  const [activeFilter, setActiveFilter] = useState('ALL PHOTOS');
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
   const filteredItems = galleryItems.filter(item => 
     activeFilter === 'ALL PHOTOS' || item.category === activeFilter
   );
 
-  const openLightbox = (id: number) => {
+  const openLightbox = (id) => {
     const originalIndex = galleryItems.findIndex(item => item.id === id);
     setSelectedImageIndex(originalIndex);
   };
@@ -79,26 +71,26 @@ export const Gallery: React.FC = () => {
     setSelectedImageIndex(null);
   };
 
-  const handlePrev = (e: React.MouseEvent) => {
+  const handlePrev = (e) => {
     e.stopPropagation();
     if (selectedImageIndex !== null) {
       setSelectedImageIndex(prev => 
-        prev === 0 ? galleryItems.length - 1 : prev! - 1
+        prev === 0 ? galleryItems.length - 1 : prev - 1
       );
     }
   };
 
-  const handleNext = (e: React.MouseEvent) => {
+  const handleNext = (e) => {
     e.stopPropagation();
     if (selectedImageIndex !== null) {
       setSelectedImageIndex(prev => 
-        prev === galleryItems.length - 1 ? 0 : prev! + 1
+        prev === galleryItems.length - 1 ? 0 : prev + 1
       );
     }
   };
 
   return (
-    <div className="pb-20 bg-brand-cream">
+    <div className="pb-20 bg-brand-cream animate-fade-in">
       {/* Hero Header */}
       <section className="relative h-[450px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -127,7 +119,7 @@ export const Gallery: React.FC = () => {
               <button
                 key={cat}
                 onClick={() => setActiveFilter(cat)}
-                className={`transition-colors duration-300 relative py-1 ${
+                className={`transition-colors duration-300 relative py-1 cursor-pointer ${
                   isActive ? 'text-brand-gold font-bold' : 'hover:text-brand-dark'
                 }`}
               >
@@ -142,7 +134,7 @@ export const Gallery: React.FC = () => {
       </div>
 
       {/* Grid of exactly 6 images */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 animate-fade-in">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
         {filteredItems.map((item) => (
           <div
             key={item.id}
@@ -194,7 +186,7 @@ export const Gallery: React.FC = () => {
             </div>
             <button
               onClick={closeLightbox}
-              className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-cream-dark hover:text-brand-gold hover:bg-white/10 transition-colors"
+              className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-cream-dark hover:text-brand-gold hover:bg-white/10 transition-colors cursor-pointer"
             >
               <X size={24} />
             </button>
@@ -204,7 +196,7 @@ export const Gallery: React.FC = () => {
           <div className="flex-grow flex items-center justify-center relative w-full max-w-7xl mx-auto my-4">
             <button
               onClick={handlePrev}
-              className="absolute left-2 md:left-4 z-10 w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-cream-dark hover:text-brand-gold hover:bg-white/10 transition-colors"
+              className="absolute left-2 md:left-4 z-10 w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-cream-dark hover:text-brand-gold hover:bg-white/10 transition-colors cursor-pointer"
             >
               <ChevronLeft size={24} />
             </button>
@@ -222,7 +214,7 @@ export const Gallery: React.FC = () => {
 
             <button
               onClick={handleNext}
-              className="absolute right-2 md:right-4 z-10 w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-cream-dark hover:text-brand-gold hover:bg-white/10 transition-colors"
+              className="absolute right-2 md:right-4 z-10 w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-cream-dark hover:text-brand-gold hover:bg-white/10 transition-colors cursor-pointer"
             >
               <ChevronRight size={24} />
             </button>

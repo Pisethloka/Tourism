@@ -1,24 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Search, MapPin, SlidersHorizontal, ChevronDown } from 'lucide-react';
 import heroAngkor from '../assets/hero_angkor.png';
 import kohRongBeach from '../assets/koh_rong_beach.png';
 import preahVihear from '../assets/preah_vihear.png';
 
-interface MapSite {
-  id: string;
-  name: string;
-  category: 'CULTURAL' | 'ECO' | 'DARK' | 'BOUTIQUE';
-  region: string;
-  duration: string;
-  image: string;
-  description: string;
-  tag: string;
-  coordinates: { x: number; y: number }; // Percentage positions for mock map pins
-}
-
-export const Map: React.FC = () => {
+export const Map = () => {
   // Mock sites database
-  const sites: MapSite[] = [
+  const sites = [
     {
       id: 'angkor',
       name: 'Angkor Wat',
@@ -77,7 +65,7 @@ export const Map: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   // Active Map Node details overlay
-  const [activeMapSite, setActiveMapSite] = useState<MapSite>(sites[3]); // Default to Bayon Temple
+  const [activeMapSite, setActiveMapSite] = useState(sites[3]); // Default to Bayon Temple
 
   // Map markers search state
   const [mapSearchQuery, setMapSearchQuery] = useState('');
@@ -87,7 +75,7 @@ export const Map: React.FC = () => {
     site.region.toLowerCase().includes(mapSearchQuery.toLowerCase())
   );
 
-  const handleFilterToggle = (key: 'cultural' | 'eco' | 'dark' | 'boutique') => {
+  const handleFilterToggle = (key) => {
     setTourismFilters({
       ...tourismFilters,
       [key]: !tourismFilters[key]
@@ -112,16 +100,16 @@ export const Map: React.FC = () => {
   });
 
   return (
-    <div className="pt-28 pb-20 bg-brand-cream">
+    <div className="pt-28 pb-20 bg-brand-cream animate-fade-in">
       {/* 1. Page Title */}
-      <div className="text-center space-y-4 mb-8 animate-fade-in">
+      <div className="text-center space-y-4 mb-8">
         <h1 className="font-serif text-4xl md:text-5xl text-brand-dark font-normal italic tracking-wide">
           Discover Your Sanctuary
         </h1>
       </div>
 
       {/* 2. Top Search Bar */}
-      <div className="max-w-xl mx-auto px-6 mb-12 animate-fade-in">
+      <div className="max-w-xl mx-auto px-6 mb-12">
         <div className="relative">
           <input
             type="text"
@@ -135,7 +123,7 @@ export const Map: React.FC = () => {
       </div>
 
       {/* 3. Main Filter & Listings Grid */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-4 gap-10 items-start mb-20 animate-fade-in">
+      <section className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-4 gap-10 items-start mb-20">
         {/* Left Filter Sidebar */}
         <div className="bg-white/40 border border-brand-gold/10 p-6 space-y-8 rounded-none">
           <div className="flex items-center space-x-2 text-brand-gold-dark font-bold text-xs uppercase tracking-wider pb-2 border-b border-brand-gold/10">
@@ -345,7 +333,7 @@ export const Map: React.FC = () => {
             />
           </div>
 
-          {/* Right Panel: Search & Explore Markers Selector */}
+          {/* Right Panel: Explore Markers Selector */}
           <div className="lg:w-[24%] p-6 bg-[#18130D] border-t lg:border-t-0 lg:border-l border-brand-gold/15 flex flex-col space-y-6 z-10 shrink-0">
             <div className="space-y-4">
               <span className="text-[10px] font-bold tracking-widest text-brand-gold uppercase border-b border-brand-gold/10 pb-2 block font-sans">

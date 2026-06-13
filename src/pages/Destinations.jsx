@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import heroAngkor from '../assets/hero_angkor.png';
 import phnomPenhPalace from '../assets/phnom_penh_palace.png';
@@ -8,9 +7,9 @@ import bokorHill from '../assets/bokor_hill.png';
 import cardamomMountains from '../assets/cardamom_mountains.png';
 import tonleSap from '../assets/tonle_sap.png';
 
-export const Destinations: React.FC = () => {
+export const Destinations = () => {
   return (
-    <div className="pb-20 bg-brand-cream font-sans">
+    <div className="pb-20 bg-brand-cream font-sans animate-fade-in">
       {/* Hero Header Banner */}
       <section className="relative h-96 flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -18,7 +17,7 @@ export const Destinations: React.FC = () => {
           <div className="absolute inset-0 bg-brand-dark/50" />
         </div>
         <div className="relative z-10 text-center space-y-2 mt-12">
-          <h1 className="font-serif text-3xl md:text-5xl text-white tracking-widest font-normal uppercase">
+          <h1 className="font-serif text-3xl md:text-5xl text-white tracking-widest font-normal uppercase animate-fade-in">
             Explore Our Destinations
           </h1>
         </div>
@@ -46,7 +45,7 @@ export const Destinations: React.FC = () => {
                     The soul of the Khmer Empire, a vast stone symphony and the largest religious monument in the world.
                   </p>
                 </div>
-                <button className="text-brand-gold hover:text-brand-gold-dark text-[10px] font-bold tracking-wider uppercase text-left flex items-center space-x-1.5 pt-4 border-t border-brand-gold/10 group-hover:underline">
+                <button className="text-brand-gold hover:text-brand-gold-dark text-[10px] font-bold tracking-wider uppercase text-left flex items-center space-x-1.5 pt-4 border-t border-brand-gold/10 group-hover:underline cursor-pointer">
                   <span>Learn More</span>
                   <ArrowRight size={12} />
                 </button>
@@ -66,7 +65,7 @@ export const Destinations: React.FC = () => {
                     A shining example of Khmer architecture with its classic gilded roofs and tranquil palace grounds.
                   </p>
                 </div>
-                <button className="text-brand-gold hover:text-brand-gold-dark text-[10px] font-bold tracking-wider uppercase text-left flex items-center space-x-1.5 pt-4 border-t border-brand-gold/10 group-hover:underline">
+                <button className="text-brand-gold hover:text-brand-gold-dark text-[10px] font-bold tracking-wider uppercase text-left flex items-center space-x-1.5 pt-4 border-t border-brand-gold/10 group-hover:underline cursor-pointer">
                   <span>Learn More</span>
                   <ArrowRight size={12} />
                 </button>
@@ -96,7 +95,7 @@ export const Destinations: React.FC = () => {
                 </div>
                 <div className="pt-4 border-t border-brand-gold/10 flex items-center justify-between text-[9px] font-bold tracking-wider uppercase text-brand-dark/50">
                   <span>Phnom Penh</span>
-                  <button className="text-brand-gold hover:text-brand-gold-dark flex items-center space-x-1 group-hover:underline">
+                  <button className="text-brand-gold hover:text-brand-gold-dark flex items-center space-x-1 group-hover:underline cursor-pointer">
                     <span>Learn More</span>
                     <ArrowRight size={10} />
                   </button>
@@ -119,7 +118,7 @@ export const Destinations: React.FC = () => {
                 </div>
                 <div className="pt-4 border-t border-brand-gold/10 flex items-center justify-between text-[9px] font-bold tracking-wider uppercase text-brand-dark/50">
                   <span>Choeung Ek</span>
-                  <button className="text-brand-gold hover:text-brand-gold-dark flex items-center space-x-1 group-hover:underline">
+                  <button className="text-brand-gold hover:text-brand-gold-dark flex items-center space-x-1 group-hover:underline cursor-pointer">
                     <span>Learn More</span>
                     <ArrowRight size={10} />
                   </button>
@@ -142,7 +141,7 @@ export const Destinations: React.FC = () => {
                 </div>
                 <div className="pt-4 border-t border-brand-gold/10 flex items-center justify-between text-[9px] font-bold tracking-wider uppercase text-brand-dark/50">
                   <span>Kampot</span>
-                  <button className="text-brand-gold hover:text-brand-gold-dark flex items-center space-x-1 group-hover:underline">
+                  <button className="text-brand-gold hover:text-brand-gold-dark flex items-center space-x-1 group-hover:underline cursor-pointer">
                     <span>Learn More</span>
                     <ArrowRight size={10} />
                   </button>
@@ -179,7 +178,7 @@ export const Destinations: React.FC = () => {
                   </p>
                 </div>
                 <div className="flex justify-end pt-4 sm:pt-0">
-                  <button className="w-10 h-10 rounded-full bg-white border border-brand-gold/20 flex items-center justify-center text-brand-dark hover:bg-brand-gold hover:text-brand-dark hover:border-brand-gold transition-all">
+                  <button className="w-10 h-10 rounded-full bg-white border border-brand-gold/20 flex items-center justify-center text-brand-dark hover:bg-brand-gold hover:text-brand-dark hover:border-brand-gold transition-all cursor-pointer">
                     <ArrowRight size={16} />
                   </button>
                 </div>
@@ -199,7 +198,7 @@ export const Destinations: React.FC = () => {
                     The beating heart of Cambodia, featuring unique floating communities and seasonal floods.
                   </p>
                 </div>
-                <button className="text-brand-gold hover:text-brand-gold-dark text-[9px] font-bold tracking-widest uppercase text-left flex items-center space-x-1.5 pt-2 border-t border-brand-gold/10 group-hover:underline">
+                <button className="text-brand-gold hover:text-brand-gold-dark text-[9px] font-bold tracking-widest uppercase text-left flex items-center space-x-1.5 pt-2 border-t border-brand-gold/10 group-hover:underline cursor-pointer">
                   <span>Explore Waterways</span>
                   <ArrowRight size={10} />
                 </button>

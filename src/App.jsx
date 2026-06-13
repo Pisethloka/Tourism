@@ -9,7 +9,7 @@ import { Contact } from './pages/Contact';
 import { PlanTrip } from './pages/PlanTrip';
 
 function App() {
-  const [activeTab, setActiveTab] = useState<string>('home');
+  const [activeTab, setActiveTab] = useState('home');
 
   // Handle browser hash changes
   useEffect(() => {
@@ -28,7 +28,7 @@ function App() {
     };
   }, []);
 
-  const handleTabChange = (tab: string) => {
+  const handleTabChange = (tab) => {
     setActiveTab(tab);
     window.location.hash = tab;
     window.scrollTo({ top: 0, behavior: 'smooth' });

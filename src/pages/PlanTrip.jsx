@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Plane, Compass, ArrowRight, Minus, Plus, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Import local image assets
@@ -13,30 +13,23 @@ import galleryBoat from '../assets/gallery_boat.png';
 import galleryForest from '../assets/gallery_forest.png';
 import cambodianCulinary from '../assets/cambodian_culinary.png';
 
-interface ActivityOption {
-  id: string;
-  name: string;
-  pricePerPerson: number;
-  icon: React.ReactNode;
-}
-
-export const PlanTrip: React.FC = () => {
+export const PlanTrip = () => {
   // 1. Wizard Step State
-  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [currentStep, setCurrentStep] = useState(1);
 
   // 2. Calculator Input States
-  const [days, setDays] = useState<number>(7);
-  const [travelers, setTravelers] = useState<number>(2);
-  const [tier, setTier] = useState<'boutique' | 'luxury' | 'ultra'>('luxury');
-  const [transport, setTransport] = useState<'tuk-tuk' | 'chauffeur' | 'domestic-flights'>('chauffeur');
-  const [selectedActivities, setSelectedActivities] = useState<string[]>([
+  const [days, setDays] = useState(7);
+  const [travelers, setTravelers] = useState(2);
+  const [tier, setTier] = useState('luxury');
+  const [transport, setTransport] = useState('chauffeur');
+  const [selectedActivities, setSelectedActivities] = useState([
     'angkor-sunrise',
     'mekong-cruise'
   ]);
 
   // 3. UI interaction states
-  const [showSummary, setShowSummary] = useState<boolean>(false);
-  const [hasMadeChoices, setHasMadeChoices] = useState<boolean>(false);
+  const [showSummary, setShowSummary] = useState(false);
+  const [hasMadeChoices, setHasMadeChoices] = useState(false);
 
   // 4. Pricing Database
   const tierPricing = {
@@ -51,7 +44,7 @@ export const PlanTrip: React.FC = () => {
     'domestic-flights': { label: 'Private Chauffeur + Flights ($160/day)', rate: 160 }
   };
 
-  const activityOptions: ActivityOption[] = [
+  const activityOptions = [
     {
       id: 'angkor-sunrise',
       name: 'Private Angkor Wat Sunrise Tour',
@@ -130,7 +123,7 @@ export const PlanTrip: React.FC = () => {
     }
   }, [days, travelers, tier, transport, selectedActivities, hasMadeChoices]);
 
-  const handleActivityToggle = (id: string) => {
+  const handleActivityToggle = (id) => {
     if (selectedActivities.includes(id)) {
       setSelectedActivities(selectedActivities.filter(actId => actId !== id));
     } else {
@@ -290,7 +283,7 @@ export const PlanTrip: React.FC = () => {
                     <button
                       key={key}
                       type="button"
-                      onClick={() => setTier(key as any)}
+                      onClick={() => setTier(key)}
                       className={`group relative text-left bg-[#FCFAF8] overflow-hidden transition-all duration-500 flex flex-col h-full ${
                         isSelected 
                           ? 'ring-2 ring-brand-gold shadow-lg scale-[1.01]' 
@@ -299,7 +292,7 @@ export const PlanTrip: React.FC = () => {
                     >
                       <div className="relative h-60 overflow-hidden">
                         <img 
-                          src={imageMap[key as 'boutique' | 'luxury' | 'ultra']} 
+                          src={imageMap[key]} 
                           alt={value.label} 
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                         />
@@ -364,7 +357,7 @@ export const PlanTrip: React.FC = () => {
                     <button
                       key={key}
                       type="button"
-                      onClick={() => setTransport(key as any)}
+                      onClick={() => setTransport(key)}
                       className={`group relative text-left bg-[#FCFAF8] overflow-hidden transition-all duration-500 flex flex-col h-full ${
                         isSelected 
                           ? 'ring-2 ring-brand-gold shadow-lg scale-[1.01]' 
@@ -373,7 +366,7 @@ export const PlanTrip: React.FC = () => {
                     >
                       <div className="relative h-60 overflow-hidden">
                         <img 
-                          src={imageMap[key as 'tuk-tuk' | 'chauffeur' | 'domestic-flights']} 
+                          src={imageMap[key]} 
                           alt={value.label} 
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                         />
@@ -448,7 +441,7 @@ export const PlanTrip: React.FC = () => {
                       }`}
                     >
                       <img 
-                        src={imageMap[act.id as keyof typeof imageMap]} 
+                        src={imageMap[act.id]} 
                         alt={act.name} 
                         className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                       />

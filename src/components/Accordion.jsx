@@ -1,19 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 
-interface AccordionItem {
-  title: string;
-  content: string;
-}
+export const Accordion = ({ items }) => {
+  const [activeIndex, setActiveIndex] = useState(null);
 
-interface AccordionProps {
-  items: AccordionItem[];
-}
-
-export const Accordion: React.FC<AccordionProps> = ({ items }) => {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-
-  const toggleIndex = (index: number) => {
+  const toggleIndex = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
 

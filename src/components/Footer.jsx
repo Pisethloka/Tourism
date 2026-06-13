@@ -1,15 +1,9 @@
-import React from 'react';
-
-interface FooterProps {
-  setActiveTab: (tab: string) => void;
-}
-
-export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
+export const Footer = ({ setActiveTab }) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleLinkClick = (tab: string) => {
+  const handleLinkClick = (tab) => {
     setActiveTab(tab);
     scrollToTop();
   };
