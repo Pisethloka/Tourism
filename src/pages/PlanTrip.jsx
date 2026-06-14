@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Plane, Compass, ArrowRight, Minus, Plus, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Plane, Compass, ArrowRight, Minus, Plus, X } from 'lucide-react';
 
 // Import local image assets
 import galleryCorridor from '../assets/gallery_corridor.png';
@@ -14,10 +14,7 @@ import galleryForest from '../assets/gallery_forest.png';
 import cambodianCulinary from '../assets/cambodian_culinary.png';
 
 export const PlanTrip = () => {
-  // 1. Wizard Step State
-  const [currentStep, setCurrentStep] = useState(1);
-
-  // 2. Calculator Input States
+  // 1. Calculator Input States
   const [days, setDays] = useState(7);
   const [travelers, setTravelers] = useState(2);
   const [tier, setTier] = useState('luxury');
@@ -27,11 +24,10 @@ export const PlanTrip = () => {
     'mekong-cruise'
   ]);
 
-  // 3. UI interaction states
-  const [showSummary, setShowSummary] = useState(false);
-  const [hasMadeChoices, setHasMadeChoices] = useState(false);
+  // Mobile layout state to toggle quick drawer for statement preview
+  const [showMobileDrawer, setShowMobileDrawer] = useState(false);
 
-  // 4. Pricing Database
+  // 2. Pricing Database
   const tierPricing = {
     boutique: { label: 'Boutique Hotel ($120/night)', rate: 120 },
     luxury: { label: 'Luxury Resort ($350/night)', rate: 350 },
@@ -77,7 +73,7 @@ export const PlanTrip = () => {
     }
   ];
 
-  // 5. Dynamic Calculation logic (Calculated during render to prevent cascading renders)
+  // 3. Dynamic Calculation logic (Calculated during render to prevent cascading updates)
   const accommodationCost = days * tierPricing[tier].rate;
   const transportCost = days * transportPricing[transport].rate;
   
@@ -97,14 +93,7 @@ export const PlanTrip = () => {
     total: total
   };
 
-  // Track if user has modified anything from initial state to trigger summary slide-in
-  const updateChoices = () => {
-    if (!hasMadeChoices) {
-      setHasMadeChoices(true);
-      setShowSummary(true);
-    }
-  };
-
+  // Toggle activity selection
   const handleActivityToggle = (id) => {
     if (selectedActivities.includes(id)) {
       setSelectedActivities(selectedActivities.filter(actId => actId !== id));
@@ -113,147 +102,209 @@ export const PlanTrip = () => {
     }
   };
 
+  // Main Statement Card renderer, reused in both sticky sidebar and mobile drawer
+  const renderStatementContent = () => (
+    <div className="bg-[#FCFAF8] border border-brand-gold/20 p-6 md:p-8 rounded-none shadow-xl flex flex-col justify-between h-full relative">
+      {/* Decorative inner border */}
+      <div className="absolute inset-2 border border-brand-gold/5 pointer-events-none" />
+
+      <div className="space-y-6 relative z-10">
+        {/* Statement Brand Header */}
+        <div className="text-center">
+          <span className="font-cormorant text-2xl tracking-[0.2em] font-light text-brand-dark block">
+            ANGKOR LUX
+          </span>
+          <span className="font-inter text-[9px] tracking-[0.3em] text-brand-dark/40 uppercase block mt-1">
+            Private Journeys
+          </span>
+          <div className="w-10 h-px bg-brand-gold/35 mx-auto mt-3" />
+        </div>
+
+        {/* Statement Details */}
+        <div className="flex justify-between items-end text-[11px] font-inter text-brand-dark/50 border-b border-brand-gold/10 pb-3">
+          <div>
+            <span className="block font-medium text-brand-dark/65">PREPARED FOR:</span>
+            <span className="block mt-0.5 font-semibold text-brand-dark">Honored Guest</span>
+          </div>
+          <div className="text-right">
+            <span className="block font-medium text-brand-dark/65">STATEMENT NO:</span>
+            <span className="block mt-0.5 font-mono">#AL-{days}D{travelers}G-2026</span>
+          </div>
+        </div>
+
+        {/* Itemized Estimate List (All text sizes >= 15px as required) */}
+        <div className="space-y-4 py-2">
+          <div className="flex justify-between items-baseline">
+            <span className="font-inter text-[15px] text-brand-dark/60 font-light">
+              Accommodation ({days} nights, {tier === 'boutique' ? 'Boutique' : tier === 'luxury' ? 'Luxury' : 'Ultra-Luxury'})
+            </span>
+            <span className="font-cormorant text-lg text-brand-dark font-medium">${breakdown.accommodation}</span>
+          </div>
+          <div className="flex justify-between items-baseline">
+            <span className="font-inter text-[15px] text-brand-dark/60 font-light">
+              Private Transport ({days} days, {transport === 'tuk-tuk' ? 'Tuk-Tuk' : transport === 'chauffeur' ? 'Chauffeur' : 'Flights'})
+            </span>
+            <span className="font-cormorant text-lg text-brand-dark font-medium">${breakdown.transport}</span>
+          </div>
+          <div className="flex justify-between items-baseline">
+            <span className="font-inter text-[15px] text-brand-dark/60 font-light">
+              Private Excursions ({travelers} {travelers === 1 ? 'guest' : 'guests'})
+            </span>
+            <span className="font-cormorant text-lg text-brand-dark font-medium">${breakdown.activities}</span>
+          </div>
+          <div className="flex justify-between items-baseline">
+            <span className="font-inter text-[15px] text-brand-dark/60 font-light">
+              Concierge Booking Fee (8%)
+            </span>
+            <span className="font-cormorant text-lg text-brand-dark font-medium">${breakdown.conciergeFee}</span>
+          </div>
+        </div>
+
+        {/* Total Estimate */}
+        <div className="pt-4 border-t border-brand-gold/20">
+          <div className="flex justify-between items-baseline">
+            <span className="font-inter text-[15px] uppercase tracking-wider text-brand-dark font-semibold">Estimated Total</span>
+            <span className="font-cormorant text-3xl font-light text-brand-gold-dark">
+              ${breakdown.total} <span className="text-xs text-brand-dark/50 uppercase tracking-widest font-inter">usd</span>
+            </span>
+          </div>
+        </div>
+
+        {/* Concierge Handwritten note */}
+        <div className="pt-4 border-t border-brand-gold/10 space-y-3 text-center">
+          <p className="font-handwritten text-[#A47D23] text-xl leading-relaxed max-w-xs mx-auto">
+            "Each pilgrimage is a unique canvas. We curate every journey with absolute devotion to detail."
+          </p>
+          <div>
+            <span className="font-handwritten text-[#A47D23] text-2xl block">
+              Sophea & The Angkor Lux Team
+            </span>
+            <span className="font-inter text-[10px] tracking-wider text-brand-dark/40 uppercase block mt-0.5">
+              Lead Concierge
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Action CTA Button */}
+      <div className="pt-6 mt-6 border-t border-brand-gold/15 relative z-10">
+        <button
+          type="button"
+          onClick={() => {
+            alert(`Quote Request Sent!\nYour compiled estimate total is $${breakdown.total} USD.\nLead Concierge Sophea will contact you shortly.`);
+          }}
+          className="w-full bg-[#C59E3F] hover:bg-[#E5C36E] text-brand-dark py-3.5 text-[15px] font-inter font-medium tracking-[0.15em] uppercase transition-all duration-300 hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center space-x-2 shadow-md shadow-brand-gold/10 cursor-pointer"
+        >
+          <span>Submit to Travel Architect</span>
+          <ArrowRight size={15} />
+        </button>
+        <div className="text-center text-[10px] text-brand-dark/45 font-light pt-2.5">
+          *Rates are subject to high/low season occupancy details.
+        </div>
+      </div>
+    </div>
+  );
+
   return (
-    <div className="pb-32 bg-brand-cream font-inter text-brand-dark min-h-screen relative overflow-x-hidden">
-      {/* Dark olive/charcoal header matching the reference design details */}
-      <header className="bg-brand-forest text-brand-cream-dark pt-32 pb-16 px-6 md:px-12 text-center relative">
-        <div className="max-w-4xl mx-auto space-y-4 animate-fade-in">
+    <div className="pb-32 bg-brand-cream font-inter text-brand-dark min-h-screen relative">
+      {/* Top Banner Header */}
+      <header className="bg-brand-forest text-brand-cream-dark pt-32 pb-14 px-6 md:px-12 text-center relative">
+        <div className="max-w-4xl mx-auto space-y-3 animate-fade-in">
           <span className="font-handwritten text-brand-gold text-2xl md:text-3xl tracking-wide block">
             Curating your bespoke pilgrimage
           </span>
-          <h1 className="font-cormorant text-4xl md:text-6xl font-light tracking-tight text-white leading-tight uppercase">
+          <h1 className="font-cormorant text-4xl md:text-5xl font-light tracking-tight text-white leading-tight uppercase">
             Plan Your Journey
           </h1>
-          <p className="font-inter text-[16px] md:text-[18px] font-light text-brand-cream-dark/70 max-w-xl mx-auto leading-relaxed">
-            Welcome to your digital concierge. Together, we will draft a proposal of private arrangements tailored to your pacing.
+          <p className="font-inter text-[15px] md:text-[17px] font-light text-brand-cream-dark/70 max-w-xl mx-auto leading-relaxed">
+            Welcome to your digital concierge. Adjust details on the left, and watch your statement calculate instantly on the right.
           </p>
         </div>
       </header>
 
-      {/* Progress Step Indicator */}
-      <div className="max-w-xl mx-auto px-6 pt-12 pb-6 flex justify-between items-center relative">
-        {/* Connecting Line */}
-        <div className="absolute top-1/2 left-8 right-8 h-[1px] bg-brand-gold/20 -translate-y-1/2 z-0" />
-        
-        {[
-          { step: 1, label: 'Details' },
-          { step: 2, label: 'Lodging' },
-          { step: 3, label: 'Travel' },
-          { step: 4, label: 'Excursions' }
-        ].map((item) => {
-          const isCompleted = item.step < currentStep;
-          const isActive = item.step === currentStep;
-          return (
-            <button
-              key={item.step}
-              type="button"
-              onClick={() => {
-                if (item.step <= currentStep || hasMadeChoices) {
-                  setCurrentStep(item.step);
-                }
-              }}
-              className="relative z-10 flex flex-col items-center group focus:outline-none"
-            >
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center border font-cormorant text-lg transition-all duration-300 ${
-                isActive 
-                  ? 'border-brand-gold bg-brand-gold text-brand-dark font-semibold scale-110 shadow-md shadow-brand-gold/10'
-                  : isCompleted
-                    ? 'border-brand-gold-dark bg-brand-dark text-brand-gold'
-                    : 'border-brand-gold/20 bg-brand-cream text-brand-dark/40 group-hover:border-brand-gold/45'
-              }`}>
-                {isCompleted ? '✓' : item.step}
-              </div>
-              <span className={`font-inter text-[13px] tracking-wider uppercase mt-2 transition-colors duration-300 ${
-                isActive ? 'text-brand-dark font-semibold' : 'text-brand-dark/40'
-              }`}>
-                {item.label}
-              </span>
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Main Wizard Area */}
-      <main className="max-w-6xl mx-auto px-6 md:px-12 py-10">
-        
-        <div className="bg-white/30 backdrop-blur-sm border border-brand-gold/10 p-8 md:p-12 space-y-12 min-h-[420px] flex flex-col justify-between">
+      {/* Main Split Layout Grid */}
+      <main className="max-w-7xl mx-auto px-4 md:px-8 py-10 lg:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* STEP 1: Journey Details */}
-          {currentStep === 1 && (
-            <div className="space-y-12 py-6 max-w-xl mx-auto w-full animate-fade-in">
-              {/* Duration Select */}
-              <div className="space-y-4">
-                <label className="font-cormorant text-3xl font-light text-brand-dark block text-center">
-                  How many days are you dreaming of?
-                </label>
-                <div className="flex items-center justify-center space-x-6 border-b border-brand-gold/25 pb-4 max-w-xs mx-auto">
-                  <button
-                    type="button"
-                    onClick={() => { setDays(Math.max(3, days - 1)); updateChoices(); }}
-                    className="w-12 h-12 rounded-full border border-brand-gold/20 flex items-center justify-center text-brand-dark/50 hover:text-brand-dark hover:border-brand-gold hover:bg-brand-cream-dark/10 transition-all active:scale-95"
-                  >
-                    <Minus size={20} />
-                  </button>
-                  <span className="font-cormorant text-4xl font-light text-brand-dark min-w-[80px] text-center">
-                    {days}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => { setDays(Math.min(21, days + 1)); updateChoices(); }}
-                    className="w-12 h-12 rounded-full border border-brand-gold/20 flex items-center justify-center text-brand-dark/50 hover:text-brand-dark hover:border-brand-gold hover:bg-brand-cream-dark/10 transition-all active:scale-95"
-                  >
-                    <Plus size={20} />
-                  </button>
-                </div>
-                <p className="font-inter text-[15px] text-brand-dark/50 text-center">
-                  Minimum 3 days. We recommend at least 7 days to absorb the magic of Angkor and coastal breezes.
-                </p>
+          {/* Left Column: Interactive Planner Sections */}
+          <div className="lg:col-span-8 space-y-12 animate-fade-in">
+            
+            {/* SECTION 1: Pacing & Companions */}
+            <section className="bg-white/35 backdrop-blur-xs border border-brand-gold/15 p-6 md:p-8 space-y-8">
+              <div className="border-b border-brand-gold/15 pb-3 flex items-center space-x-3">
+                <div className="w-6 h-6 rounded-full bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center text-brand-gold text-xs font-serif font-bold">1</div>
+                <h3 className="font-cormorant text-2xl font-light uppercase tracking-wider text-brand-dark">Journey Pacing & Companions</h3>
               </div>
 
-              {/* Guest Count Select */}
-              <div className="space-y-4 pt-4">
-                <label className="font-cormorant text-3xl font-light text-brand-dark block text-center">
-                  How many are travelling?
-                </label>
-                <div className="flex items-center justify-center space-x-6 border-b border-brand-gold/25 pb-4 max-w-xs mx-auto">
-                  <button
-                    type="button"
-                    onClick={() => { setTravelers(Math.max(1, travelers - 1)); updateChoices(); }}
-                    className="w-12 h-12 rounded-full border border-brand-gold/20 flex items-center justify-center text-brand-dark/50 hover:text-brand-dark hover:border-brand-gold hover:bg-brand-cream-dark/10 transition-all active:scale-95"
-                  >
-                    <Minus size={20} />
-                  </button>
-                  <span className="font-cormorant text-4xl font-light text-brand-dark min-w-[80px] text-center">
-                    {travelers}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => { setTravelers(Math.min(10, travelers + 1)); updateChoices(); }}
-                    className="w-12 h-12 rounded-full border border-brand-gold/20 flex items-center justify-center text-brand-dark/50 hover:text-brand-dark hover:border-brand-gold hover:bg-brand-cream-dark/10 transition-all active:scale-95"
-                  >
-                    <Plus size={20} />
-                  </button>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Duration Counter */}
+                <div className="space-y-3 p-4 bg-[#FCFAF8] border border-brand-gold/5">
+                  <label className="font-cormorant text-xl font-light text-brand-dark block text-center">
+                    How many days are you dreaming of?
+                  </label>
+                  <div className="flex items-center justify-center space-x-6 pb-2 max-w-xs mx-auto">
+                    <button
+                      type="button"
+                      onClick={() => setDays(Math.max(3, days - 1))}
+                      className="w-10 h-10 rounded-full border border-brand-gold/20 flex items-center justify-center text-brand-dark/50 hover:text-brand-dark hover:border-brand-gold hover:bg-brand-cream-dark/15 transition-all active:scale-95 cursor-pointer"
+                    >
+                      <Minus size={16} />
+                    </button>
+                    <span className="font-cormorant text-3xl font-light text-brand-dark min-w-[60px] text-center">
+                      {days}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setDays(Math.min(21, days + 1))}
+                      className="w-10 h-10 rounded-full border border-brand-gold/20 flex items-center justify-center text-brand-dark/50 hover:text-brand-dark hover:border-brand-gold hover:bg-brand-cream-dark/15 transition-all active:scale-95 cursor-pointer"
+                    >
+                      <Plus size={16} />
+                    </button>
+                  </div>
+                  <p className="font-inter text-xs text-brand-dark/45 text-center leading-normal">
+                    Minimum 3 days. Recommend at least 7 days to absorb Siem Reap and the southern coast.
+                  </p>
                 </div>
-                <p className="font-inter text-[15px] text-brand-dark/50 text-center">
-                  Private itineraries are curated for intimate groups of up to 10 guests.
-                </p>
-              </div>
-            </div>
-          )}
 
-          {/* STEP 2: Accommodation Picker */}
-          {currentStep === 2 && (
-            <div className="space-y-8 w-full animate-fade-in">
-              <div className="text-center space-y-2">
-                <h3 className="font-cormorant text-3xl font-light text-brand-dark">
-                  Where would you like to rest?
-                </h3>
-                <p className="font-inter text-[16px] text-brand-dark/60 max-w-xl mx-auto">
-                  Choose a sanctuary that matches your travel philosophy.
-                </p>
+                {/* Travelers Counter */}
+                <div className="space-y-3 p-4 bg-[#FCFAF8] border border-brand-gold/5">
+                  <label className="font-cormorant text-xl font-light text-brand-dark block text-center">
+                    How many are travelling?
+                  </label>
+                  <div className="flex items-center justify-center space-x-6 pb-2 max-w-xs mx-auto">
+                    <button
+                      type="button"
+                      onClick={() => setTravelers(Math.max(1, travelers - 1))}
+                      className="w-10 h-10 rounded-full border border-brand-gold/20 flex items-center justify-center text-brand-dark/50 hover:text-brand-dark hover:border-brand-gold hover:bg-brand-cream-dark/15 transition-all active:scale-95 cursor-pointer"
+                    >
+                      <Minus size={16} />
+                    </button>
+                    <span className="font-cormorant text-3xl font-light text-brand-dark min-w-[60px] text-center">
+                      {travelers}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setTravelers(Math.min(10, travelers + 1))}
+                      className="w-10 h-10 rounded-full border border-brand-gold/20 flex items-center justify-center text-brand-dark/50 hover:text-brand-dark hover:border-brand-gold hover:bg-brand-cream-dark/15 transition-all active:scale-95 cursor-pointer"
+                    >
+                      <Plus size={16} />
+                    </button>
+                  </div>
+                  <p className="font-inter text-xs text-brand-dark/45 text-center leading-normal">
+                    Private bespoke transfers are designed for intimate groups of up to 10 guests.
+                  </p>
+                </div>
               </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-4">
+            </section>
+
+            {/* SECTION 2: Sanctuary Lodging */}
+            <section className="bg-white/35 backdrop-blur-xs border border-brand-gold/15 p-6 md:p-8 space-y-6">
+              <div className="border-b border-brand-gold/15 pb-3 flex items-center space-x-3">
+                <div className="w-6 h-6 rounded-full bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center text-brand-gold text-xs font-serif font-bold">2</div>
+                <h3 className="font-cormorant text-2xl font-light uppercase tracking-wider text-brand-dark">Sanctuary Lodging</h3>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {Object.entries(tierPricing).map(([key, value]) => {
                   const isSelected = tier === key;
                   const imageMap = {
@@ -265,46 +316,45 @@ export const PlanTrip = () => {
                     <button
                       key={key}
                       type="button"
-                      onClick={() => { setTier(key); updateChoices(); }}
-                      className={`group relative text-left bg-[#FCFAF8] overflow-hidden transition-all duration-500 flex flex-col h-full ${
+                      onClick={() => setTier(key)}
+                      className={`group relative text-left bg-[#FCFAF8] overflow-hidden transition-all duration-300 flex flex-col h-full cursor-pointer ${
                         isSelected 
-                          ? 'ring-2 ring-brand-gold shadow-lg scale-[1.01]' 
-                          : 'border border-brand-gold/10 hover:border-brand-gold/30 hover:shadow-md'
+                          ? 'ring-2 ring-brand-gold shadow-md scale-[1.01]' 
+                          : 'border border-brand-gold/10 hover:border-brand-gold/25 hover:shadow-sm'
                       }`}
                     >
-                      <div className="relative h-60 overflow-hidden">
+                      <div className="relative h-48 overflow-hidden">
                         <img 
                           src={imageMap[key]} 
                           alt={value.label} 
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                          className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500" 
                         />
-                        <div className="absolute inset-0 bg-brand-dark/15 group-hover:bg-brand-dark/5 transition-colors duration-500" />
+                        <div className="absolute inset-0 bg-brand-dark/15 group-hover:bg-brand-dark/5 transition-colors" />
                         {isSelected && (
                           <div className="absolute inset-0 bg-brand-gold/15 mix-blend-overlay pointer-events-none" />
                         )}
                         {key === 'luxury' && (
-                          <span className="absolute top-4 right-4 bg-brand-gold text-brand-dark font-inter text-[11px] font-medium tracking-wider uppercase px-2.5 py-1">
-                            Signature Choice
+                          <span className="absolute top-3 right-3 bg-brand-gold text-brand-dark font-inter text-[9px] font-bold tracking-wider uppercase px-2 py-0.5">
+                            Signature
                           </span>
                         )}
                       </div>
-                      <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
-                        <div className="space-y-2">
-                          <h4 className="font-cormorant text-2xl font-light text-brand-dark capitalize">
+                      <div className="p-4 flex-grow flex flex-col justify-between space-y-3">
+                        <div className="space-y-1.5">
+                          <h4 className="font-cormorant text-xl font-light text-brand-dark capitalize">
                             {key === 'boutique' ? 'Boutique Heritage' : key === 'luxury' ? 'Luxury Resort' : 'Ultra-Luxury Villa'}
                           </h4>
                           <p className="font-inter text-[15px] font-light text-brand-dark/70 leading-relaxed">
-                            {key === 'boutique' && 'Premium heritage villas, boutique boutique stays, and local colonial-style guest houses.'}
-                            {key === 'luxury' && 'Private luxury suites, award-winning spas, lavish resort grounds, and private swimming pools.'}
-                            {key === 'ultra' && 'Ultra-luxury estate villas, private plunge pools, dedicated butler service, and ultimate privacy.'}
+                            {key === 'boutique' && 'Premium heritage properties, colonial guest houses, and local boutique hotels.'}
+                            {key === 'luxury' && 'Private luxury suites, curated wellness spas, and lavish resort pools.'}
+                            {key === 'ultra' && 'Ultra-luxury estates, dedicated butler service, and ultimate beachfront privacy.'}
                           </p>
                         </div>
-                        <div className="pt-3 flex justify-between items-baseline border-t border-brand-gold/10">
-                          <span className="font-inter text-xs tracking-wider text-brand-dark/50 uppercase">Investment Rate</span>
-                          <span className="font-cormorant text-2xl font-light text-brand-gold-dark">${value.rate} <span className="font-inter text-[13px] font-light text-brand-dark/50 lowercase">/ night</span></span>
+                        <div className="pt-2 flex justify-between items-baseline border-t border-brand-gold/10">
+                          <span className="font-inter text-[11px] tracking-wider text-brand-dark/40 uppercase">Investment Rate</span>
+                          <span className="font-cormorant text-xl font-light text-brand-gold-dark">${value.rate} <span className="font-inter text-xs text-brand-dark/40 lowercase">/ night</span></span>
                         </div>
                       </div>
-                      {/* Gold border overlay glow on selected card */}
                       {isSelected && (
                         <div className="absolute inset-0 border-2 border-brand-gold pointer-events-none" />
                       )}
@@ -312,22 +362,16 @@ export const PlanTrip = () => {
                   );
                 })}
               </div>
-            </div>
-          )}
+            </section>
 
-          {/* STEP 3: Transport Options */}
-          {currentStep === 3 && (
-            <div className="space-y-8 w-full animate-fade-in">
-              <div className="text-center space-y-2">
-                <h3 className="font-cormorant text-3xl font-light text-brand-dark">
-                  How would you prefer to travel?
-                </h3>
-                <p className="font-inter text-[16px] text-brand-dark/60 max-w-xl mx-auto">
-                  Select your preference for local navigation and regional transfers.
-                </p>
+            {/* SECTION 3: Local Navigation */}
+            <section className="bg-white/35 backdrop-blur-xs border border-brand-gold/15 p-6 md:p-8 space-y-6">
+              <div className="border-b border-brand-gold/15 pb-3 flex items-center space-x-3">
+                <div className="w-6 h-6 rounded-full bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center text-brand-gold text-xs font-serif font-bold">3</div>
+                <h3 className="font-cormorant text-2xl font-light uppercase tracking-wider text-brand-dark">Local Navigation</h3>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {Object.entries(transportPricing).map(([key, value]) => {
                   const isSelected = transport === key;
                   const imageMap = {
@@ -339,46 +383,45 @@ export const PlanTrip = () => {
                     <button
                       key={key}
                       type="button"
-                      onClick={() => { setTransport(key); updateChoices(); }}
-                      className={`group relative text-left bg-[#FCFAF8] overflow-hidden transition-all duration-500 flex flex-col h-full ${
+                      onClick={() => setTransport(key)}
+                      className={`group relative text-left bg-[#FCFAF8] overflow-hidden transition-all duration-300 flex flex-col h-full cursor-pointer ${
                         isSelected 
-                          ? 'ring-2 ring-brand-gold shadow-lg scale-[1.01]' 
-                          : 'border border-brand-gold/10 hover:border-brand-gold/30 hover:shadow-md'
+                          ? 'ring-2 ring-brand-gold shadow-md scale-[1.01]' 
+                          : 'border border-brand-gold/10 hover:border-brand-gold/25 hover:shadow-sm'
                       }`}
                     >
-                      <div className="relative h-60 overflow-hidden">
+                      <div className="relative h-48 overflow-hidden">
                         <img 
                           src={imageMap[key]} 
                           alt={value.label} 
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                          className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500" 
                         />
-                        <div className="absolute inset-0 bg-brand-dark/15 group-hover:bg-brand-dark/5 transition-colors duration-500" />
+                        <div className="absolute inset-0 bg-brand-dark/15 group-hover:bg-brand-dark/5 transition-colors" />
                         {isSelected && (
                           <div className="absolute inset-0 bg-brand-gold/15 mix-blend-overlay pointer-events-none" />
                         )}
                         {key === 'chauffeur' && (
-                          <span className="absolute top-4 right-4 bg-brand-gold text-brand-dark font-inter text-[11px] font-medium tracking-wider uppercase px-2.5 py-1">
+                          <span className="absolute top-3 right-3 bg-brand-gold text-brand-dark font-inter text-[9px] font-bold tracking-wider uppercase px-2 py-0.5">
                             Recommended
                           </span>
                         )}
                       </div>
-                      <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
-                        <div className="space-y-2">
-                          <h4 className="font-cormorant text-2xl font-light text-brand-dark">
+                      <div className="p-4 flex-grow flex flex-col justify-between space-y-3">
+                        <div className="space-y-1.5">
+                          <h4 className="font-cormorant text-xl font-light text-brand-dark">
                             {key === 'tuk-tuk' ? 'Tuk-Tuk Explorer' : key === 'chauffeur' ? 'Private Chauffeur' : 'Regional Flights'}
                           </h4>
                           <p className="font-inter text-[15px] font-light text-brand-dark/70 leading-relaxed">
-                            {key === 'tuk-tuk' && 'Traditional open-air local transport for an authentic, immersive, and breezy local exploration.'}
-                            {key === 'chauffeur' && 'Air-conditioned luxury SUV with dedicated private English guide and unlimited refreshments.'}
-                            {key === 'domestic-flights' && 'Private chauffeur service combined with domestic flights between Siem Reap and the coast.'}
+                            {key === 'tuk-tuk' && 'Traditional open-air local transport for an authentic, breezy neighborhood tour.'}
+                            {key === 'chauffeur' && 'Air-conditioned luxury SUV with dedicated private English guide.'}
+                            {key === 'domestic-flights' && 'Private chauffeur service combined with domestic flights between provinces.'}
                           </p>
                         </div>
-                        <div className="pt-3 flex justify-between items-baseline border-t border-brand-gold/10">
-                          <span className="font-inter text-xs tracking-wider text-brand-dark/50 uppercase">Daily rate</span>
-                          <span className="font-cormorant text-2xl font-light text-brand-gold-dark">${value.rate} <span className="font-inter text-[13px] font-light text-brand-dark/50 lowercase">/ day</span></span>
+                        <div className="pt-2 flex justify-between items-baseline border-t border-brand-gold/10">
+                          <span className="font-inter text-[11px] tracking-wider text-brand-dark/40 uppercase">Daily rate</span>
+                          <span className="font-cormorant text-xl font-light text-brand-gold-dark">${value.rate} <span className="font-inter text-xs text-brand-dark/40 lowercase">/ day</span></span>
                         </div>
                       </div>
-                      {/* Gold border glow */}
                       {isSelected && (
                         <div className="absolute inset-0 border-2 border-brand-gold pointer-events-none" />
                       )}
@@ -386,22 +429,16 @@ export const PlanTrip = () => {
                   );
                 })}
               </div>
-            </div>
-          )}
+            </section>
 
-          {/* STEP 4: Excursions Grid */}
-          {currentStep === 4 && (
-            <div className="space-y-8 w-full animate-fade-in">
-              <div className="text-center space-y-2">
-                <h3 className="font-cormorant text-3xl font-light text-brand-dark">
-                  Curate your experiences
-                </h3>
-                <p className="font-inter text-[16px] text-brand-dark/60 max-w-xl mx-auto">
-                  Choose from our private excursions. Select tiles below to add them to your custom estimate.
-                </p>
+            {/* SECTION 4: Curated Excursions */}
+            <section className="bg-white/35 backdrop-blur-xs border border-brand-gold/15 p-6 md:p-8 space-y-6">
+              <div className="border-b border-brand-gold/15 pb-3 flex items-center space-x-3">
+                <div className="w-6 h-6 rounded-full bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center text-brand-gold text-xs font-serif font-bold">4</div>
+                <h3 className="font-cormorant text-2xl font-light uppercase tracking-wider text-brand-dark">Curated Excursions</h3>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {activityOptions.map((act) => {
                   const isSelected = selectedActivities.includes(act.id);
                   const imageMap = {
@@ -416,55 +453,54 @@ export const PlanTrip = () => {
                       key={act.id}
                       type="button"
                       onClick={() => handleActivityToggle(act.id)}
-                      className={`group relative text-left bg-brand-dark overflow-hidden transition-all duration-500 h-80 flex flex-col justify-end ${
+                      className={`group relative text-left bg-brand-dark overflow-hidden transition-all duration-300 h-64 flex flex-col justify-end cursor-pointer ${
                         isSelected 
-                          ? 'ring-2 ring-brand-gold shadow-xl scale-[1.01]' 
-                          : 'border border-brand-gold/10 hover:border-brand-gold/30'
+                          ? 'ring-2 ring-brand-gold shadow-md scale-[1.01]' 
+                          : 'border border-brand-gold/10 hover:border-brand-gold/25'
                       }`}
                     >
                       <img 
                         src={imageMap[act.id]} 
                         alt={act.name} 
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-103 transition-transform duration-500" 
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/35 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/25 to-transparent" />
                       {isSelected && (
                         <div className="absolute inset-0 bg-brand-gold/15 mix-blend-overlay pointer-events-none" />
                       )}
                       
                       {/* Check badge overlay */}
                       <div className="absolute top-4 right-4 z-20">
-                        <div className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all ${
+                        <div className={`w-7 h-7 rounded-full border flex items-center justify-center transition-all ${
                           isSelected ? 'border-brand-gold bg-brand-gold text-brand-dark scale-110' : 'border-white/30 bg-black/40 text-white'
                         }`}>
                           {isSelected ? (
-                            <span className="font-inter text-sm font-bold">✓</span>
+                            <span className="font-inter text-xs font-bold">✓</span>
                           ) : (
                             <span className="font-inter text-xs text-white/50">+</span>
                           )}
                         </div>
                       </div>
 
-                      <div className="relative z-10 p-6 space-y-2">
-                        <span className="font-inter text-xs font-semibold tracking-wider text-brand-gold uppercase">
+                      <div className="relative z-10 p-5 space-y-1.5">
+                        <span className="font-inter text-[10px] font-semibold tracking-wider text-brand-gold uppercase">
                           Private Excursion
                         </span>
-                        <h4 className="font-cormorant text-2xl font-light text-white">
+                        <h4 className="font-cormorant text-xl font-light text-white leading-tight">
                           {act.name}
                         </h4>
-                        <p className="font-inter text-[15px] font-light text-white/80 line-clamp-2 max-w-md leading-relaxed">
-                          {act.id === 'angkor-sunrise' && 'Witness sunrise over the grand spires of Angkor Wat before exploring its hidden passages with a lead historian.'}
-                          {act.id === 'helicopter' && 'Fly above Siem Reap and the vast Tonle Sap lake to trace the ancient irrigation networks from a private charter.'}
+                        <p className="font-inter text-[15px] font-light text-white/80 line-clamp-2 max-w-sm leading-relaxed">
+                          {act.id === 'angkor-sunrise' && 'Witness sunrise over Angkor Wat before exploring key galleries with a lead historian.'}
+                          {act.id === 'helicopter' && 'Fly above Siem Reap temples and the vast Tonle Sap lake on a scenic private flight.'}
                           {act.id === 'mekong-cruise' && 'Glide past floating villages on a restored traditional barge while dining on local gourmet recipes.'}
-                          {act.id === 'rainforest-trek' && 'Trek alongside forest rangers through cardamom sanctuaries to spot wild elephants and gibbons.'}
-                          {act.id === 'culinary-class' && 'Pick fresh lemongrass and local herbs from organic gardens and craft classic Royal Khmer recipes.'}
+                          {act.id === 'rainforest-trek' && 'Trek alongside forest rangers through cardamom sanctuaries to spot wild elephants.'}
+                          {act.id === 'culinary-class' && 'Pick fresh lemongrass and craft classic Royal Khmer recipes with a master chef.'}
                         </p>
-                        <div className="pt-2 flex justify-between items-baseline border-t border-white/10">
-                          <span className="font-inter text-xs text-white/50 uppercase">Rate per guest</span>
-                          <span className="font-cormorant text-xl font-light text-brand-gold-light">${act.pricePerPerson} USD</span>
+                        <div className="pt-1.5 flex justify-between items-baseline border-t border-white/10">
+                          <span className="font-inter text-[10px] text-white/50 uppercase">Rate per guest</span>
+                          <span className="font-cormorant text-lg font-light text-brand-gold-light">${act.pricePerPerson} USD</span>
                         </div>
                       </div>
-                      {/* Glowing border glow for select state */}
                       {isSelected && (
                         <div className="absolute inset-0 border-2 border-brand-gold pointer-events-none" />
                       )}
@@ -472,188 +508,53 @@ export const PlanTrip = () => {
                   );
                 })}
               </div>
-            </div>
-          )}
+            </section>
 
-          {/* Navigation Controls */}
-          <div className="flex justify-between items-center pt-8 border-t border-brand-gold/15 mt-10">
-            {currentStep > 1 ? (
-              <button
-                type="button"
-                onClick={() => setCurrentStep(currentStep - 1)}
-                className="font-inter text-[15px] font-medium text-brand-dark/50 hover:text-brand-dark transition-colors flex items-center space-x-2 py-3 focus:outline-none"
-              >
-                <ChevronLeft size={16} />
-                <span>Back</span>
-              </button>
-            ) : (
-              <div />
-            )}
+          </div>
 
-            {currentStep < 4 ? (
-              <button
-                type="button"
-                onClick={() => setCurrentStep(currentStep + 1)}
-                className="bg-brand-dark hover:bg-brand-dark-accent text-brand-cream-dark py-4 px-10 text-[15px] font-inter tracking-wider uppercase transition-all duration-300 hover:scale-[1.01] active:scale-[0.99] flex items-center space-x-2 focus:outline-none"
-              >
-                <span>Continue to {currentStep === 1 ? 'Sanctuaries' : currentStep === 2 ? 'Transfers' : 'Excursions'}</span>
-                <ChevronRight size={16} />
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={() => {
-                  setHasMadeChoices(true);
-                  setShowSummary(true);
-                }}
-                className="bg-brand-dark hover:bg-brand-dark-accent text-brand-cream-dark py-4 px-10 text-[15px] font-inter tracking-wider uppercase transition-all duration-300 hover:scale-[1.01] active:scale-[0.99] flex items-center space-x-2 focus:outline-none"
-              >
-                <span>Review Compiled Statement</span>
-                <ChevronRight size={16} />
-              </button>
-            )}
+          {/* Right Column: Sticky Compiled Statement invoice panel (Desktop only) */}
+          <div className="hidden lg:block lg:col-span-4 lg:sticky lg:top-28">
+            {renderStatementContent()}
           </div>
 
         </div>
-
       </main>
 
-      {/* Floating Cost Tab - Click to open slide-in Invoice sheet */}
-      {hasMadeChoices && !showSummary && (
+      {/* Floating Bottom Bar for Mobile layout (visible when summary card is hidden) */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-brand-dark/95 border-t border-brand-gold/25 p-4 flex justify-between items-center shadow-2xl backdrop-blur-md">
+        <div className="flex flex-col text-left">
+          <span className="text-[10px] tracking-widest text-brand-gold uppercase font-bold">Estimated Cost</span>
+          <span className="font-cormorant text-2xl text-white font-light mt-0.5">${breakdown.total} USD</span>
+        </div>
         <button
           type="button"
-          onClick={() => setShowSummary(true)}
-          className="fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-brand-dark border-l-2 border-t-2 border-b-2 border-brand-gold text-brand-cream-dark p-4 pl-5 shadow-2xl flex flex-col items-center space-y-2 hover:-translate-x-1 transition-all duration-300"
+          onClick={() => setShowMobileDrawer(true)}
+          className="bg-brand-gold hover:bg-brand-gold-light text-brand-dark px-5 py-3 text-xs font-semibold tracking-wider uppercase rounded-none transition-all active:scale-95 shadow-md shadow-brand-gold/15 cursor-pointer"
         >
-          <span className="font-inter text-xs tracking-[0.25em] uppercase text-brand-gold-light [writing-mode:vertical-lr] rotate-180 font-semibold">
-            View Estimate
-          </span>
-          <span className="font-cormorant text-xl font-light text-white pt-1">
-            ${breakdown.total}
-          </span>
+          View Estimate Summary
         </button>
-      )}
-
-      {/* Background Blur Overlay when summary panel drawer is active */}
-      {showSummary && (
-        <div 
-          onClick={() => setShowSummary(false)} 
-          className="fixed inset-0 bg-brand-dark/25 backdrop-blur-sm z-40 transition-opacity duration-500"
-        />
-      )}
-
-      {/* Slide-in Summary Panel / Invoice Drawer */}
-      <div className={`fixed inset-y-0 right-0 z-50 w-full max-w-lg bg-[#FCFAF8] shadow-2xl border-l border-brand-gold/15 p-8 md:p-12 transition-transform duration-500 ease-in-out flex flex-col justify-between ${
-        showSummary ? 'translate-x-0' : 'translate-x-full'
-      }`}>
-        {/* Double border detailing inside the drawer */}
-        <div className="absolute inset-2 border border-brand-gold/5 pointer-events-none" />
-
-        {/* Close Button */}
-        <button 
-          type="button" 
-          onClick={() => setShowSummary(false)} 
-          className="absolute top-8 left-8 w-10 h-10 rounded-full border border-brand-gold/10 flex items-center justify-center text-brand-dark/50 hover:text-brand-dark hover:border-brand-gold transition-all duration-300"
-        >
-          <X size={18} />
-        </button>
-
-        <div className="space-y-8 overflow-y-auto pr-1 pt-6 flex-1">
-          {/* Invoice Header */}
-          <div className="text-center relative">
-            <span className="font-cormorant text-3xl tracking-[0.15em] font-light text-brand-dark block">
-              ANGKOR LUX
-            </span>
-            <span className="font-inter text-[10px] tracking-[0.3em] text-brand-dark/40 uppercase block mt-1">
-              Private Journeys
-            </span>
-            <div className="w-12 h-px bg-brand-gold/35 mx-auto mt-4" />
-          </div>
-
-          {/* Statement Details */}
-          <div className="flex justify-between items-end text-[12px] font-inter text-brand-dark/50 border-b border-brand-gold/10 pb-4">
-            <div>
-              <span className="block font-medium text-brand-dark/65">PREPARED FOR:</span>
-              <span className="block mt-0.5">Honored Guest</span>
-            </div>
-            <div className="text-right">
-              <span className="block font-medium text-brand-dark/65">STATEMENT NO:</span>
-              <span className="block mt-0.5 font-mono">#AL-{days}D{travelers}G-2026</span>
-            </div>
-          </div>
-
-          {/* Quote Itemized Rows (All text sizes >= 15px) */}
-          <div className="space-y-5 py-4">
-            <div className="flex justify-between items-baseline">
-              <span className="font-inter text-[15px] text-brand-dark/60 font-light">
-                Accommodation ({days} nights, {tier === 'boutique' ? 'Boutique' : tier === 'luxury' ? 'Luxury' : 'Ultra-Luxury'})
-              </span>
-              <span className="font-cormorant text-xl text-brand-dark">${breakdown.accommodation}</span>
-            </div>
-            <div className="flex justify-between items-baseline">
-              <span className="font-inter text-[15px] text-brand-dark/60 font-light">
-                Private Transport & Guide ({days} days)
-              </span>
-              <span className="font-cormorant text-xl text-brand-dark">${breakdown.transport}</span>
-            </div>
-            <div className="flex justify-between items-baseline">
-              <span className="font-inter text-[15px] text-brand-dark/60 font-light">
-                Private Excursions ({travelers} {travelers === 1 ? 'guest' : 'guests'})
-              </span>
-              <span className="font-cormorant text-xl text-brand-dark">${breakdown.activities}</span>
-            </div>
-            <div className="flex justify-between items-baseline">
-              <span className="font-inter text-[15px] text-brand-dark/60 font-light">
-                Concierge Booking Fee (8%)
-              </span>
-              <span className="font-cormorant text-xl text-brand-dark">${breakdown.conciergeFee}</span>
-            </div>
-          </div>
-
-          {/* Total Investment Row */}
-          <div className="pt-6 border-t border-brand-gold/20">
-            <div className="flex justify-between items-baseline">
-              <span className="font-inter text-[15px] uppercase tracking-wider text-brand-dark font-medium">Estimated Investment</span>
-              <span className="font-cormorant text-4xl font-light text-brand-gold-dark">
-                ${breakdown.total} <span className="text-xs text-brand-dark/50 uppercase tracking-widest font-inter">usd</span>
-              </span>
-            </div>
-          </div>
-
-          {/* Concierge handwritten notes */}
-          <div className="pt-6 border-t border-brand-gold/10 space-y-4 text-center">
-            <p className="font-handwritten text-[#A47D23] text-2xl leading-relaxed max-w-sm mx-auto">
-              "Each pilgrimage is a unique canvas. We curate every journey with absolute devotion to detail, tailoring the experience to your pacing and wishes."
-            </p>
-            <div>
-              <span className="font-handwritten text-[#A47D23] text-3xl block">
-                Sophea & The Angkor Lux Team
-              </span>
-              <span className="font-inter text-[11px] tracking-wider text-brand-dark/40 uppercase block mt-1">
-                Lead Concierge
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* CTA Button Anchored at the bottom of the drawer */}
-        <div className="pt-6 border-t border-brand-gold/10 relative z-10 bg-[#FCFAF8] pb-4">
-          <button
-            type="button"
-            onClick={() => {
-              alert(`Quote Request Sent!\nYour compiled estimate total is $${breakdown.total} USD.\nLead Concierge Sophea will contact you shortly.`);
-            }}
-            className="w-full bg-[#C59E3F] hover:bg-[#E5C36E] text-brand-dark py-4 text-[16px] font-inter font-medium tracking-[0.2em] uppercase transition-all duration-300 hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center space-x-2.5 shadow-md shadow-brand-gold/10"
-          >
-            <span>Submit to Travel Architect</span>
-            <ArrowRight size={16} />
-          </button>
-          <div className="text-center text-[11px] text-brand-dark/40 font-light pt-3">
-            *Final rate is subject to high/low season occupancy and custom alterations.
-          </div>
-        </div>
       </div>
 
+      {/* Mobile Drawer (Slide-up modal detailing the estimate breakdown) */}
+      {showMobileDrawer && (
+        <div className="lg:hidden fixed inset-0 z-50 bg-brand-dark/60 backdrop-blur-xs flex items-end animate-fade-in" onClick={() => setShowMobileDrawer(false)}>
+          <div 
+            className="w-full bg-[#FCFAF8] max-h-[85vh] overflow-y-auto p-4 relative animate-fade-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close icon drawer */}
+            <button
+              onClick={() => setShowMobileDrawer(false)}
+              className="absolute top-4 right-4 w-9 h-9 rounded-full border border-brand-gold/25 flex items-center justify-center text-brand-dark/50 hover:text-brand-dark transition-colors cursor-pointer"
+            >
+              <X size={16} />
+            </button>
+            <div className="pt-6">
+              {renderStatementContent()}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
