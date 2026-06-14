@@ -82,22 +82,33 @@ export const Map = () => {
     });
   };
 
-  // Card filter logic
-  const filteredCards = sites.filter(site => {
-    // Search query check
-    if (searchQuery && !site.name.toLowerCase().includes(searchQuery.toLowerCase())) {
-      return false;
-    }
-    // Category check
-    if (site.category === 'CULTURAL' && !tourismFilters.cultural) return false;
-    if (site.category === 'ECO' && !tourismFilters.eco) return false;
-    if (site.category === 'DARK' && !tourismFilters.dark) return false;
-    if (site.category === 'BOUTIQUE' && !tourismFilters.boutique) return false;
-    // Region check
-    if (selectedRegion !== 'All Regions' && site.region !== selectedRegion) return false;
+  // Card filter & sort logic
+  const filteredCards = sites
+    .filter(site => {
+      // Search query check
+      if (searchQuery && !site.name.toLowerCase().includes(searchQuery.toLowerCase())) {
+        return false;
+      }
+      // Category check
+      if (site.category === 'CULTURAL' && !tourismFilters.cultural) return false;
+      if (site.category === 'ECO' && !tourismFilters.eco) return false;
+      if (site.category === 'DARK' && !tourismFilters.dark) return false;
+      if (site.category === 'BOUTIQUE' && !tourismFilters.boutique) return false;
+      // Region check
+      if (selectedRegion !== 'All Regions' && site.region !== selectedRegion) return false;
 
-    return true;
-  });
+      return true;
+    })
+    .sort((a, b) => {
+      if (sortBy === 'Alphabetical') {
+        return a.name.localeCompare(b.name);
+      }
+      if (sortBy === 'Recent') {
+        return b.id.localeCompare(a.id);
+      }
+      // 'Recommended' retains the default array order
+      return 0;
+    });
 
   return (
     <div className="pt-28 pb-20 bg-brand-cream animate-fade-in">

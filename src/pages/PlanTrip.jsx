@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Plane, Compass, ArrowRight, Minus, Plus, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Import local image assets
@@ -77,51 +77,33 @@ export const PlanTrip = () => {
     }
   ];
 
-  // 5. Dynamic Calculation logic
-  const [breakdown, setBreakdown] = useState({
-    accommodation: 0,
-    transport: 0,
-    activities: 0,
-    conciergeFee: 0,
-    total: 0
-  });
+  // 5. Dynamic Calculation logic (Calculated during render to prevent cascading renders)
+  const accommodationCost = days * tierPricing[tier].rate;
+  const transportCost = days * transportPricing[transport].rate;
+  
+  const activitiesCost = activityOptions
+    .filter(act => selectedActivities.includes(act.id))
+    .reduce((sum, act) => sum + (act.pricePerPerson * travelers), 0);
+  
+  const baseTotal = accommodationCost + transportCost + activitiesCost;
+  const conciergeFee = Math.round(baseTotal * 0.08); // 8% luxury service fee
+  const total = baseTotal + conciergeFee;
 
-  useEffect(() => {
-    const accommodationCost = days * tierPricing[tier].rate;
-    const transportCost = days * transportPricing[transport].rate;
-    
-    const activitiesCost = activityOptions
-      .filter(act => selectedActivities.includes(act.id))
-      .reduce((sum, act) => sum + (act.pricePerPerson * travelers), 0);
-    
-    const baseTotal = accommodationCost + transportCost + activitiesCost;
-    const fee = Math.round(baseTotal * 0.08); // 8% luxury service fee
-    const grandTotal = baseTotal + fee;
-
-    setBreakdown({
-      accommodation: accommodationCost,
-      transport: transportCost,
-      activities: activitiesCost,
-      conciergeFee: fee,
-      total: grandTotal
-    });
-  }, [days, travelers, tier, transport, selectedActivities]);
+  const breakdown = {
+    accommodation: accommodationCost,
+    transport: transportCost,
+    activities: activitiesCost,
+    conciergeFee: conciergeFee,
+    total: total
+  };
 
   // Track if user has modified anything from initial state to trigger summary slide-in
-  useEffect(() => {
-    if (
-      days !== 7 ||
-      travelers !== 2 ||
-      tier !== 'luxury' ||
-      transport !== 'chauffeur' ||
-      selectedActivities.length !== 2
-    ) {
-      if (!hasMadeChoices) {
-        setHasMadeChoices(true);
-        setShowSummary(true); // slide in summary panel
-      }
+  const updateChoices = () => {
+    if (!hasMadeChoices) {
+      setHasMadeChoices(true);
+      setShowSummary(true);
     }
-  }, [days, travelers, tier, transport, selectedActivities, hasMadeChoices]);
+  };
 
   const handleActivityToggle = (id) => {
     if (selectedActivities.includes(id)) {
@@ -207,7 +189,7 @@ export const PlanTrip = () => {
                 <div className="flex items-center justify-center space-x-6 border-b border-brand-gold/25 pb-4 max-w-xs mx-auto">
                   <button
                     type="button"
-                    onClick={() => setDays(Math.max(3, days - 1))}
+                    onClick={() => { setDays(Math.max(3, days - 1)); updateChoices(); }}
                     className="w-12 h-12 rounded-full border border-brand-gold/20 flex items-center justify-center text-brand-dark/50 hover:text-brand-dark hover:border-brand-gold hover:bg-brand-cream-dark/10 transition-all active:scale-95"
                   >
                     <Minus size={20} />
@@ -217,7 +199,7 @@ export const PlanTrip = () => {
                   </span>
                   <button
                     type="button"
-                    onClick={() => setDays(Math.min(21, days + 1))}
+                    onClick={() => { setDays(Math.min(21, days + 1)); updateChoices(); }}
                     className="w-12 h-12 rounded-full border border-brand-gold/20 flex items-center justify-center text-brand-dark/50 hover:text-brand-dark hover:border-brand-gold hover:bg-brand-cream-dark/10 transition-all active:scale-95"
                   >
                     <Plus size={20} />
@@ -236,7 +218,7 @@ export const PlanTrip = () => {
                 <div className="flex items-center justify-center space-x-6 border-b border-brand-gold/25 pb-4 max-w-xs mx-auto">
                   <button
                     type="button"
-                    onClick={() => setTravelers(Math.max(1, travelers - 1))}
+                    onClick={() => { setTravelers(Math.max(1, travelers - 1)); updateChoices(); }}
                     className="w-12 h-12 rounded-full border border-brand-gold/20 flex items-center justify-center text-brand-dark/50 hover:text-brand-dark hover:border-brand-gold hover:bg-brand-cream-dark/10 transition-all active:scale-95"
                   >
                     <Minus size={20} />
@@ -246,7 +228,7 @@ export const PlanTrip = () => {
                   </span>
                   <button
                     type="button"
-                    onClick={() => setTravelers(Math.min(10, travelers + 1))}
+                    onClick={() => { setTravelers(Math.min(10, travelers + 1)); updateChoices(); }}
                     className="w-12 h-12 rounded-full border border-brand-gold/20 flex items-center justify-center text-brand-dark/50 hover:text-brand-dark hover:border-brand-gold hover:bg-brand-cream-dark/10 transition-all active:scale-95"
                   >
                     <Plus size={20} />
@@ -283,7 +265,7 @@ export const PlanTrip = () => {
                     <button
                       key={key}
                       type="button"
-                      onClick={() => setTier(key)}
+                      onClick={() => { setTier(key); updateChoices(); }}
                       className={`group relative text-left bg-[#FCFAF8] overflow-hidden transition-all duration-500 flex flex-col h-full ${
                         isSelected 
                           ? 'ring-2 ring-brand-gold shadow-lg scale-[1.01]' 
@@ -357,7 +339,7 @@ export const PlanTrip = () => {
                     <button
                       key={key}
                       type="button"
-                      onClick={() => setTransport(key)}
+                      onClick={() => { setTransport(key); updateChoices(); }}
                       className={`group relative text-left bg-[#FCFAF8] overflow-hidden transition-all duration-500 flex flex-col h-full ${
                         isSelected 
                           ? 'ring-2 ring-brand-gold shadow-lg scale-[1.01]' 

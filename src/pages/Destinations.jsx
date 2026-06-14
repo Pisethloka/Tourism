@@ -135,7 +135,7 @@ export const Destinations = () => {
               <div className="p-5 space-y-3 flex-grow flex flex-col justify-between">
                 <div className="space-y-1.5">
                   <h3 className="font-serif text-base font-bold tracking-wider text-brand-dark uppercase">Bokor Hill Station</h3>
-                  <p className="text-[11px] font-light text-brand-dark/75 leading-relaxed">
+                  <p className="text-sm font-light text-brand-dark/80 leading-relaxed">
                     A misty mountain canopy featuring haunting colonial ruins and panoramic views of the Gulf of Thailand.
                   </p>
                 </div>
