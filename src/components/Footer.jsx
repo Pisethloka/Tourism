@@ -16,8 +16,8 @@ export const Footer = ({ setActiveTab }) => {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12 relative z-10">
         {/* Brand Column */}
         <div className="md:col-span-2 space-y-4">
-          <h3 className="font-serif text-2xl font-bold tracking-widest text-brand-gold uppercase">
-            ANGKOR LUX
+          <h3 className="font-serif text-2xl font-bold tracking-widest text-brand-gold uppercase whitespace-nowrap">
+            ANGKOR PRESTIGE
           </h3>
           <p className="text-sm font-light leading-relaxed text-brand-cream-dark/70 max-w-sm">
             Curating the most exclusive journeys through the Kingdom of Wonder. Authentic, sustainable, and undeniably majestic.
@@ -85,7 +85,7 @@ export const Footer = ({ setActiveTab }) => {
 
       {/* Footer Bottom */}
       <div className="max-w-7xl mx-auto pt-8 mt-8 border-t border-brand-gold/10 flex flex-col md:flex-row justify-between items-center text-xs text-brand-cream-dark/50 relative z-10">
-        <p>© 2026 Angkor Lux. Kingdom of Wonder Tourism. All Rights Reserved.</p>
+        <p>© 2026 Angkor Prestige. Kingdom of Wonder Tourism. All Rights Reserved.</p>
         
         {/* Social Links Row */}
         <div className="flex items-center space-x-6 mt-4 md:mt-0">

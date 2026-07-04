@@ -13,14 +13,14 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:px-8">
-      <div className="max-w-7xl mx-auto flex md:grid md:grid-cols-3 items-center justify-between px-6 py-4 rounded-2xl glass transition-all duration-300 shadow-xl border-brand-gold/20">
+      <div className="max-w-7xl mx-auto flex md:grid md:grid-cols-[auto_1fr_auto] items-center justify-between px-6 py-4 rounded-2xl glass transition-all duration-300 shadow-xl border-brand-gold/20">
         {/* Logo */}
         <div 
           className="flex items-center space-x-2 cursor-pointer group justify-self-start"
           onClick={() => { setActiveTab('home'); setIsOpen(false); }}
         >
-          <span className="font-serif text-2xl font-bold tracking-widest text-brand-gold group-hover:text-brand-gold-light transition-colors">
-            ANGKOR LUX
+          <span className="font-serif text-2xl font-bold tracking-widest text-brand-gold group-hover:text-brand-gold-light transition-colors whitespace-nowrap">
+            ANGKOR PRESTIGE
           </span>
         </div>
 

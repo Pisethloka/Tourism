@@ -111,8 +111,8 @@ export const PlanTrip = () => {
       <div className="space-y-6 relative z-10">
         {/* Statement Brand Header */}
         <div className="text-center">
-          <span className="font-cormorant text-2xl tracking-[0.2em] font-light text-brand-dark block">
-            ANGKOR LUX
+          <span className="font-cormorant text-2xl tracking-[0.2em] font-light text-brand-dark block whitespace-nowrap">
+            ANGKOR PRESTIGE
           </span>
           <span className="font-inter text-[9px] tracking-[0.3em] text-brand-dark/40 uppercase block mt-1">
             Private Journeys
@@ -128,7 +128,7 @@ export const PlanTrip = () => {
           </div>
           <div className="text-right">
             <span className="block font-medium text-brand-dark/65">STATEMENT NO:</span>
-            <span className="block mt-0.5 font-mono">#AL-{days}D{travelers}G-2026</span>
+            <span className="block mt-0.5 font-mono">#AP-{days}D{travelers}G-2026</span>
           </div>
         </div>
 
@@ -176,8 +176,8 @@ export const PlanTrip = () => {
             "Each pilgrimage is a unique canvas. We curate every journey with absolute devotion to detail."
           </p>
           <div>
-            <span className="font-handwritten text-[#A47D23] text-2xl block">
-              Sophea & The Angkor Lux Team
+            <span className="font-handwritten text-[#A47D23] text-2xl block whitespace-nowrap">
+              Sophea & The Angkor Prestige Team
             </span>
             <span className="font-inter text-[10px] tracking-wider text-brand-dark/40 uppercase block mt-0.5">
               Lead Concierge

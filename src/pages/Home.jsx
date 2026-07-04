@@ -45,8 +45,8 @@ export const Home = ({ setActiveTab }) => {
           <span className="font-handwritten text-brand-gold text-3xl tracking-wide block">
             Curating your bespoke pilgrimage
           </span>
-          <h1 className="font-cormorant text-5xl md:text-7xl text-white font-light tracking-widest uppercase animate-fade-in">
-            ANGKOR LUX
+          <h1 className="font-cormorant text-5xl md:text-7xl text-white font-light tracking-widest uppercase animate-fade-in whitespace-nowrap">
+            ANGKOR PRESTIGE
           </h1>
           <p className="font-inter text-base text-brand-cream-dark/80 max-w-md mx-auto leading-relaxed">
             Unveil the serene temples, deep historical reflections, and pristine ecotourism landscapes of Cambodia.

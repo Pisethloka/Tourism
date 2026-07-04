@@ -236,7 +236,7 @@ export const Gallery = () => {
       stars: 5,
       date: "May 14, 2026",
       comment:
-        "We spent three days in Koh Rong Sansloem. The water was crystalline and completely quiet. Angkor Lux curated details beautifully. A must-visit destination.",
+        "We spent three days in Koh Rong Sansloem. The water was crystalline and completely quiet. Angkor Prestige curated details beautifully. A must-visit destination.",
     },
     {
       id: 4,
