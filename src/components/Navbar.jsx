@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Menu, X, Image, MapPin, Phone, Home, Map } from 'lucide-react';
+import { Menu, X, Image, MapPin, Home, Map } from 'lucide-react';
 
 export const Navbar = ({ activeTab, setActiveTab }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,15 +9,14 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
     { id: 'destinations', label: 'Destinations', icon: MapPin },
     { id: 'gallery', label: 'Gallery', icon: Image },
     { id: 'map', label: 'Map', icon: Map },
-    { id: 'contact', label: 'Contact', icon: Phone },
   ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:px-8">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4 rounded-2xl glass transition-all duration-300 shadow-xl border-brand-gold/20">
+      <div className="max-w-7xl mx-auto flex md:grid md:grid-cols-3 items-center justify-between px-6 py-4 rounded-2xl glass transition-all duration-300 shadow-xl border-brand-gold/20">
         {/* Logo */}
         <div 
-          className="flex items-center space-x-2 cursor-pointer group"
+          className="flex items-center space-x-2 cursor-pointer group justify-self-start"
           onClick={() => { setActiveTab('home'); setIsOpen(false); }}
         >
           <span className="font-serif text-2xl font-bold tracking-widest text-brand-gold group-hover:text-brand-gold-light transition-colors">
@@ -25,8 +24,8 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
           </span>
         </div>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-8">
+        {/* Desktop Navigation Links */}
+        <div className="hidden md:flex items-center space-x-8 justify-self-center">
           {navItems.map((item) => {
             const isActive = activeTab === item.id;
             return (
@@ -46,6 +45,10 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
               </button>
             );
           })}
+        </div>
+
+        {/* Desktop CTA Button */}
+        <div className="hidden md:flex justify-self-end">
           <button 
             onClick={() => setActiveTab('plan-trip')}
             className="bg-brand-gold hover:bg-brand-gold-light text-brand-dark px-5 py-2.5 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all duration-300 hover:scale-105 active:scale-95 shadow-md shadow-brand-gold/20"

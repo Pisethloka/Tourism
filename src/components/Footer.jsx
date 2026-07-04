@@ -3,9 +3,8 @@ export const Footer = ({ setActiveTab }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleLinkClick = (tab) => {
-    setActiveTab(tab);
-    scrollToTop();
+  const handleLinkClick = (tab, sectionId = null) => {
+    setActiveTab(tab, sectionId);
   };
 
   return (
@@ -32,17 +31,17 @@ export const Footer = ({ setActiveTab }) => {
           </h4>
           <ul className="space-y-2 text-xs font-light text-brand-cream-dark/70 uppercase tracking-wider">
             <li>
-              <button onClick={() => handleLinkClick('destinations')} className="hover:text-brand-gold transition-colors text-left">
+              <button onClick={() => handleLinkClick('destinations', 'cultural-tourism')} className="hover:text-brand-gold transition-colors text-left">
                 Cultural Tourism
               </button>
             </li>
             <li>
-              <button onClick={() => handleLinkClick('destinations')} className="hover:text-brand-gold transition-colors text-left">
+              <button onClick={() => handleLinkClick('destinations', 'dark-tourism')} className="hover:text-brand-gold transition-colors text-left">
                 Dark Tourism
               </button>
             </li>
             <li>
-              <button onClick={() => handleLinkClick('destinations')} className="hover:text-brand-gold transition-colors text-left">
+              <button onClick={() => handleLinkClick('destinations', 'eco-tourism')} className="hover:text-brand-gold transition-colors text-left">
                 Eco Tourism
               </button>
             </li>
@@ -56,23 +55,28 @@ export const Footer = ({ setActiveTab }) => {
           </h4>
           <ul className="space-y-2 text-xs font-light text-brand-cream-dark/70 uppercase tracking-wider">
             <li>
-              <button onClick={() => handleLinkClick('map')} className="hover:text-brand-gold transition-colors text-left">
-                Heritage Map
-              </button>
-            </li>
-            <li>
-              <button onClick={() => handleLinkClick('contact')} className="hover:text-brand-gold transition-colors text-left">
-                Travel Permits
+              <button onClick={() => handleLinkClick('home')} className="hover:text-brand-gold transition-colors text-left">
+                Home
               </button>
             </li>
             <li>
               <button onClick={() => handleLinkClick('destinations')} className="hover:text-brand-gold transition-colors text-left">
-                UNESCO Sites
+                Destinations
               </button>
             </li>
             <li>
-              <button onClick={() => handleLinkClick('contact')} className="hover:text-brand-gold transition-colors text-left">
-                Boutique Stays
+              <button onClick={() => handleLinkClick('gallery')} className="hover:text-brand-gold transition-colors text-left">
+                Gallery
+              </button>
+            </li>
+            <li>
+              <button onClick={() => handleLinkClick('map')} className="hover:text-brand-gold transition-colors text-left">
+                Map
+              </button>
+            </li>
+            <li>
+              <button onClick={() => handleLinkClick('plan-trip')} className="hover:text-brand-gold transition-colors text-left">
+                Plan Trip
               </button>
             </li>
           </ul>

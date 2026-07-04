@@ -70,7 +70,7 @@ export const Home = ({ setActiveTab }) => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Card 1: Cultural */}
-          <div className="relative overflow-hidden aspect-[4/3] group cursor-pointer border border-brand-gold/10" onClick={() => setActiveTab('destinations')}>
+          <div className="relative overflow-hidden aspect-[4/3] group cursor-pointer border border-brand-gold/10" onClick={() => setActiveTab('destinations', 'cultural-tourism')}>
             <span className="absolute top-4 left-4 bg-[#C59E3F] text-brand-dark px-3.5 py-1.5 text-[10px] font-bold tracking-[0.25em] uppercase z-10 shadow-sm">
               Heritage
             </span>
@@ -82,7 +82,7 @@ export const Home = ({ setActiveTab }) => {
           </div>
 
           {/* Card 2: Dark */}
-          <div className="relative overflow-hidden aspect-[4/3] group cursor-pointer border border-brand-gold/10" onClick={() => setActiveTab('destinations')}>
+          <div className="relative overflow-hidden aspect-[4/3] group cursor-pointer border border-brand-gold/10" onClick={() => setActiveTab('destinations', 'dark-tourism')}>
             <span className="absolute top-4 left-4 bg-red-800 text-white px-3.5 py-1.5 text-[10px] font-bold tracking-[0.25em] uppercase z-10 shadow-sm">
               Reflection
             </span>
@@ -94,7 +94,7 @@ export const Home = ({ setActiveTab }) => {
           </div>
 
           {/* Card 3: Eco */}
-          <div className="relative overflow-hidden aspect-[4/3] group cursor-pointer border border-brand-gold/10" onClick={() => setActiveTab('destinations')}>
+          <div className="relative overflow-hidden aspect-[4/3] group cursor-pointer border border-brand-gold/10" onClick={() => setActiveTab('destinations', 'eco-tourism')}>
             <span className="absolute top-4 left-4 bg-[#3D5A42] text-white px-3.5 py-1.5 text-[10px] font-bold tracking-[0.25em] uppercase z-10 shadow-sm">
               Sanctuary
             </span>

@@ -1,8 +1,13 @@
 import { useState } from 'react';
-import { Search, MapPin, SlidersHorizontal, ChevronDown } from 'lucide-react';
+import { Search, MapPin, SlidersHorizontal, ChevronDown, ChevronUp } from 'lucide-react';
 import heroAngkor from '../assets/hero_angkor.png';
 import kohRongBeach from '../assets/koh_rong_beach.png';
 import preahVihear from '../assets/preah_vihear.png';
+import tonleSap from '../assets/tonle_sap.png';
+import bokorHill from '../assets/bokor_hill.png';
+import tuolSleng from '../assets/tuol_sleng.png';
+import cardamomMountains from '../assets/cardamom_mountains.png';
+import phnomPenhPalace from '../assets/phnom_penh_palace.png';
 
 export const Map = () => {
   // Mock sites database
@@ -50,16 +55,72 @@ export const Map = () => {
       tag: 'CULTURAL',
       description: 'Witness the mountain-temple of Avalokiteshvara, a 12th-century masterpiece of Khmer architecture. A sanctuary of spiritual geometry.',
       coordinates: { x: 43, y: 33 }
+    },
+    {
+      id: 'tonle-sap',
+      name: 'Tonle Sap Lake',
+      category: 'ECO',
+      region: 'Siem Reap',
+      duration: 'Half day',
+      image: tonleSap,
+      tag: 'ECOTRAVEL',
+      description: 'The beating heart of Cambodia, featuring unique floating communities and seasonal floods.',
+      coordinates: { x: 42, y: 48 }
+    },
+    {
+      id: 'bokor',
+      name: 'Bokor Hill Station',
+      category: 'DARK',
+      region: 'Kampot',
+      duration: '1 Day',
+      image: bokorHill,
+      tag: 'HISTORIC',
+      description: 'A misty mountain canopy featuring haunting French colonial ruins and panoramic gulf views.',
+      coordinates: { x: 48, y: 78 }
+    },
+    {
+      id: 'tuol-sleng',
+      name: 'Tuol Sleng (S-21)',
+      category: 'DARK',
+      region: 'Phnom Penh',
+      duration: '2 Hours',
+      image: tuolSleng,
+      tag: 'MEMORIAL',
+      description: 'A former high school turned interrogation facility, now standing as a memorial to historical truth.',
+      coordinates: { x: 55, y: 62 }
+    },
+    {
+      id: 'cardamoms',
+      name: 'Cardamom Mountains',
+      category: 'ECO',
+      region: 'Western Highlands',
+      duration: '3 Days',
+      image: cardamomMountains,
+      tag: 'WILDERNESS',
+      description: 'One of Southeast Asia\'s last great wilderness areas, home to rare wildlife and hidden waterfalls.',
+      coordinates: { x: 28, y: 55 }
+    },
+    {
+      id: 'royal-palace',
+      name: 'Royal Palace PP',
+      category: 'CULTURAL',
+      region: 'Phnom Penh',
+      duration: 'Half day',
+      image: phnomPenhPalace,
+      tag: 'ROYALTY',
+      description: 'A shining example of classic Khmer architecture with its golden spires and royal gardens.',
+      coordinates: { x: 56, y: 60 }
     }
   ];
 
   // Filters State
   const [tourismFilters, setTourismFilters] = useState({
     cultural: true,
-    eco: false,
-    dark: false,
-    boutique: false
+    eco: true,
+    dark: true,
+    boutique: true
   });
+  const [showMoreSites, setShowMoreSites] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState('All Regions');
   const [sortBy, setSortBy] = useState('Recommended');
   const [searchQuery, setSearchQuery] = useState('');
@@ -110,6 +171,8 @@ export const Map = () => {
       return 0;
     });
 
+  const visibleCards = showMoreSites ? filteredCards : filteredCards.slice(0, 6);
+
   return (
     <div className="pt-28 pb-20 bg-brand-cream animate-fade-in">
       {/* 1. Page Title */}
@@ -136,106 +199,109 @@ export const Map = () => {
       {/* 3. Main Filter & Listings Grid */}
       <section className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-4 gap-10 items-start mb-20">
         {/* Left Filter Sidebar */}
-        <div className="bg-white/40 border border-brand-gold/10 p-6 space-y-8 rounded-none">
-          <div className="flex items-center space-x-2 text-brand-gold-dark font-bold text-xs uppercase tracking-wider pb-2 border-b border-brand-gold/10">
-            <SlidersHorizontal size={14} />
+        <div className="bg-[#FAF8F5]/90 border border-brand-gold/15 p-8 space-y-10 rounded-2xl shadow-sm">
+          <div className="flex items-center space-x-2.5 text-brand-gold font-bold text-xs uppercase tracking-[0.2em] pb-3 border-b border-brand-gold/10">
+            <SlidersHorizontal size={14} className="text-brand-gold shrink-0" />
             <span>FILTER SEARCH</span>
           </div>
 
           {/* Tourism Type */}
-          <div className="space-y-3">
-            <label className="text-[10px] font-bold uppercase tracking-wider text-brand-dark/60 block">Tourism Type</label>
-            <div className="space-y-2 text-xs">
-              <label className="flex items-center space-x-3 cursor-pointer">
+          <div className="space-y-4">
+            <label className="text-[11px] font-bold uppercase tracking-[0.15em] text-brand-dark/70 block">Tourism Type</label>
+            <div className="space-y-3.5 text-xs">
+              <label className="flex items-center space-x-3 cursor-pointer group py-0.5">
                 <input
                   type="checkbox"
                   checked={tourismFilters.cultural}
                   onChange={() => handleFilterToggle('cultural')}
-                  className="rounded border-brand-gold/30 text-brand-gold focus:ring-brand-gold"
+                  className="appearance-none w-4 h-4 border border-brand-gold/40 rounded-[4px] checked:bg-brand-gold checked:border-brand-gold focus:ring-0 focus:outline-none transition-all duration-200 cursor-pointer relative checked:after:content-[''] checked:after:absolute checked:after:left-[5px] checked:after:top-[2px] checked:after:w-[4px] checked:after:h-[8px] checked:after:border-r-2 checked:after:border-b-2 checked:after:border-brand-dark checked:after:rotate-45"
                 />
-                <span className="text-brand-dark/80 font-light">Cultural Tourism</span>
+                <span className="text-brand-dark/85 font-light tracking-wide transition-colors group-hover:text-brand-dark">Cultural Tourism</span>
               </label>
-              <label className="flex items-center space-x-3 cursor-pointer">
+              <label className="flex items-center space-x-3 cursor-pointer group py-0.5">
                 <input
                   type="checkbox"
                   checked={tourismFilters.eco}
                   onChange={() => handleFilterToggle('eco')}
-                  className="rounded border-brand-gold/30 text-brand-gold focus:ring-brand-gold"
+                  className="appearance-none w-4 h-4 border border-brand-gold/40 rounded-[4px] checked:bg-brand-gold checked:border-brand-gold focus:ring-0 focus:outline-none transition-all duration-200 cursor-pointer relative checked:after:content-[''] checked:after:absolute checked:after:left-[5px] checked:after:top-[2px] checked:after:w-[4px] checked:after:h-[8px] checked:after:border-r-2 checked:after:border-b-2 checked:after:border-brand-dark checked:after:rotate-45"
                 />
-                <span className="text-brand-dark/80 font-light">Eco Tourism</span>
+                <span className="text-brand-dark/85 font-light tracking-wide transition-colors group-hover:text-brand-dark">Eco Tourism</span>
               </label>
-              <label className="flex items-center space-x-3 cursor-pointer">
+              <label className="flex items-center space-x-3 cursor-pointer group py-0.5">
                 <input
                   type="checkbox"
                   checked={tourismFilters.dark}
                   onChange={() => handleFilterToggle('dark')}
-                  className="rounded border-brand-gold/30 text-brand-gold focus:ring-brand-gold"
+                  className="appearance-none w-4 h-4 border border-brand-gold/40 rounded-[4px] checked:bg-brand-gold checked:border-brand-gold focus:ring-0 focus:outline-none transition-all duration-200 cursor-pointer relative checked:after:content-[''] checked:after:absolute checked:after:left-[5px] checked:after:top-[2px] checked:after:w-[4px] checked:after:h-[8px] checked:after:border-r-2 checked:after:border-b-2 checked:after:border-brand-dark checked:after:rotate-45"
                 />
-                <span className="text-brand-dark/80 font-light">Dark Tourism</span>
+                <span className="text-brand-dark/85 font-light tracking-wide transition-colors group-hover:text-brand-dark">Dark Tourism</span>
               </label>
-              <label className="flex items-center space-x-3 cursor-pointer">
+              <label className="flex items-center space-x-3 cursor-pointer group py-0.5">
                 <input
                   type="checkbox"
                   checked={tourismFilters.boutique}
                   onChange={() => handleFilterToggle('boutique')}
-                  className="rounded border-brand-gold/30 text-brand-gold focus:ring-brand-gold"
+                  className="appearance-none w-4 h-4 border border-brand-gold/40 rounded-[4px] checked:bg-brand-gold checked:border-brand-gold focus:ring-0 focus:outline-none transition-all duration-200 cursor-pointer relative checked:after:content-[''] checked:after:absolute checked:after:left-[5px] checked:after:top-[2px] checked:after:w-[4px] checked:after:h-[8px] checked:after:border-r-2 checked:after:border-b-2 checked:after:border-brand-dark checked:after:rotate-45"
                 />
-                <span className="text-brand-dark/80 font-light">Boutique Stays</span>
+                <span className="text-brand-dark/85 font-light tracking-wide transition-colors group-hover:text-brand-dark">Boutique Stays</span>
               </label>
             </div>
           </div>
 
           {/* Regions Dropdown */}
-          <div className="space-y-2">
-            <label className="text-[10px] font-bold uppercase tracking-wider text-brand-dark/60 block">Regions</label>
+          <div className="space-y-3">
+            <label className="text-[11px] font-bold uppercase tracking-[0.15em] text-brand-dark/70 block">Regions</label>
             <div className="relative">
               <select
                 value={selectedRegion}
                 onChange={(e) => setSelectedRegion(e.target.value)}
-                className="w-full bg-white border border-brand-gold/15 py-3.5 px-4 rounded-none text-xs font-light focus:outline-none focus:border-brand-gold appearance-none"
+                className="w-full bg-white border border-brand-gold/15 py-3.5 pl-4 pr-10 rounded-xl text-xs font-light focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/30 hover:border-brand-gold/40 transition-colors appearance-none cursor-pointer"
               >
                 <option>All Regions</option>
                 <option>Siem Reap</option>
                 <option>Sihanoukville</option>
                 <option>Northern Highlands</option>
+                <option>Kampot</option>
+                <option>Phnom Penh</option>
+                <option>Western Highlands</option>
               </select>
               <ChevronDown size={14} className="text-brand-dark/50 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
           </div>
 
           {/* Sort By */}
-          <div className="space-y-3">
-            <label className="text-[10px] font-bold uppercase tracking-wider text-brand-dark/60 block">Sort By</label>
-            <div className="space-y-2 text-xs font-light text-brand-dark/80">
-              <label className="flex items-center space-x-3 cursor-pointer">
+          <div className="space-y-4">
+            <label className="text-[11px] font-bold uppercase tracking-[0.15em] text-brand-dark/70 block">Sort By</label>
+            <div className="space-y-3.5 text-xs font-light text-brand-dark/85">
+              <label className="flex items-center space-x-3 cursor-pointer group py-0.5">
                 <input
                   type="radio"
                   name="sortBy"
                   checked={sortBy === 'Recommended'}
                   onChange={() => setSortBy('Recommended')}
-                  className="text-brand-gold focus:ring-brand-gold"
+                  className="appearance-none w-4 h-4 border border-brand-gold/40 rounded-full checked:bg-brand-gold checked:border-brand-gold focus:ring-0 focus:outline-none transition-all duration-200 cursor-pointer relative checked:after:content-[''] checked:after:absolute checked:after:left-[4px] checked:after:top-[4px] checked:after:w-[6px] checked:after:h-[6px] checked:after:bg-brand-dark checked:after:rounded-full"
                 />
-                <span>Most Recommended</span>
+                <span className="transition-colors group-hover:text-brand-dark">Most Recommended</span>
               </label>
-              <label className="flex items-center space-x-3 cursor-pointer">
+              <label className="flex items-center space-x-3 cursor-pointer group py-0.5">
                 <input
                   type="radio"
                   name="sortBy"
                   checked={sortBy === 'Alphabetical'}
                   onChange={() => setSortBy('Alphabetical')}
-                  className="text-brand-gold focus:ring-brand-gold"
+                  className="appearance-none w-4 h-4 border border-brand-gold/40 rounded-full checked:bg-brand-gold checked:border-brand-gold focus:ring-0 focus:outline-none transition-all duration-200 cursor-pointer relative checked:after:content-[''] checked:after:absolute checked:after:left-[4px] checked:after:top-[4px] checked:after:w-[6px] checked:after:h-[6px] checked:after:bg-brand-dark checked:after:rounded-full"
                 />
-                <span>Alphabetical</span>
+                <span className="transition-colors group-hover:text-brand-dark">Alphabetical</span>
               </label>
-              <label className="flex items-center space-x-3 cursor-pointer">
+              <label className="flex items-center space-x-3 cursor-pointer group py-0.5">
                 <input
                   type="radio"
                   name="sortBy"
                   checked={sortBy === 'Recent'}
                   onChange={() => setSortBy('Recent')}
-                  className="text-brand-gold focus:ring-brand-gold"
+                  className="appearance-none w-4 h-4 border border-brand-gold/40 rounded-full checked:bg-brand-gold checked:border-brand-gold focus:ring-0 focus:outline-none transition-all duration-200 cursor-pointer relative checked:after:content-[''] checked:after:absolute checked:after:left-[4px] checked:after:top-[4px] checked:after:w-[6px] checked:after:h-[6px] checked:after:bg-brand-dark checked:after:rounded-full"
                 />
-                <span>Recent Discovery</span>
+                <span className="transition-colors group-hover:text-brand-dark">Recent Discovery</span>
               </label>
             </div>
           </div>
@@ -243,8 +309,8 @@ export const Map = () => {
 
         {/* Right Cards Grid */}
         <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {filteredCards.length > 0 ? (
-            filteredCards.map((card) => (
+          {visibleCards.length > 0 ? (
+            visibleCards.map((card) => (
               <div
                 key={card.id}
                 onClick={() => {
@@ -276,6 +342,19 @@ export const Map = () => {
           ) : (
             <div className="col-span-3 py-16 text-center text-xs font-light text-brand-dark/60">
               No matching sites found for current filters.
+            </div>
+          )}
+
+          {/* Toggle Show More Button */}
+          {filteredCards.length > 6 && (
+            <div className="col-span-1 sm:col-span-3 flex justify-center pt-4">
+              <button
+                onClick={() => setShowMoreSites(!showMoreSites)}
+                className="flex items-center space-x-2 border border-brand-gold/30 hover:border-brand-gold text-brand-gold-dark hover:text-brand-gold px-6 py-3 text-xs font-semibold tracking-widest uppercase transition-all duration-300 rounded-lg cursor-pointer bg-white"
+              >
+                <span>{showMoreSites ? 'Show Less' : `Show More Destinations`}</span>
+                {showMoreSites ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+              </button>
             </div>
           )}
         </div>
@@ -332,7 +411,12 @@ export const Map = () => {
                 activeMapSite.id === 'angkor' ? 'Angkor Wat, Siem Reap, Cambodia' :
                 activeMapSite.id === 'koh-rong' ? 'Koh Rong Sanloem, Cambodia' :
                 activeMapSite.id === 'preah-vihear' ? 'Preah Vihear Temple, Cambodia' :
-                'Bayon Temple, Siem Reap, Cambodia'
+                activeMapSite.id === 'bayon' ? 'Bayon Temple, Siem Reap, Cambodia' :
+                activeMapSite.id === 'tonle-sap' ? 'Tonle Sap, Siem Reap, Cambodia' :
+                activeMapSite.id === 'bokor' ? 'Bokor Hill Station, Kampot, Cambodia' :
+                activeMapSite.id === 'tuol-sleng' ? 'Tuol Sleng Genocide Museum, Phnom Penh, Cambodia' :
+                activeMapSite.id === 'cardamoms' ? 'Cardamom Mountains, Koh Kong, Cambodia' :
+                'Royal Palace, Phnom Penh, Cambodia'
               )}&t=h&z=15&ie=UTF8&iwloc=&output=embed`}
               width="100%"
               height="100%"

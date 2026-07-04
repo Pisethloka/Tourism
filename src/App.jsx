@@ -5,17 +5,17 @@ import { Home } from './pages/Home';
 import { Destinations } from './pages/Destinations';
 import { Gallery } from './pages/Gallery';
 import { Map } from './pages/Map';
-import { Contact } from './pages/Contact';
 import { PlanTrip } from './pages/PlanTrip';
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
+  const [activeSection, setActiveSection] = useState(null);
 
   // Handle browser hash changes
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '');
-      if (hash && ['home', 'destinations', 'gallery', 'map', 'contact', 'plan-trip'].includes(hash)) {
+      if (hash && ['home', 'destinations', 'gallery', 'map', 'plan-trip'].includes(hash)) {
         setActiveTab(hash);
       }
     };
@@ -28,10 +28,20 @@ function App() {
     };
   }, []);
 
-  const handleTabChange = (tab) => {
+  const handleTabChange = (tab, sectionId = null) => {
     setActiveTab(tab);
+    setActiveSection(sectionId);
     window.location.hash = tab;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (sectionId) {
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const renderContent = () => {
@@ -39,13 +49,11 @@ function App() {
       case 'home':
         return <Home setActiveTab={handleTabChange} />;
       case 'destinations':
-        return <Destinations />;
+        return <Destinations activeSection={activeSection} setActiveSection={setActiveSection} />;
       case 'gallery':
         return <Gallery />;
       case 'map':
         return <Map />;
-      case 'contact':
-        return <Contact />;
       case 'plan-trip':
         return <PlanTrip />;
       default:
