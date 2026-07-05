@@ -41,11 +41,11 @@ export const Home = ({ setActiveTab }) => {
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <img src={heroAngkor} className="absolute inset-0 w-full h-full object-cover" alt="Angkor" />
         <div className="absolute inset-0 bg-brand-dark/45" />
-        <div className="relative z-10 text-center space-y-4 max-w-3xl px-6">
+        <div className="relative z-10 text-center space-y-4 max-w-6xl px-6">
           <span className="font-handwritten text-brand-gold text-3xl tracking-wide block">
             Curating your bespoke pilgrimage
           </span>
-          <h1 className="font-cormorant text-3xl sm:text-5xl md:text-7xl text-white font-light uppercase animate-fade-in" style={{ whiteSpace: 'nowrap', letterSpacing: '0.15em', textIndent: '0.15em' }}>
+          <h1 className="font-cormorant text-3xl sm:text-5xl md:text-7xl text-white font-light uppercase animate-fade-in" style={{ whiteSpace: 'nowrap', letterSpacing: '0.2em', marginRight: '-0.2em' }}>
             ANGKOR PRESTIGE
           </h1>
           <p className="font-inter text-base text-brand-cream-dark/80 max-w-md mx-auto leading-relaxed">
