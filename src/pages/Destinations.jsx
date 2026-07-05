@@ -208,7 +208,7 @@ export const Destinations = ({ activeSection, setActiveSection }) => {
                   cultural: !prev.cultural,
                 }))
               }
-              className="flex items-center space-x-2 border border-brand-gold/30 text-brand-gold-dark px-8 py-3.5 text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300 rounded-[8px] cursor-pointer hover:bg-brand-gold hover:text-brand-dark hover:-translate-y-0.5 hover:shadow-md hover:shadow-brand-gold/15 hover:border-brand-gold"
+              className="flex items-center space-x-2 border border-brand-gold/30 text-brand-gold-dark px-8 py-3.5 text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300 rounded-md cursor-pointer hover:bg-brand-gold hover:text-brand-dark hover:-translate-y-0.5 hover:shadow-md hover:shadow-brand-gold/15 hover:border-brand-gold"
             >
               <span>
                 {expandedSections.cultural
@@ -391,7 +391,7 @@ export const Destinations = ({ activeSection, setActiveSection }) => {
               onClick={() =>
                 setExpandedSections((prev) => ({ ...prev, dark: !prev.dark }))
               }
-              className="flex items-center space-x-2 border border-red-800/30 text-red-800 px-8 py-3.5 text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300 rounded-[8px] cursor-pointer hover:bg-red-800 hover:text-white hover:-translate-y-0.5 hover:shadow-md hover:shadow-red-800/15 hover:border-red-800"
+              className="flex items-center space-x-2 border border-red-800/30 text-red-800 px-8 py-3.5 text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300 rounded-md cursor-pointer hover:bg-red-800 hover:text-white hover:-translate-y-0.5 hover:shadow-md hover:shadow-red-800/15 hover:border-red-800"
             >
               <span>
                 {expandedSections.dark ? "Show Less" : "Show More Destinations"}
@@ -570,7 +570,7 @@ export const Destinations = ({ activeSection, setActiveSection }) => {
               onClick={() =>
                 setExpandedSections((prev) => ({ ...prev, eco: !prev.eco }))
               }
-              className="flex items-center space-x-2 border border-brand-gold/30 text-brand-gold-dark px-8 py-3.5 text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300 rounded-[8px] cursor-pointer hover:bg-brand-gold hover:text-brand-dark hover:-translate-y-0.5 hover:shadow-md hover:shadow-brand-gold/15 hover:border-brand-gold"
+              className="flex items-center space-x-2 border border-brand-gold/30 text-brand-gold-dark px-8 py-3.5 text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300 rounded-md cursor-pointer hover:bg-brand-gold hover:text-brand-dark hover:-translate-y-0.5 hover:shadow-md hover:shadow-brand-gold/15 hover:border-brand-gold"
             >
               <span>
                 {expandedSections.eco ? "Show Less" : "Show More Destinations"}

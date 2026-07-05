@@ -586,7 +586,7 @@ export const Gallery = () => {
               />
               <button
                 type="submit"
-                className="bg-brand-dark hover:bg-brand-dark-accent text-brand-gold text-[10px] font-bold tracking-widest uppercase py-3 px-6 rounded-none transition-all cursor-pointer"
+                className="bg-brand-dark hover:bg-brand-dark-accent text-brand-gold text-[10px] font-bold tracking-widest uppercase py-3 px-6 rounded-md transition-all cursor-pointer"
               >
                 Submit Comment
               </button>

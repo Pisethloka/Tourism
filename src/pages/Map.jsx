@@ -350,7 +350,7 @@ export const Map = () => {
             <div className="col-span-1 sm:col-span-3 flex justify-center pt-4">
               <button
                 onClick={() => setShowMoreSites(!showMoreSites)}
-                className="flex items-center space-x-2 border border-brand-gold/30 hover:border-brand-gold text-brand-gold-dark hover:text-brand-gold px-6 py-3 text-xs font-semibold tracking-widest uppercase transition-all duration-300 rounded-lg cursor-pointer bg-white"
+                className="flex items-center space-x-2 border border-brand-gold/30 hover:border-brand-gold text-brand-gold-dark hover:text-brand-gold px-6 py-3 text-xs font-semibold tracking-widest uppercase transition-all duration-300 rounded-md cursor-pointer bg-white"
               >
                 <span>{showMoreSites ? 'Show Less' : `Show More Destinations`}</span>
                 {showMoreSites ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -396,7 +396,7 @@ export const Map = () => {
                 onClick={() => {
                   window.scrollTo({ top: 400, behavior: 'smooth' });
                 }}
-                className="w-full bg-brand-gold hover:bg-brand-gold-light text-brand-dark py-3.5 text-xs font-bold tracking-widest uppercase rounded-none transition-all shadow-md shadow-brand-gold/10 cursor-pointer"
+                className="w-full bg-brand-gold hover:bg-brand-gold-light text-brand-dark py-3.5 text-xs font-bold tracking-widest uppercase rounded-md transition-all shadow-md shadow-brand-gold/10 cursor-pointer"
               >
                 VIEW DETAILS
               </button>

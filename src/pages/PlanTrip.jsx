@@ -193,7 +193,7 @@ export const PlanTrip = () => {
           onClick={() => {
             alert(`Quote Request Sent!\nYour compiled estimate total is $${breakdown.total} USD.\nLead Concierge Sophea will contact you shortly.`);
           }}
-          className="w-full bg-[#C59E3F] hover:bg-[#E5C36E] text-brand-dark py-3.5 text-[15px] font-inter font-medium tracking-[0.15em] uppercase transition-all duration-300 hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center space-x-2 shadow-md shadow-brand-gold/10 cursor-pointer"
+          className="w-full bg-[#C59E3F] hover:bg-[#E5C36E] text-brand-dark py-3.5 text-[15px] font-inter font-medium tracking-[0.15em] uppercase transition-all duration-300 hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center space-x-2 rounded-md shadow-md shadow-brand-gold/10 cursor-pointer"
         >
           <span>Submit to Travel Architect</span>
           <ArrowRight size={15} />
@@ -529,7 +529,7 @@ export const PlanTrip = () => {
         <button
           type="button"
           onClick={() => setShowMobileDrawer(true)}
-          className="bg-brand-gold hover:bg-brand-gold-light text-brand-dark px-5 py-3 text-xs font-semibold tracking-wider uppercase rounded-none transition-all active:scale-95 shadow-md shadow-brand-gold/15 cursor-pointer"
+          className="bg-brand-gold hover:bg-brand-gold-light text-brand-dark px-5 py-3 text-xs font-semibold tracking-wider uppercase rounded-md transition-all active:scale-95 shadow-md shadow-brand-gold/15 cursor-pointer"
         >
           View Estimate Summary
         </button>

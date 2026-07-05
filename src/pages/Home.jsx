@@ -45,7 +45,7 @@ export const Home = ({ setActiveTab }) => {
           <span className="font-handwritten text-brand-gold text-3xl tracking-wide block">
             Curating your bespoke pilgrimage
           </span>
-          <h1 className="font-cormorant text-3xl sm:text-5xl md:text-7xl text-white font-light tracking-widest uppercase animate-fade-in" style={{ whiteSpace: 'nowrap' }}>
+          <h1 className="font-cormorant text-3xl sm:text-5xl md:text-7xl text-white font-light uppercase animate-fade-in" style={{ whiteSpace: 'nowrap', letterSpacing: '0.15em', textIndent: '0.15em' }}>
             ANGKOR PRESTIGE
           </h1>
           <p className="font-inter text-base text-brand-cream-dark/80 max-w-md mx-auto leading-relaxed">
@@ -53,7 +53,7 @@ export const Home = ({ setActiveTab }) => {
           </p>
           <button 
             onClick={() => setActiveTab('destinations')}
-            className="mt-8 bg-brand-gold hover:bg-brand-gold-light text-brand-dark px-10 py-4 text-xs font-semibold tracking-widest uppercase cursor-pointer"
+            className="mt-8 bg-brand-gold hover:bg-brand-gold-light text-brand-dark px-10 py-4 text-xs font-semibold tracking-widest uppercase rounded-md cursor-pointer"
           >
             EXPLORE
           </button>
