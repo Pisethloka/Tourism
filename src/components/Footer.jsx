@@ -1,3 +1,5 @@
+import logoImg from '../assets/logo.jpg';
+
 export const Footer = ({ setActiveTab }) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -16,9 +18,12 @@ export const Footer = ({ setActiveTab }) => {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12 relative z-10">
         {/* Brand Column */}
         <div className="md:col-span-2 space-y-4">
-          <h3 className="font-serif text-2xl font-bold tracking-widest text-brand-gold uppercase whitespace-nowrap">
-            ANGKOR PRESTIGE
-          </h3>
+          <div className="flex items-center space-x-3">
+            <img src={logoImg} className="h-9 w-9 object-cover rounded-full border border-brand-gold/30 shadow-md" alt="Angkor Prestige Logo" />
+            <h3 className="font-serif text-2xl font-bold tracking-widest text-brand-gold uppercase whitespace-nowrap">
+              ANGKOR PRESTIGE
+            </h3>
+          </div>
           <p className="text-sm font-light leading-relaxed text-brand-cream-dark/70 max-w-sm">
             Curating the most exclusive journeys through the Kingdom of Wonder. Authentic, sustainable, and undeniably majestic.
           </p>
