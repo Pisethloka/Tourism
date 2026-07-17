@@ -20,6 +20,9 @@ import galleryMuseum from "../assets/gallery_museum.jpg";
 import gallerySkyline from "../assets/gallery_skyline.jpg";
 import galleryPubstreet from "../assets/gallery_pubstreet.jpg";
 import galleryMountain from "../assets/gallery_mountain.jpg";
+import galleryFood1 from "../assets/gallery_food1.jpg";
+import galleryFood2 from "../assets/gallery_food2.jpg";
+import galleryFood3 from "../assets/gallery_food3.jpg";
 
 export const Home = ({ setActiveTab }) => {
   const [slideIndex, setSlideIndex] = useState(0);
@@ -215,9 +218,9 @@ export const Home = ({ setActiveTab }) => {
               onClick={() => setActiveTab("gallery")}
             >
               <img
-                src={galleryMuseum}
+                src={galleryFood1}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                alt="National Museum"
+                alt="Khmer Platter"
               />
             </div>
             <div
@@ -225,9 +228,9 @@ export const Home = ({ setActiveTab }) => {
               onClick={() => setActiveTab("gallery")}
             >
               <img
-                src={galleryPubstreet}
+                src={galleryFood2}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                alt="Pub Street"
+                alt="Fish Amok"
               />
             </div>
             <div
@@ -235,9 +238,9 @@ export const Home = ({ setActiveTab }) => {
               onClick={() => setActiveTab("gallery")}
             >
               <img
-                src={galleryMountain}
+                src={galleryFood3}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                alt="Mountain Cliff"
+                alt="Street Food Market"
               />
             </div>
           </div>
