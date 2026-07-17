@@ -96,12 +96,12 @@ export const Footer = ({ setActiveTab }) => {
         <div className="flex items-center space-x-6 mt-4 md:mt-0">
           <span className="text-[10px] tracking-widest text-brand-cream-dark/40 uppercase font-bold">Follow us:</span>
           <div className="flex space-x-4">
-            <a href="#" className="text-brand-cream-dark hover:text-brand-gold transition-colors" aria-label="Facebook">
+            <a href="https://www.facebook.com/tourismcambodia.official" target="_blank" rel="noopener noreferrer" className="text-brand-cream-dark hover:text-brand-gold transition-colors" aria-label="Facebook">
               <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                 <path d="M9 8H7v3h2v9h4v-9h3.6l.4-3H13V6c0-.5.5-1 1-1h2V2h-3C10.5 2 9 3.5 9 5.5V8z"/>
               </svg>
             </a>
-            <a href="#" className="text-brand-cream-dark hover:text-brand-gold transition-colors" aria-label="Instagram">
+            <a href="https://www.instagram.com/cambodia.travel" target="_blank" rel="noopener noreferrer" className="text-brand-cream-dark hover:text-brand-gold transition-colors" aria-label="Instagram">
               <svg className="w-4 h-4 stroke-current stroke-2 fill-none" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
@@ -109,12 +109,12 @@ export const Footer = ({ setActiveTab }) => {
               </svg>
             </a>
             {/* TikTok Icon */}
-            <a href="#" className="text-brand-cream-dark hover:text-brand-gold transition-colors" aria-label="TikTok">
+            <a href="https://www.tiktok.com/@tourismcambodia" target="_blank" rel="noopener noreferrer" className="text-brand-cream-dark hover:text-brand-gold transition-colors" aria-label="TikTok">
               <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                 <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.02 1.63 4.13.99 1.13 2.39 1.84 3.86 2.05v3.86c-1.84-.04-3.62-.75-4.96-2.02-.12-.11-.23-.23-.34-.35v6.86c.07 3.57-2.12 6.94-5.5 8.13-3.37 1.19-7.24-.13-9.11-3.23C.16 16.32-.4 12.23 1.02 8.94c1.42-3.29 4.86-5.46 8.44-5.32V7.5c-1.89-.14-3.72.88-4.57 2.58-.85 1.7-.58 3.83.67 5.23 1.25 1.4 3.32 1.76 4.96.88 1.26-.68 2.02-2.02 2-3.46V0c0 .02 0 .02 0 .02z"/>
               </svg>
             </a>
-            <a href="#" className="text-brand-cream-dark hover:text-brand-gold transition-colors" aria-label="Twitter/X">
+            <a href="https://x.com/tourismcambodia" target="_blank" rel="noopener noreferrer" className="text-brand-cream-dark hover:text-brand-gold transition-colors" aria-label="Twitter/X">
               <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
               </svg>
