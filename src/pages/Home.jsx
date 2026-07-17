@@ -14,17 +14,23 @@ import apsaraDancer from "../assets/apsara_dancer.png";
 import cambodianCulinary from "../assets/cambodian_culinary.png";
 import kohRongBeach from "../assets/koh_rong_beach.png";
 
+// New custom gallery image imports
+import galleryAngkor from "../assets/gallery_angkor.jpg";
+import galleryMuseum from "../assets/gallery_museum.jpg";
+import gallerySkyline from "../assets/gallery_skyline.jpg";
+import galleryPubstreet from "../assets/gallery_pubstreet.jpg";
+import galleryMountain from "../assets/gallery_mountain.jpg";
+
 export const Home = ({ setActiveTab }) => {
   const [slideIndex, setSlideIndex] = useState(0);
 
   // Array of images for the auto-rotating gallery preview
   const slideshowImages = [
-    { src: heroAngkor, label: "Angkor Wat, Siem Reap" },
-    { src: phnomPenhPalace, label: "Royal Palace, Phnom Penh" },
-    { src: preahVihear, label: "Preah Vihear Temple, Preah Vihear" },
-    { src: tonleSap, label: "Tonle Sap Floating Village, Siem Reap" },
-    { src: bokorHill, label: "Bokor Hill Station, Kampot" },
-    { src: bayonBuddha, label: "Bayon Temple, Siem Reap" },
+    { src: galleryAngkor, label: "Angkor Wat, Siem Reap" },
+    { src: galleryMuseum, label: "National Museum, Phnom Penh" },
+    { src: gallerySkyline, label: "Phnom Penh Skyline" },
+    { src: galleryPubstreet, label: "Pub Street, Siem Reap" },
+    { src: galleryMountain, label: "Cardamom Mountains, Cambodia" },
   ];
 
   // Rotate images automatically
@@ -209,9 +215,9 @@ export const Home = ({ setActiveTab }) => {
               onClick={() => setActiveTab("gallery")}
             >
               <img
-                src={apsaraDancer}
+                src={galleryMuseum}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                alt="Apsara"
+                alt="National Museum"
               />
             </div>
             <div
@@ -219,9 +225,9 @@ export const Home = ({ setActiveTab }) => {
               onClick={() => setActiveTab("gallery")}
             >
               <img
-                src={cambodianCulinary}
+                src={galleryPubstreet}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                alt="Culinary"
+                alt="Pub Street"
               />
             </div>
             <div
@@ -229,9 +235,9 @@ export const Home = ({ setActiveTab }) => {
               onClick={() => setActiveTab("gallery")}
             >
               <img
-                src={kohRongBeach}
+                src={galleryMountain}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                alt="Coast"
+                alt="Mountain Cliff"
               />
             </div>
           </div>
