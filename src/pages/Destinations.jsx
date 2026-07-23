@@ -8,13 +8,12 @@ import bokorHill from "../assets/bokor_hill.png";
 import cardamomMountains from "../assets/cardamom_mountains.png";
 import tonleSap from "../assets/tonle_sap.png";
 import preahVihear from "../assets/preah_vihear.png";
-import bayonBuddha from "../assets/bayon_buddha.png";
 import yeakLaom from "../assets/yeak_laom.png";
 import kohRongBeach from "../assets/koh_rong_beach.png";
 import banteaySrei from "../assets/banteay_srei.png";
 import watThmey from "../assets/wat_thmey.png";
 
-export const Destinations = ({ activeSection, setActiveSection }) => {
+export const Destinations = ({ activeSection }) => {
   const [expandedSections, setExpandedSections] = useState({
     cultural: false,
     dark: false,
@@ -23,11 +22,17 @@ export const Destinations = ({ activeSection, setActiveSection }) => {
 
   useEffect(() => {
     if (activeSection === "cultural-tourism") {
-      setExpandedSections((prev) => ({ ...prev, cultural: true }));
+      setTimeout(() => {
+        setExpandedSections((prev) => ({ ...prev, cultural: true }));
+      }, 0);
     } else if (activeSection === "dark-tourism") {
-      setExpandedSections((prev) => ({ ...prev, dark: true }));
+      setTimeout(() => {
+        setExpandedSections((prev) => ({ ...prev, dark: true }));
+      }, 0);
     } else if (activeSection === "eco-tourism") {
-      setExpandedSections((prev) => ({ ...prev, eco: true }));
+      setTimeout(() => {
+        setExpandedSections((prev) => ({ ...prev, eco: true }));
+      }, 0);
     }
   }, [activeSection]);
   return (

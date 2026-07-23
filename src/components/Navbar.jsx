@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Menu, X, Image, MapPin, Home, Map } from 'lucide-react';
-import logoImg from '../assets/logo.jpg';
+import logoImg from '../assets/logo_gold.png';
 
 export const Navbar = ({ activeTab, setActiveTab }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,9 +20,9 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
           className="flex items-center space-x-3 cursor-pointer group justify-self-start"
           onClick={() => { setActiveTab('home'); setIsOpen(false); }}
         >
-          <img src={logoImg} className="h-9 w-9 object-cover rounded-full border border-brand-gold/30 shadow-md transition-transform duration-300 group-hover:scale-105" alt="Angkor Prestige Logo" />
+          <img src={logoImg} className="h-10 w-10 object-contain transition-transform duration-300 group-hover:scale-105" alt="Angkor Lux Logo" />
           <span className="font-serif text-2xl font-bold tracking-widest text-brand-gold group-hover:text-brand-gold-light transition-colors whitespace-nowrap">
-            ANGKOR PRESTIGE
+            ANGKOR LUX
           </span>
         </div>
 

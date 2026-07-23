@@ -2,17 +2,9 @@ import { useState, useEffect } from "react";
 
 // Image imports
 import heroAngkor from "../assets/hero_angkor.png";
-import phnomPenhPalace from "../assets/phnom_penh_palace.png";
-import preahVihear from "../assets/preah_vihear.png";
-import tonleSap from "../assets/tonle_sap.png";
-import bokorHill from "../assets/bokor_hill.png";
-import bayonBuddha from "../assets/bayon_buddha.png";
 import bayonBuddhaClose from "../assets/bayon_buddha_close.jpg";
 import darkSkulls from "../assets/dark_skulls.jpg";
 import yeakLaom from "../assets/yeak_laom.png";
-import apsaraDancer from "../assets/apsara_dancer.png";
-import cambodianCulinary from "../assets/cambodian_culinary.png";
-import kohRongBeach from "../assets/koh_rong_beach.png";
 
 // New custom gallery image imports
 import galleryAngkor from "../assets/gallery_angkor.jpg";
@@ -56,7 +48,7 @@ export const Home = ({ setActiveTab }) => {
         <div className="absolute inset-0 bg-brand-dark/45" />
         <div className="relative z-10 text-center space-y-4 max-w-6xl px-6">
           <span className="font-handwritten text-brand-gold text-3xl tracking-wide block">
-            Curating your bespoke pilgrimage
+            Planning your special journey
           </span>
           <h1
             className="font-cormorant text-3xl sm:text-5xl md:text-7xl text-white font-light uppercase animate-fade-in"
@@ -66,11 +58,10 @@ export const Home = ({ setActiveTab }) => {
               marginRight: "-0.2em",
             }}
           >
-            ANGKOR PRESTIGE
+            ANGKOR LUX
           </h1>
           <p className="font-inter text-base text-brand-cream-dark/80 max-w-md mx-auto leading-relaxed">
-            Unveil the serene temples, deep historical reflections, and pristine
-            ecotourism landscapes of Cambodia.
+            Explore peaceful temples, learn about rich history, and enjoy the beautiful nature of Cambodia.
           </p>
           <button
             onClick={() => setActiveTab("destinations")}
@@ -81,7 +72,43 @@ export const Home = ({ setActiveTab }) => {
         </div>
       </section>
 
-      {/* 2. Journey Sectors with Banners */}
+      {/* 2. Experience Cambodia Introduction */}
+      <section className="bg-brand-forest text-brand-cream-dark py-24 border-y border-brand-gold/15 relative overflow-hidden">
+        {/* Subtle decorative gold background glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-brand-gold/5 blur-3xl pointer-events-none" />
+        
+        <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center">
+            {/* Left Column: Styled Header & Premium Ornament */}
+            <div className="md:col-span-5 space-y-4">
+              <span className="text-brand-gold text-xs tracking-[0.25em] uppercase block font-bold">
+                — Welcome —
+              </span>
+              <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl text-white font-light tracking-wide uppercase leading-tight">
+                Experience <br className="hidden md:block" /> Cambodia
+              </h2>
+              
+              {/* Premium Diamond Ornament Divider */}
+              <div className="flex items-center space-x-3 pt-2">
+                <div className="w-1.5 h-1.5 rotate-45 bg-brand-gold" />
+                <div className="h-[1px] w-24 bg-gradient-to-r from-brand-gold/50 to-transparent" />
+              </div>
+            </div>
+
+            {/* Right Column: Short paragraph with left border decoration */}
+            <div className="md:col-span-7 border-l border-brand-gold/25 pl-6 md:pl-10 py-2">
+              <p className="font-inter text-base sm:text-lg text-brand-cream-dark/85 leading-relaxed font-light">
+                Cambodia is a beautiful country with very friendly people. 
+                Here, you can see huge stone temples from long ago, walk on soft sandy beaches, 
+                and explore green forests filled with life. Every corner has a new story, 
+                a warm smile, and a special memory waiting for you.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Journey Sectors with Banners */}
       <section className="py-24 max-w-7xl mx-auto px-6 md:px-12 space-y-16">
         <div className="text-center space-y-2">
           <span className="text-brand-gold-dark text-xs tracking-widest uppercase block">
@@ -91,6 +118,9 @@ export const Home = ({ setActiveTab }) => {
             Journey Sectors
           </h2>
           <div className="w-16 h-[1px] bg-brand-gold mx-auto" />
+          <p className="font-inter text-sm text-brand-dark/70 max-w-md mx-auto mt-3 leading-relaxed">
+            Find the kind of trip you want to take. Choose from culture, history, or nature.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -112,8 +142,7 @@ export const Home = ({ setActiveTab }) => {
                 Cultural Tourism
               </h3>
               <p className="text-[12px] font-light text-brand-cream-dark/85 mt-1 leading-normal">
-                Temples, ancient ruins, classical dance performances, and
-                artisan crafts.
+                Beautiful temples, old ruins, traditional dances, and handmade crafts.
               </p>
             </div>
           </div>
@@ -136,7 +165,7 @@ export const Home = ({ setActiveTab }) => {
                 Dark Tourism
               </h3>
               <p className="text-[11px] font-light text-brand-cream-dark/85 mt-1 leading-normal">
-                Reflective visits detailing history, resilience, and memory.
+                Learn about Cambodia's past, its history, and how its people rebuilt their lives.
               </p>
             </div>
           </div>
@@ -159,18 +188,24 @@ export const Home = ({ setActiveTab }) => {
                 Eco Tourism
               </h3>
               <p className="text-[11px] font-light text-brand-cream-dark/85 mt-1 leading-normal">
-                Volcanic crater lakes, rainforest conservation, and eco-lodges.
+                Beautiful lakes inside volcanic craters, green rainforests, and nice nature stays.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. Wonders Captured Slideshow */}
-      <section className="py-24 max-w-7xl mx-auto px-6 md:px-12 space-y-16">
-        <h2 className="text-center font-cormorant text-4xl tracking-widest text-brand-dark uppercase">
-          Wonders Captured
-        </h2>
+      {/* 4. Wonders Captured Slideshow */}
+      <section className="py-24 max-w-7xl mx-auto px-6 md:px-12 space-y-12">
+        <div className="text-center space-y-2">
+          <h2 className="font-cormorant text-4xl tracking-widest text-brand-dark uppercase">
+            Wonders Captured
+          </h2>
+          <div className="w-16 h-[1px] bg-brand-gold mx-auto" />
+          <p className="font-inter text-sm text-brand-dark/70 max-w-md mx-auto mt-3 leading-relaxed">
+            Take a look at photos of beautiful places and tasty local food from around Cambodia.
+          </p>
+        </div>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Slideshow Panel */}
           <div

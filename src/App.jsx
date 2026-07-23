@@ -6,6 +6,7 @@ import { Destinations } from './pages/Destinations';
 import { Gallery } from './pages/Gallery';
 import { Map } from './pages/Map';
 import { PlanTrip } from './pages/PlanTrip';
+import { GlobalCTA } from './components/GlobalCTA';
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
@@ -70,6 +71,11 @@ function App() {
       <main className="flex-grow">
         {renderContent()}
       </main>
+
+      {/* Global Call to Action */}
+      {activeTab !== 'plan-trip' && (
+        <GlobalCTA setActiveTab={handleTabChange} />
+      )}
 
       {/* Footer */}
       <Footer setActiveTab={handleTabChange} />

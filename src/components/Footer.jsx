@@ -1,10 +1,6 @@
-import logoImg from '../assets/logo.jpg';
+import logoImg from '../assets/logo_gold.png';
 
 export const Footer = ({ setActiveTab }) => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   const handleLinkClick = (tab, sectionId = null) => {
     setActiveTab(tab, sectionId);
   };
@@ -19,9 +15,9 @@ export const Footer = ({ setActiveTab }) => {
         {/* Brand Column */}
         <div className="md:col-span-2 space-y-4">
           <div className="flex items-center space-x-3">
-            <img src={logoImg} className="h-9 w-9 object-cover rounded-full border border-brand-gold/30 shadow-md" alt="Angkor Prestige Logo" />
+            <img src={logoImg} className="h-10 w-10 object-contain" alt="Angkor Lux Logo" />
             <h3 className="font-serif text-2xl font-bold tracking-widest text-brand-gold uppercase whitespace-nowrap">
-              ANGKOR PRESTIGE
+              ANGKOR LUX
             </h3>
           </div>
           <p className="text-sm font-light leading-relaxed text-brand-cream-dark/70 max-w-sm">
@@ -90,13 +86,16 @@ export const Footer = ({ setActiveTab }) => {
 
       {/* Footer Bottom */}
       <div className="max-w-7xl mx-auto pt-8 mt-8 border-t border-brand-gold/10 flex flex-col md:flex-row justify-between items-center text-xs text-brand-cream-dark/50 relative z-10">
-        <p>© 2026 Angkor Prestige. Kingdom of Wonder Tourism. All Rights Reserved.</p>
+        <div className="text-center md:text-left mb-4 md:mb-0">
+          <p className="font-handwritten text-brand-gold text-lg mb-1">Experience the extraordinary.</p>
+          <p className="text-[10px] text-brand-cream-dark/50 uppercase tracking-wider">© 2026 Angkor Lux. Kingdom of Wonder Tourism. All Rights Reserved.</p>
+        </div>
         
         {/* Social Links Row */}
         <div className="flex items-center space-x-6 mt-4 md:mt-0">
           <span className="text-[10px] tracking-widest text-brand-cream-dark/40 uppercase font-bold">Follow us:</span>
           <div className="flex space-x-4">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-brand-cream-dark hover:text-brand-gold transition-colors" aria-label="Facebook">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-brand-cream-dark hover:text-brand-gold hover:scale-110 transition-all" aria-label="Facebook">
               <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                 <path d="M9 8H7v3h2v9h4v-9h3.6l.4-3H13V6c0-.5.5-1 1-1h2V2h-3C10.5 2 9 3.5 9 5.5V8z"/>
               </svg>
