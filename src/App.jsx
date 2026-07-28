@@ -7,7 +7,6 @@ import { Gallery } from './pages/Gallery';
 import { Map } from './pages/Map';
 import { PlanTrip } from './pages/PlanTrip';
 import { GlobalCTA } from './components/GlobalCTA';
-import { LiveWeatherWidget } from './components/LiveWeatherWidget';
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
@@ -67,11 +66,6 @@ function App() {
     <div className="min-h-screen flex flex-col bg-brand-cream text-brand-dark selection:bg-brand-gold selection:text-brand-dark">
       {/* Floating Navbar */}
       <Navbar activeTab={activeTab} setActiveTab={handleTabChange} />
-
-      {/* Live Weather & Currency Exchange API Bar */}
-      <div className="pt-24 md:pt-28 relative z-40">
-        <LiveWeatherWidget />
-      </div>
 
       {/* Pages Content */}
       <main className="flex-grow">
