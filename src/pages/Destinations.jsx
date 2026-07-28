@@ -29,7 +29,8 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
     eco: false,
   });
 
-  const [selectedDestination, setSelectedDestination] = useState(null);
+  // Track currently expanded card ID for inline opening right where clicked
+  const [expandedCardId, setExpandedCardId] = useState(null);
 
   // Fetch data from Mock REST API on component mount
   useEffect(() => {
@@ -70,10 +71,18 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
     }
   }, [activeSection]);
 
-  const openDetails = (destId) => {
-    const found = destinations.find((item) => item.id === destId);
-    if (found) {
-      setSelectedDestination(found);
+  const toggleCard = (destId) => {
+    if (expandedCardId === destId) {
+      setExpandedCardId(null);
+    } else {
+      setExpandedCardId(destId);
+      // Smooth scroll to the clicked card element
+      setTimeout(() => {
+        const el = document.getElementById(`card-${destId}`);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+      }, 50);
     }
   };
 
@@ -156,49 +165,16 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
                 CULTURAL & HERITAGE
               </h2>
 
-              {/* First 2 Cultural Cards */}
+              {/* Initial Cultural Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {culturalDests.slice(0, 2).map((item) => (
-                  <div
+                  <DestinationCard
                     key={item.id}
-                    className="bg-white/40 border border-brand-gold/15 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1.5 group overflow-hidden flex flex-col"
-                  >
-                    <div
-                      className="h-64 sm:h-72 overflow-hidden relative cursor-pointer"
-                      onClick={() => openDetails(item.id)}
-                    >
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                      />
-                      <span className="absolute top-4 left-4 bg-brand-gold text-brand-dark text-[9px] font-bold tracking-widest uppercase px-3.5 py-1.5 rounded-md">
-                        {item.category}
-                      </span>
-                    </div>
-                    <div className="p-8 space-y-5 flex-grow flex flex-col justify-between">
-                      <div className="space-y-2.5">
-                        <h3 className="font-serif text-xl font-normal tracking-widest text-brand-dark uppercase">
-                          {item.title}
-                        </h3>
-                        <p className="text-sm font-light text-brand-dark/70 leading-relaxed">
-                          {item.shortDescription}
-                        </p>
-                      </div>
-                      <button
-                        onClick={() => openDetails(item.id)}
-                        className="text-brand-gold hover:text-brand-gold-dark text-[11px] font-semibold tracking-widest uppercase text-left flex items-center space-x-2 pt-4 border-t border-brand-gold/10 cursor-pointer"
-                      >
-                        <span className="relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-brand-gold after:transition-all after:duration-300 group-hover:after:w-full">
-                          Learn More
-                        </span>
-                        <ArrowRight
-                          size={12}
-                          className="transform transition-transform duration-300 group-hover:translate-x-1.5"
-                        />
-                      </button>
-                    </div>
-                  </div>
+                    item={item}
+                    isExpanded={expandedCardId === item.id}
+                    onToggle={() => toggleCard(item.id)}
+                    setActiveTab={setActiveTab}
+                  />
                 ))}
               </div>
 
@@ -206,46 +182,13 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
               {expandedSections.cultural && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 animate-fade-in">
                   {culturalDests.slice(2).map((item) => (
-                    <div
+                    <DestinationCard
                       key={item.id}
-                      className="bg-white/40 border border-brand-gold/15 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1.5 group overflow-hidden flex flex-col"
-                    >
-                      <div
-                        className="h-64 sm:h-72 overflow-hidden relative cursor-pointer"
-                        onClick={() => openDetails(item.id)}
-                      >
-                        <img
-                          src={item.image}
-                          alt={item.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                        />
-                        <span className="absolute top-4 left-4 bg-brand-gold text-brand-dark text-[9px] font-bold tracking-widest uppercase px-3.5 py-1.5 rounded-md">
-                          {item.category}
-                        </span>
-                      </div>
-                      <div className="p-8 space-y-5 flex-grow flex flex-col justify-between">
-                        <div className="space-y-2.5">
-                          <h3 className="font-serif text-xl font-normal tracking-widest text-brand-dark uppercase">
-                            {item.title}
-                          </h3>
-                          <p className="text-sm font-light text-brand-dark/70 leading-relaxed">
-                            {item.shortDescription}
-                          </p>
-                        </div>
-                        <button
-                          onClick={() => openDetails(item.id)}
-                          className="text-brand-gold hover:text-brand-gold-dark text-[11px] font-semibold tracking-widest uppercase text-left flex items-center space-x-2 pt-4 border-t border-brand-gold/10 cursor-pointer"
-                        >
-                          <span className="relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-brand-gold after:transition-all after:duration-300 group-hover:after:w-full">
-                            Learn More
-                          </span>
-                          <ArrowRight
-                            size={12}
-                            className="transform transition-transform duration-300 group-hover:translate-x-1.5"
-                          />
-                        </button>
-                      </div>
-                    </div>
+                      item={item}
+                      isExpanded={expandedCardId === item.id}
+                      onToggle={() => toggleCard(item.id)}
+                      setActiveTab={setActiveTab}
+                    />
                   ))}
                 </div>
               )}
@@ -281,52 +224,16 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
                 HISTORICAL REFLECTION
               </h2>
 
-              {/* First 2 Dark Cards */}
+              {/* Initial Dark Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {darkDests.slice(0, 2).map((item) => (
-                  <div
+                  <DestinationCard
                     key={item.id}
-                    className="bg-white/40 border border-brand-gold/15 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1.5 group overflow-hidden flex flex-col"
-                  >
-                    <div
-                      className="h-52 sm:h-56 overflow-hidden relative cursor-pointer"
-                      onClick={() => openDetails(item.id)}
-                    >
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                      />
-                      <span className="absolute top-4 left-4 bg-red-800 text-white text-[9px] font-bold tracking-widest uppercase px-3.5 py-1.5 rounded-md">
-                        {item.category}
-                      </span>
-                    </div>
-                    <div className="p-8 space-y-5 flex-grow flex flex-col justify-between">
-                      <div className="space-y-2.5">
-                        <h3 className="font-serif text-xl font-normal tracking-widest text-brand-dark uppercase">
-                          {item.title}
-                        </h3>
-                        <p className="text-sm font-light text-brand-dark/70 leading-relaxed">
-                          {item.shortDescription}
-                        </p>
-                      </div>
-                      <div className="pt-4 border-t border-brand-gold/10 flex items-center justify-between text-[10px] font-semibold tracking-wider uppercase text-brand-dark/50">
-                        <span>{item.location.split("(")[0]}</span>
-                        <button
-                          onClick={() => openDetails(item.id)}
-                          className="text-brand-gold hover:text-brand-gold-dark text-[11px] font-semibold tracking-widest uppercase flex items-center space-x-1.5 cursor-pointer"
-                        >
-                          <span className="relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-brand-gold after:transition-all after:duration-300 group-hover:after:w-full">
-                            Learn More
-                          </span>
-                          <ArrowRight
-                            size={12}
-                            className="transform transition-transform duration-300 group-hover:translate-x-1"
-                          />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                    item={item}
+                    isExpanded={expandedCardId === item.id}
+                    onToggle={() => toggleCard(item.id)}
+                    setActiveTab={setActiveTab}
+                  />
                 ))}
               </div>
 
@@ -334,49 +241,13 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
               {expandedSections.dark && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 animate-fade-in">
                   {darkDests.slice(2).map((item) => (
-                    <div
+                    <DestinationCard
                       key={item.id}
-                      className="bg-white/40 border border-brand-gold/15 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1.5 group overflow-hidden flex flex-col"
-                    >
-                      <div
-                        className="h-52 sm:h-56 overflow-hidden relative cursor-pointer"
-                        onClick={() => openDetails(item.id)}
-                      >
-                        <img
-                          src={item.image}
-                          alt={item.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                        />
-                        <span className="absolute top-4 left-4 bg-red-800 text-white text-[9px] font-bold tracking-widest uppercase px-3.5 py-1.5">
-                          {item.category}
-                        </span>
-                      </div>
-                      <div className="p-8 space-y-5 flex-grow flex flex-col justify-between">
-                        <div className="space-y-2.5">
-                          <h3 className="font-serif text-xl font-normal tracking-widest text-brand-dark uppercase">
-                            {item.title}
-                          </h3>
-                          <p className="text-sm font-light text-brand-dark/70 leading-relaxed">
-                            {item.shortDescription}
-                          </p>
-                        </div>
-                        <div className="pt-4 border-t border-brand-gold/10 flex items-center justify-between text-[10px] font-semibold tracking-wider uppercase text-brand-dark/50">
-                          <span>{item.location.split("(")[0]}</span>
-                          <button
-                            onClick={() => openDetails(item.id)}
-                            className="text-brand-gold hover:text-brand-gold-dark text-[11px] font-semibold tracking-widest uppercase flex items-center space-x-1.5 cursor-pointer"
-                          >
-                            <span className="relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-brand-gold after:transition-all after:duration-300 group-hover:after:w-full">
-                              Learn More
-                            </span>
-                            <ArrowRight
-                              size={12}
-                              className="transform transition-transform duration-300 group-hover:translate-x-1"
-                            />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
+                      item={item}
+                      isExpanded={expandedCardId === item.id}
+                      onToggle={() => toggleCard(item.id)}
+                      setActiveTab={setActiveTab}
+                    />
                   ))}
                 </div>
               )}
@@ -422,133 +293,30 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
                 </span>
               </div>
 
-              {/* Main 2 Eco Cards */}
-              {ecoDests.length >= 2 && (
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                  {/* Cardamom Mountains */}
-                  <div className="lg:col-span-8 bg-white/40 border border-brand-gold/15 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1.5 group overflow-hidden flex flex-col sm:flex-row h-auto sm:h-72">
-                    <div
-                      className="w-full sm:w-1/2 overflow-hidden relative h-56 sm:h-full shrink-0 cursor-pointer"
-                      onClick={() => openDetails(ecoDests[0].id)}
-                    >
-                      <img
-                        src={ecoDests[0].image}
-                        alt={ecoDests[0].title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                      />
-                      <span className="absolute top-4 left-4 bg-brand-forest text-white text-[9px] font-bold tracking-widest uppercase px-3 py-1">
-                        {ecoDests[0].category}
-                      </span>
-                    </div>
-                    <div className="p-8 flex flex-col justify-between flex-grow">
-                      <div className="space-y-2.5">
-                        <h3 className="font-serif text-xl font-normal tracking-widest text-brand-dark uppercase">
-                          {ecoDests[0].title}
-                        </h3>
-                        <p className="text-sm font-light text-brand-dark/70 leading-relaxed">
-                          {ecoDests[0].shortDescription}
-                        </p>
-                      </div>
-                      <button
-                        onClick={() => openDetails(ecoDests[0].id)}
-                        className="text-brand-gold hover:text-brand-gold-dark text-[11px] font-semibold tracking-widest uppercase text-left flex items-center space-x-2 pt-4 border-t border-brand-gold/10 cursor-pointer"
-                      >
-                        <span className="relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-brand-gold after:transition-all after:duration-300 group-hover:after:w-full">
-                          Learn More
-                        </span>
-                        <ArrowRight
-                          size={12}
-                          className="transform transition-transform duration-300 group-hover:translate-x-1.5"
-                        />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Tonle Sap */}
-                  <div className="lg:col-span-4 bg-white/40 border border-brand-gold/15 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1.5 group overflow-hidden flex flex-col h-auto lg:h-72 justify-between">
-                    <div
-                      className="relative h-32 overflow-hidden shrink-0 cursor-pointer"
-                      onClick={() => openDetails(ecoDests[1].id)}
-                    >
-                      <img
-                        src={ecoDests[1].image}
-                        alt={ecoDests[1].title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                      />
-                      <span className="absolute top-3 left-3 bg-purple-900 text-white text-[9px] font-bold tracking-widest uppercase px-2.5 py-1">
-                        {ecoDests[1].category}
-                      </span>
-                    </div>
-                    <div className="p-6 flex-grow flex flex-col justify-between space-y-3">
-                      <div className="space-y-1.5">
-                        <h3 className="font-serif text-base font-normal tracking-widest text-brand-dark uppercase">
-                          {ecoDests[1].title}
-                        </h3>
-                        <p className="text-xs font-light text-brand-dark/70 leading-relaxed">
-                          {ecoDests[1].shortDescription}
-                        </p>
-                      </div>
-                      <button
-                        onClick={() => openDetails(ecoDests[1].id)}
-                        className="text-brand-gold hover:text-brand-gold-dark text-[11px] font-semibold tracking-widest uppercase text-left flex items-center space-x-2 pt-2 border-t border-brand-gold/10 cursor-pointer"
-                      >
-                        <span className="relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-brand-gold after:transition-all after:duration-300 group-hover:after:w-full">
-                          Explore Waterways
-                        </span>
-                        <ArrowRight
-                          size={12}
-                          className="transform transition-transform duration-300 group-hover:translate-x-1.5"
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
+              {/* Main Eco Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {ecoDests.slice(0, 2).map((item) => (
+                  <DestinationCard
+                    key={item.id}
+                    item={item}
+                    isExpanded={expandedCardId === item.id}
+                    onToggle={() => toggleCard(item.id)}
+                    setActiveTab={setActiveTab}
+                  />
+                ))}
+              </div>
 
               {/* Expanded Eco Cards */}
               {expandedSections.eco && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 animate-fade-in">
                   {ecoDests.slice(2).map((item) => (
-                    <div
+                    <DestinationCard
                       key={item.id}
-                      className="bg-white/40 border border-brand-gold/15 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1.5 group overflow-hidden flex flex-col"
-                    >
-                      <div
-                        className="h-64 sm:h-72 overflow-hidden relative cursor-pointer"
-                        onClick={() => openDetails(item.id)}
-                      >
-                        <img
-                          src={item.image}
-                          alt={item.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                        />
-                        <span className="absolute top-4 left-4 bg-brand-forest text-white text-[9px] font-bold tracking-widest uppercase px-3 py-1">
-                          {item.category}
-                        </span>
-                      </div>
-                      <div className="p-8 space-y-5 flex-grow flex flex-col justify-between">
-                        <div className="space-y-2.5">
-                          <h3 className="font-serif text-xl font-normal tracking-widest text-brand-dark uppercase">
-                            {item.title}
-                          </h3>
-                          <p className="text-sm font-light text-brand-dark/70 leading-relaxed">
-                            {item.shortDescription}
-                          </p>
-                        </div>
-                        <button
-                          onClick={() => openDetails(item.id)}
-                          className="text-brand-gold hover:text-brand-gold-dark text-[11px] font-semibold tracking-widest uppercase text-left flex items-center space-x-2 pt-4 border-t border-brand-gold/10 cursor-pointer"
-                        >
-                          <span className="relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-brand-gold after:transition-all after:duration-300 group-hover:after:w-full">
-                            Learn More
-                          </span>
-                          <ArrowRight
-                            size={12}
-                            className="transform transition-transform duration-300 group-hover:translate-x-1.5"
-                          />
-                        </button>
-                      </div>
-                    </div>
+                      item={item}
+                      isExpanded={expandedCardId === item.id}
+                      onToggle={() => toggleCard(item.id)}
+                      setActiveTab={setActiveTab}
+                    />
                   ))}
                 </div>
               )}
@@ -575,155 +343,198 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
           </>
         )}
       </div>
+    </div>
+  );
+};
 
-      {/* Detailed Destination Info Modal */}
-      {selectedDestination && (
-        <div className="fixed inset-0 bg-brand-dark/75 backdrop-blur-sm z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto animate-fade-in">
-          <div className="bg-brand-cream border border-brand-gold/30 shadow-2xl rounded-2xl max-w-3xl w-full overflow-hidden relative my-auto max-h-[90vh] flex flex-col">
-            {/* Modal Header / Banner */}
-            <div className="relative h-64 sm:h-72 shrink-0 overflow-hidden">
-              <img
-                src={selectedDestination.image}
-                alt={selectedDestination.title}
-                className="w-full h-full object-cover"
+// Sub-component for individual Destination Card with Inline Expansion
+const DestinationCard = ({ item, isExpanded, onToggle, setActiveTab }) => {
+  return (
+    <div
+      id={`card-${item.id}`}
+      className={`bg-white/50 border transition-all duration-500 rounded-xl overflow-hidden flex flex-col ${
+        isExpanded
+          ? "border-brand-gold ring-2 ring-brand-gold/50 shadow-xl col-span-1 md:col-span-2 my-2 bg-brand-cream/80"
+          : "border-brand-gold/15 shadow-sm hover:shadow-lg hover:-translate-y-1"
+      }`}
+    >
+      {/* Card Header Image */}
+      <div
+        className={`overflow-hidden relative cursor-pointer group ${
+          isExpanded ? "h-64 sm:h-80" : "h-56 sm:h-64"
+        }`}
+        onClick={onToggle}
+      >
+        <img
+          src={item.image}
+          alt={item.title}
+          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-brand-dark/25 to-transparent" />
+
+        <span className="absolute top-4 left-4 bg-brand-gold text-brand-dark text-[9px] font-bold tracking-widest uppercase px-3.5 py-1.5 rounded-md shadow-sm">
+          {item.category}
+        </span>
+
+        {/* Title overlay on image */}
+        <div className="absolute bottom-4 left-5 right-5 text-white space-y-0.5">
+          <div className="flex items-center space-x-1.5 text-xs text-brand-cream-dark/90 font-light">
+            <MapPin size={12} className="text-brand-gold" />
+            <span>{item.location}</span>
+          </div>
+          <h3 className="font-serif text-xl sm:text-2xl font-normal tracking-widest uppercase">
+            {item.title}
+          </h3>
+        </div>
+
+        {/* Close Button if Expanded */}
+        {isExpanded && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggle();
+            }}
+            className="absolute top-4 right-4 bg-brand-dark/80 text-white hover:text-brand-gold p-2 rounded-full border border-brand-gold/30 shadow transition-all cursor-pointer"
+            aria-label="Close details"
+          >
+            <X size={18} />
+          </button>
+        )}
+      </div>
+
+      {/* Card Content Body */}
+      <div className="p-6 sm:p-8 space-y-5 flex-grow flex flex-col justify-between">
+        {!isExpanded ? (
+          // Collapsed Standard Card View
+          <>
+            <div className="space-y-2">
+              <p className="font-handwritten text-brand-gold text-lg">
+                {item.subtitle}
+              </p>
+              <p className="text-sm font-light text-brand-dark/75 leading-relaxed">
+                {item.shortDescription}
+              </p>
+            </div>
+            <button
+              onClick={onToggle}
+              className="text-brand-gold hover:text-brand-gold-dark text-[11px] font-semibold tracking-widest uppercase text-left flex items-center space-x-2 pt-4 border-t border-brand-gold/10 cursor-pointer group"
+            >
+              <span className="relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-brand-gold after:transition-all after:duration-300 group-hover:after:w-full">
+                Learn More (Expand Details)
+              </span>
+              <ArrowRight
+                size={12}
+                className="transform transition-transform duration-300 group-hover:translate-x-1.5"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/40 to-transparent" />
+            </button>
+          </>
+        ) : (
+          // Expanded Detailed Inline Card View Right Where Clicked!
+          <div className="space-y-6 animate-fade-in text-brand-dark">
+            <p className="font-handwritten text-brand-gold text-xl sm:text-2xl">
+              {item.subtitle}
+            </p>
 
-              {/* Close Button */}
-              <button
-                onClick={() => setSelectedDestination(null)}
-                className="absolute top-4 right-4 bg-brand-dark/60 text-white hover:text-brand-gold hover:bg-brand-dark p-2 rounded-full transition-all cursor-pointer border border-brand-gold/30 shadow-md"
-                aria-label="Close details"
-              >
-                <X size={20} />
-              </button>
-
-              {/* Title overlay on banner */}
-              <div className="absolute bottom-6 left-6 right-6 text-white space-y-1">
-                <div className="flex items-center space-x-2">
-                  <span className="bg-brand-gold text-brand-dark font-bold text-[10px] tracking-widest uppercase px-3 py-1 rounded">
-                    {selectedDestination.category}
+            {/* Quick Details Badges */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 bg-white/70 border border-brand-gold/25 rounded-lg text-xs shadow-sm">
+              <div className="flex items-center space-x-2.5">
+                <Calendar className="text-brand-gold shrink-0" size={16} />
+                <div>
+                  <span className="block text-[10px] text-brand-dark/50 font-bold uppercase">
+                    Best Season
                   </span>
-                  <span className="text-brand-cream-dark/90 text-xs flex items-center gap-1 font-light">
-                    <MapPin size={12} className="text-brand-gold" />
-                    {selectedDestination.location}
+                  <span className="font-semibold text-brand-dark">
+                    {item.bestTime}
                   </span>
                 </div>
-                <h2 className="font-serif text-2xl sm:text-4xl text-white font-normal uppercase tracking-wider">
-                  {selectedDestination.title}
-                </h2>
-                <p className="font-handwritten text-brand-gold text-base sm:text-lg">
-                  {selectedDestination.subtitle}
-                </p>
+              </div>
+              <div className="flex items-center space-x-2.5">
+                <Clock className="text-brand-gold shrink-0" size={16} />
+                <div>
+                  <span className="block text-[10px] text-brand-dark/50 font-bold uppercase">
+                    Duration
+                  </span>
+                  <span className="font-semibold text-brand-dark">
+                    {item.duration}
+                  </span>
+                </div>
+              </div>
+              <div className="col-span-2 sm:col-span-1 flex items-center space-x-2.5">
+                <Compass className="text-brand-gold shrink-0" size={16} />
+                <div>
+                  <span className="block text-[10px] text-brand-dark/50 font-bold uppercase">
+                    Location
+                  </span>
+                  <span className="font-semibold text-brand-dark">
+                    {item.location}
+                  </span>
+                </div>
               </div>
             </div>
 
-            {/* Modal Content Body */}
-            <div className="p-6 sm:p-8 space-y-6 overflow-y-auto flex-grow text-brand-dark">
-              {/* Quick Details Badges */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 bg-white/60 border border-brand-gold/20 rounded-lg text-xs">
-                <div className="flex items-center space-x-2.5">
-                  <Calendar className="text-brand-gold shrink-0" size={16} />
-                  <div>
-                    <span className="block text-[10px] text-brand-dark/50 font-bold uppercase">
-                      Best Season
-                    </span>
-                    <span className="font-semibold text-brand-dark">
-                      {selectedDestination.bestTime}
-                    </span>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-2.5">
-                  <Clock className="text-brand-gold shrink-0" size={16} />
-                  <div>
-                    <span className="block text-[10px] text-brand-dark/50 font-bold uppercase">
-                      Duration
-                    </span>
-                    <span className="font-semibold text-brand-dark">
-                      {selectedDestination.duration}
-                    </span>
-                  </div>
-                </div>
-                <div className="col-span-2 sm:col-span-1 flex items-center space-x-2.5">
-                  <Compass className="text-brand-gold shrink-0" size={16} />
-                  <div>
-                    <span className="block text-[10px] text-brand-dark/50 font-bold uppercase">
-                      Location
-                    </span>
-                    <span className="font-semibold text-brand-dark">
-                      {selectedDestination.location}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Overview */}
-              <div className="space-y-2">
-                <h3 className="font-serif text-xs font-bold tracking-widest text-brand-gold-dark uppercase border-b border-brand-gold/15 pb-1">
-                  DESTINATION OVERVIEW
-                </h3>
-                <p className="text-sm font-light text-brand-dark/80 leading-relaxed">
-                  {selectedDestination.overview}
-                </p>
-              </div>
-
-              {/* Highlights */}
-              <div className="space-y-3">
-                <h3 className="font-serif text-xs font-bold tracking-widest text-brand-gold-dark uppercase border-b border-brand-gold/15 pb-1">
-                  KEY HIGHLIGHTS & EXPERIENCES
-                </h3>
-                <ul className="space-y-2.5">
-                  {selectedDestination.highlights.map((item, idx) => (
-                    <li
-                      key={idx}
-                      className="flex items-start space-x-3 text-xs sm:text-sm font-light text-brand-dark/80"
-                    >
-                      <Sparkles
-                        size={14}
-                        className="text-brand-gold shrink-0 mt-0.5"
-                      />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Practical Info & Etiquette */}
-              <div className="bg-brand-gold/10 border border-brand-gold/30 p-4 rounded-lg space-y-1.5">
-                <div className="flex items-center space-x-2 text-brand-gold-dark font-bold text-xs uppercase tracking-wider">
-                  <Info size={14} />
-                  <span>Visitor Tips & Etiquette</span>
-                </div>
-                <p className="text-xs font-light text-brand-dark/75 leading-relaxed">
-                  {selectedDestination.practicalInfo}
-                </p>
-              </div>
+            {/* Destination Overview */}
+            <div className="space-y-2">
+              <h4 className="font-serif text-xs font-bold tracking-widest text-brand-gold-dark uppercase border-b border-brand-gold/15 pb-1">
+                DESTINATION OVERVIEW
+              </h4>
+              <p className="text-sm font-light text-brand-dark/85 leading-relaxed">
+                {item.overview}
+              </p>
             </div>
 
-            {/* Modal Action Footer */}
-            <div className="p-4 sm:p-6 bg-brand-cream-dark/30 border-t border-brand-gold/20 flex items-center justify-between gap-4 shrink-0">
+            {/* Highlights */}
+            <div className="space-y-3">
+              <h4 className="font-serif text-xs font-bold tracking-widest text-brand-gold-dark uppercase border-b border-brand-gold/15 pb-1">
+                KEY HIGHLIGHTS & EXPERIENCES
+              </h4>
+              <ul className="space-y-2.5">
+                {item.highlights.map((h, idx) => (
+                  <li
+                    key={idx}
+                    className="flex items-start space-x-3 text-xs sm:text-sm font-light text-brand-dark/85"
+                  >
+                    <Sparkles
+                      size={14}
+                      className="text-brand-gold shrink-0 mt-0.5"
+                    />
+                    <span>{h}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Visitor Tips & Etiquette */}
+            <div className="bg-brand-gold/10 border border-brand-gold/30 p-4 rounded-lg space-y-1.5">
+              <div className="flex items-center space-x-2 text-brand-gold-dark font-bold text-xs uppercase tracking-wider">
+                <Info size={14} />
+                <span>Visitor Tips & Etiquette</span>
+              </div>
+              <p className="text-xs font-light text-brand-dark/80 leading-relaxed">
+                {item.practicalInfo}
+              </p>
+            </div>
+
+            {/* Footer Action Buttons */}
+            <div className="pt-4 border-t border-brand-gold/15 flex items-center justify-between gap-4 flex-wrap">
               <button
-                onClick={() => setSelectedDestination(null)}
-                className="px-5 py-2.5 border border-brand-dark/20 text-brand-dark hover:bg-brand-dark/5 text-xs font-semibold tracking-wider uppercase rounded-md cursor-pointer transition-colors"
+                onClick={onToggle}
+                className="px-4 py-2 border border-brand-dark/20 text-brand-dark hover:bg-brand-dark/5 text-xs font-semibold tracking-wider uppercase rounded-md cursor-pointer transition-colors"
               >
-                Close
+                Collapse Details
               </button>
               <button
                 onClick={() => {
-                  setSelectedDestination(null);
-                  if (setActiveTab) {
-                    setActiveTab("plan-trip");
-                  }
+                  if (setActiveTab) setActiveTab("plan-trip");
                 }}
-                className="px-6 py-2.5 bg-brand-gold hover:bg-brand-gold-light text-brand-dark text-xs font-bold tracking-widest uppercase rounded-md cursor-pointer transition-all hover:scale-105 shadow-md flex items-center space-x-2"
+                className="px-6 py-2.5 bg-brand-gold hover:bg-brand-gold-light text-brand-dark text-xs font-bold tracking-widest uppercase rounded-md cursor-pointer transition-all hover:scale-105 shadow flex items-center space-x-2"
               >
                 <span>Plan Trip Here</span>
                 <ArrowRight size={14} />
               </button>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
