@@ -73,17 +73,26 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
 
   const toggleCard = (destId) => {
     if (expandedCardId === destId) {
-      setExpandedCardId(null);
+      closeCard(destId);
     } else {
       setExpandedCardId(destId);
-      // Smooth scroll to the clicked card element
       setTimeout(() => {
         const el = document.getElementById(`card-${destId}`);
         if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
         }
       }, 50);
     }
+  };
+
+  const closeCard = (destId) => {
+    setExpandedCardId(null);
+    setTimeout(() => {
+      const el = document.getElementById(`card-${destId}`);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }, 30);
   };
 
   // Helper filters for destinations by category
@@ -173,6 +182,7 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
                     item={item}
                     isExpanded={expandedCardId === item.id}
                     onToggle={() => toggleCard(item.id)}
+                    onClose={() => closeCard(item.id)}
                     setActiveTab={setActiveTab}
                   />
                 ))}
@@ -187,6 +197,7 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
                       item={item}
                       isExpanded={expandedCardId === item.id}
                       onToggle={() => toggleCard(item.id)}
+                      onClose={() => closeCard(item.id)}
                       setActiveTab={setActiveTab}
                     />
                   ))}
@@ -232,6 +243,7 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
                     item={item}
                     isExpanded={expandedCardId === item.id}
                     onToggle={() => toggleCard(item.id)}
+                    onClose={() => closeCard(item.id)}
                     setActiveTab={setActiveTab}
                   />
                 ))}
@@ -246,6 +258,7 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
                       item={item}
                       isExpanded={expandedCardId === item.id}
                       onToggle={() => toggleCard(item.id)}
+                      onClose={() => closeCard(item.id)}
                       setActiveTab={setActiveTab}
                     />
                   ))}
@@ -301,6 +314,7 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
                     item={item}
                     isExpanded={expandedCardId === item.id}
                     onToggle={() => toggleCard(item.id)}
+                    onClose={() => closeCard(item.id)}
                     setActiveTab={setActiveTab}
                   />
                 ))}
@@ -315,6 +329,7 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
                       item={item}
                       isExpanded={expandedCardId === item.id}
                       onToggle={() => toggleCard(item.id)}
+                      onClose={() => closeCard(item.id)}
                       setActiveTab={setActiveTab}
                     />
                   ))}
@@ -348,7 +363,7 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
 };
 
 // Sub-component for individual Destination Card with Inline Expansion
-const DestinationCard = ({ item, isExpanded, onToggle, setActiveTab }) => {
+const DestinationCard = ({ item, isExpanded, onToggle, onClose, setActiveTab }) => {
   return (
     <div
       id={`card-${item.id}`}
@@ -392,9 +407,9 @@ const DestinationCard = ({ item, isExpanded, onToggle, setActiveTab }) => {
           <button
             onClick={(e) => {
               e.stopPropagation();
-              onToggle();
+              onClose ? onClose() : onToggle();
             }}
-            className="absolute top-4 right-4 bg-brand-dark/80 text-white hover:text-brand-gold p-2 rounded-full border border-brand-gold/30 shadow transition-all cursor-pointer"
+            className="absolute top-4 right-4 bg-brand-dark/80 text-white hover:text-brand-gold p-2 rounded-full border border-brand-gold/30 shadow transition-all cursor-pointer z-10"
             aria-label="Close details"
           >
             <X size={18} />
@@ -517,10 +532,14 @@ const DestinationCard = ({ item, isExpanded, onToggle, setActiveTab }) => {
             {/* Footer Action Buttons */}
             <div className="pt-4 border-t border-brand-gold/15 flex items-center justify-between gap-4 flex-wrap">
               <button
-                onClick={onToggle}
-                className="px-4 py-2 border border-brand-dark/20 text-brand-dark hover:bg-brand-dark/5 text-xs font-semibold tracking-wider uppercase rounded-md cursor-pointer transition-colors"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onClose ? onClose() : onToggle();
+                }}
+                className="px-5 py-2.5 border border-brand-gold/40 text-brand-dark hover:bg-brand-gold hover:text-brand-dark text-xs font-semibold tracking-wider uppercase rounded-md cursor-pointer transition-all flex items-center space-x-1.5"
               >
-                Collapse Details
+                <X size={14} />
+                <span>Close Details</span>
               </button>
               <button
                 onClick={() => {
