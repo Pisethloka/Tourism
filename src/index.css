@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&family=Moul&family=Hanuman:wght@100;300;400;700;900&family=Noto+Sans+Khmer:wght@100..900&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Inter:wght@100..900&family=La+Belle+Aurore&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Marcellus&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -11,13 +11,12 @@
   --color-brand-cream-dark: #f4efe0;
   --color-brand-forest: #1e3322;
   --color-brand-forest-light: #3d5a42;
-  --font-serif: Georgia, "Moul", "Hanuman", serif;
-  --font-sans:
-    "Verdana", "Kantumruy Pro", "Noto Sans Khmer", "Hanuman", system-ui,
-    sans-serif;
-  --font-cormorant: "Cormorant Garamond", serif;
-  --font-inter: "Inter", sans-serif;
-  --font-handwritten: "La Belle Aurore", cursive;
+  
+  --font-serif: "Playfair Display", "Cinzel", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-cormorant: "Cinzel", "Playfair Display", serif;
+  --font-inter: "Plus Jakarta Sans", sans-serif;
+  --font-handwritten: "Marcellus", "Playfair Display", serif;
 }
 
 /* Base resets & typography */
@@ -47,7 +46,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-serif);
+  font-family: var(--font-cormorant);
 }
 
 /* Glassmorphism utility */
@@ -65,15 +64,17 @@ h6 {
   border: 1px solid rgba(197, 158, 63, 0.15);
 }
 
-/* New human‑touch utilities */
-.font-handwritten { font-family: var(--font-handwritten); }
+/* Premium destination typography utilities */
+.font-handwritten { 
+  font-family: var(--font-handwritten); 
+  letter-spacing: 0.05em;
+}
 .soft-shadow { box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
 @keyframes scaleUp {
   from { transform: scale(1); }
   to { transform: scale(1.04); }
 }
 .hover\:scale-up:hover { animation: scaleUp 0.2s forwards; }
-
 
 /* Scrollbar styling */
 ::-webkit-scrollbar {
@@ -103,5 +104,5 @@ h6 {
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
+  animation: fadeIn 0.6s ease-out forwards;
 }
