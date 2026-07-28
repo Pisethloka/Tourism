@@ -12,6 +12,10 @@ import kohRongBeach from "../assets/koh_rong_beach.png";
 import banteaySrei from "../assets/banteay_srei.png";
 import watThmey from "../assets/wat_thmey.png";
 
+// Imported fallback JSON data to guarantee 100% load reliability
+import fallbackDestinations from "../../public/api/destinations.json";
+import fallbackWeather from "../../public/api/weather.json";
+
 const IMAGE_MAP = {
   heroAngkor,
   phnomPenhPalace,
@@ -37,33 +41,53 @@ const CITIES_COORDS = {
 
 /**
  * 1. MOCK REST API: Fetch Destinations
- * Fetches destinations from /api/destinations.json with a simulated network delay
+ * Fetches destinations from /api/destinations.json with a simulated network delay.
+ * Includes automatic fallback so it NEVER fails in production or dev server.
  */
 export async function fetchDestinations() {
   // Simulate network latency (400ms) to demonstrate loading states
   await new Promise((resolve) => setTimeout(resolve, 400));
 
-  try {
-    const response = await fetch("/api/destinations.json");
-    if (!response.ok) {
-      throw new Error(`HTTP Error status: ${response.status}`);
-    }
-    const data = await response.json();
+  let data = null;
 
-    // Map image keys to actual imported image assets
-    return data.map((dest) => ({
-      ...dest,
-      image: IMAGE_MAP[dest.imageKey] || heroAngkor,
-    }));
+  try {
+    const baseUrl = import.meta.env.BASE_URL || "/";
+    const cleanBase = baseUrl.endsWith("/") ? baseUrl : baseUrl + "/";
+    
+    // Try primary path
+    let response = await fetch(`${cleanBase}api/destinations.json`);
+    
+    if (!response.ok) {
+      // Try relative path
+      response = await fetch("./api/destinations.json");
+    }
+
+    if (response.ok) {
+      data = await response.json();
+    } else {
+      console.warn("HTTP fetch returned non-200, using JSON module fallback");
+      data = fallbackDestinations;
+    }
   } catch (error) {
-    console.error("Failed to fetch destinations API:", error);
-    throw error;
+    console.warn("API fetch error, using JSON module fallback:", error);
+    data = fallbackDestinations;
   }
+
+  // Ensure data is valid array
+  if (!Array.isArray(data)) {
+    data = fallbackDestinations;
+  }
+
+  // Map image keys to actual imported image assets
+  return data.map((dest) => ({
+    ...dest,
+    image: IMAGE_MAP[dest.imageKey] || heroAngkor,
+  }));
 }
 
 /**
  * 2. LIVE PUBLIC API: Open-Meteo Real-time Weather API
- * Fetches real weather data for Cambodian cities; falls back to /api/weather.json
+ * Fetches real weather data for Cambodian cities; falls back to weather.json
  */
 export async function fetchLiveWeather(cityName = "Siem Reap") {
   const coords = CITIES_COORDS[cityName] || CITIES_COORDS["Siem Reap"];
@@ -101,23 +125,11 @@ export async function fetchLiveWeather(cityName = "Siem Reap") {
     };
   } catch (error) {
     console.warn("Live weather API failed, using fallback endpoint:", error);
-    try {
-      const fbResponse = await fetch("/api/weather.json");
-      const fbData = await fbResponse.json();
-      const cityKey = cityName.toLowerCase().replace(" ", "_");
-      return {
-        ...(fbData[cityKey] || fbData["siem_reap"]),
-        isLive: false,
-      };
-    } catch (fbErr) {
-      return {
-        city: cityName,
-        temp_c: 30.5,
-        condition: "Warm & Sunny",
-        icon: "☀️",
-        isLive: false,
-      };
-    }
+    const cityKey = cityName.toLowerCase().replace(" ", "_");
+    return {
+      ...(fallbackWeather[cityKey] || fallbackWeather["siem_reap"]),
+      isLive: false,
+    };
   }
 }
 
