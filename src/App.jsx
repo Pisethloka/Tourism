@@ -69,7 +69,9 @@ function App() {
       <Navbar activeTab={activeTab} setActiveTab={handleTabChange} />
 
       {/* Live Weather & Currency Exchange API Bar */}
-      <LiveWeatherWidget />
+      <div className="pt-24 md:pt-28 relative z-40">
+        <LiveWeatherWidget />
+      </div>
 
       {/* Pages Content */}
       <main className="flex-grow">

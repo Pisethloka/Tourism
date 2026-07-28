@@ -208,7 +208,7 @@ export const PlanTrip = () => {
   return (
     <div className="pb-32 bg-brand-cream font-inter text-brand-dark min-h-screen relative">
       {/* Top Banner Header */}
-      <header className="bg-brand-forest text-brand-cream-dark pt-32 pb-14 px-6 md:px-12 text-center relative overflow-hidden">
+      <header className="bg-brand-forest text-brand-cream-dark pt-12 pb-14 px-6 md:px-12 text-center relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-brand-gold/10 blur-3xl pointer-events-none" />
         <div className="max-w-4xl mx-auto space-y-3 relative z-10 animate-fade-in">
           <span className="font-handwritten text-brand-gold text-2xl md:text-3xl tracking-wide block">
