@@ -53,7 +53,7 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
         <div className="hidden md:flex justify-self-end">
           <button 
             onClick={() => setActiveTab('plan-trip')}
-            className="bg-brand-gold hover:bg-brand-gold-light text-brand-dark px-5 py-2.5 rounded-md text-xs font-semibold tracking-wider uppercase transition-all duration-300 hover:scale-105 active:scale-95 shadow-md shadow-brand-gold/20"
+            className="bg-brand-gold hover:bg-brand-gold-light text-brand-dark px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-brand-gold/20 hover:shadow-brand-gold/40 cursor-pointer"
           >
             PLAN YOUR TRIP
           </button>
