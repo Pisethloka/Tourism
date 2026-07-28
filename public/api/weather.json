@@ -1,0 +1,30 @@
+{
+  "siem_reap": {
+    "city": "Siem Reap",
+    "temp_c": 31.5,
+    "condition": "Sunny",
+    "humidity": 68,
+    "icon": "☀️"
+  },
+  "phnom_penh": {
+    "city": "Phnom Penh",
+    "temp_c": 33.0,
+    "condition": "Partly Cloudy",
+    "humidity": 65,
+    "icon": "⛅"
+  },
+  "kampot": {
+    "city": "Kampot",
+    "temp_c": 29.8,
+    "condition": "Breezy",
+    "humidity": 74,
+    "icon": "🌤️"
+  },
+  "koh_rong": {
+    "city": "Koh Rong",
+    "temp_c": 30.2,
+    "condition": "Clear Ocean Sky",
+    "humidity": 72,
+    "icon": "🌊"
+  }
+}

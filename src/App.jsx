@@ -7,6 +7,7 @@ import { Gallery } from './pages/Gallery';
 import { Map } from './pages/Map';
 import { PlanTrip } from './pages/PlanTrip';
 import { GlobalCTA } from './components/GlobalCTA';
+import { LiveWeatherWidget } from './components/LiveWeatherWidget';
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
@@ -50,7 +51,7 @@ function App() {
       case 'home':
         return <Home setActiveTab={handleTabChange} />;
       case 'destinations':
-        return <Destinations activeSection={activeSection} setActiveSection={setActiveSection} />;
+        return <Destinations activeSection={activeSection} setActiveSection={setActiveSection} setActiveTab={handleTabChange} />;
       case 'gallery':
         return <Gallery />;
       case 'map':
@@ -66,6 +67,9 @@ function App() {
     <div className="min-h-screen flex flex-col bg-brand-cream text-brand-dark selection:bg-brand-gold selection:text-brand-dark">
       {/* Floating Navbar */}
       <Navbar activeTab={activeTab} setActiveTab={handleTabChange} />
+
+      {/* Live Weather & Currency Exchange API Bar */}
+      <LiveWeatherWidget />
 
       {/* Pages Content */}
       <main className="flex-grow">
