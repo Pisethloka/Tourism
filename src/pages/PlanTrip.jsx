@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Plane, Compass, ArrowRight, Minus, Plus, X } from 'lucide-react';
+import { Plane, Compass, ArrowRight, Minus, Plus, X, Sparkles, Check, ChevronRight } from 'lucide-react';
 import { LiveWeatherWidget } from '../components/LiveWeatherWidget';
 
 // Import local image assets
@@ -74,7 +74,7 @@ export const PlanTrip = () => {
     }
   ];
 
-  // 3. Dynamic Calculation logic (Calculated during render to prevent cascading updates)
+  // 3. Dynamic Calculation logic
   const accommodationCost = days * tierPricing[tier].rate;
   const transportCost = days * transportPricing[transport].rate;
   
@@ -103,84 +103,91 @@ export const PlanTrip = () => {
     }
   };
 
-  // Main Statement Card renderer, reused in both sticky sidebar and mobile drawer
+  // Main Statement Card renderer
   const renderStatementContent = () => (
-    <div className="bg-[#FCFAF8] border border-brand-gold/20 p-6 md:p-8 rounded-none shadow-xl flex flex-col justify-between h-full relative">
-      {/* Decorative inner border */}
-      <div className="absolute inset-2 border border-brand-gold/5 pointer-events-none" />
+    <div className="bg-[#FAF8F5] border border-brand-gold/30 p-6 md:p-8 rounded-3xl shadow-xl flex flex-col justify-between h-full relative overflow-hidden">
+      {/* Decorative ambient background glow */}
+      <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-brand-gold/10 blur-2xl pointer-events-none" />
 
       <div className="space-y-6 relative z-10">
         {/* Statement Brand Header */}
-        <div className="text-center">
-          <span className="font-cormorant text-2xl tracking-[0.2em] font-light text-brand-dark block whitespace-nowrap">
+        <div className="text-center space-y-1">
+          <div className="inline-flex items-center space-x-1.5 text-brand-gold text-[10px] font-bold tracking-[0.25em] uppercase">
+            <Sparkles size={10} />
+            <span>BESPOKE STATEMENT</span>
+          </div>
+          <h3 className="font-cormorant text-2xl tracking-[0.2em] font-normal text-brand-dark uppercase">
             ANGKOR LUX
+          </h3>
+          <span className="font-sans text-[10px] tracking-[0.25em] text-brand-dark/50 uppercase block">
+            Tailored Expedition Estimate
           </span>
-          <span className="font-inter text-[9px] tracking-[0.3em] text-brand-dark/40 uppercase block mt-1">
-            Private Journeys
-          </span>
-          <div className="w-10 h-px bg-brand-gold/35 mx-auto mt-3" />
+          <div className="w-12 h-[1px] bg-brand-gold/40 mx-auto pt-1" />
         </div>
 
         {/* Statement Details */}
-        <div className="flex justify-between items-end text-[11px] font-inter text-brand-dark/50 border-b border-brand-gold/10 pb-3">
+        <div className="flex justify-between items-end text-xs font-sans text-brand-dark/60 border-b border-brand-gold/15 pb-4">
           <div>
-            <span className="block font-medium text-brand-dark/65">PREPARED FOR:</span>
+            <span className="block text-[10px] tracking-wider font-bold text-brand-dark/40 uppercase">PREPARED FOR</span>
             <span className="block mt-0.5 font-semibold text-brand-dark">Honored Guest</span>
           </div>
           <div className="text-right">
-            <span className="block font-medium text-brand-dark/65">STATEMENT NO:</span>
-            <span className="block mt-0.5 font-mono">#AL-{days}D{travelers}G-2026</span>
+            <span className="block text-[10px] tracking-wider font-bold text-brand-dark/40 uppercase">STATEMENT NO.</span>
+            <span className="block mt-0.5 font-mono text-brand-gold-dark font-semibold">#AL-{days}D{travelers}G-2026</span>
           </div>
         </div>
 
-        {/* Itemized Estimate List (All text sizes >= 15px as required) */}
-        <div className="space-y-4 py-2">
-          <div className="flex justify-between items-baseline">
-            <span className="font-inter text-[15px] text-brand-dark/60 font-light">
-              Accommodation ({days} nights, {tier === 'boutique' ? 'Boutique' : tier === 'luxury' ? 'Luxury' : 'Ultra-Luxury'})
+        {/* Itemized Estimate List */}
+        <div className="space-y-3.5 py-1 text-sm">
+          <div className="flex justify-between items-center">
+            <span className="font-sans text-xs font-light text-brand-dark/80">
+              Sanctuary Lodging ({days} nights, <span className="capitalize font-medium">{tier}</span>)
             </span>
-            <span className="font-cormorant text-lg text-brand-dark font-medium">${breakdown.accommodation}</span>
+            <span className="font-cormorant text-base font-semibold text-brand-dark">${breakdown.accommodation}</span>
           </div>
-          <div className="flex justify-between items-baseline">
-            <span className="font-inter text-[15px] text-brand-dark/60 font-light">
-              Private Transport ({days} days, {transport === 'tuk-tuk' ? 'Tuk-Tuk' : transport === 'chauffeur' ? 'Chauffeur' : 'Flights'})
+
+          <div className="flex justify-between items-center">
+            <span className="font-sans text-xs font-light text-brand-dark/80">
+              Private Transfers ({days} days, <span className="capitalize font-medium">{transport === 'tuk-tuk' ? 'Tuk-Tuk' : transport === 'chauffeur' ? 'Chauffeur' : 'Flights'}</span>)
             </span>
-            <span className="font-cormorant text-lg text-brand-dark font-medium">${breakdown.transport}</span>
+            <span className="font-cormorant text-base font-semibold text-brand-dark">${breakdown.transport}</span>
           </div>
-          <div className="flex justify-between items-baseline">
-            <span className="font-inter text-[15px] text-brand-dark/60 font-light">
-              Private Excursions ({travelers} {travelers === 1 ? 'guest' : 'guests'})
+
+          <div className="flex justify-between items-center">
+            <span className="font-sans text-xs font-light text-brand-dark/80">
+              Curated Excursions ({travelers} {travelers === 1 ? 'guest' : 'guests'})
             </span>
-            <span className="font-cormorant text-lg text-brand-dark font-medium">${breakdown.activities}</span>
+            <span className="font-cormorant text-base font-semibold text-brand-dark">${breakdown.activities}</span>
           </div>
-          <div className="flex justify-between items-baseline">
-            <span className="font-inter text-[15px] text-brand-dark/60 font-light">
-              Concierge Booking Fee (8%)
+
+          <div className="flex justify-between items-center">
+            <span className="font-sans text-xs font-light text-brand-dark/80">
+              Concierge Service Fee (8%)
             </span>
-            <span className="font-cormorant text-lg text-brand-dark font-medium">${breakdown.conciergeFee}</span>
+            <span className="font-cormorant text-base font-semibold text-brand-dark">${breakdown.conciergeFee}</span>
           </div>
         </div>
 
         {/* Total Estimate */}
-        <div className="pt-4 border-t border-brand-gold/20">
+        <div className="pt-4 border-t border-brand-gold/25">
           <div className="flex justify-between items-baseline">
-            <span className="font-inter text-[15px] uppercase tracking-wider text-brand-dark font-semibold">Estimated Total</span>
-            <span className="font-cormorant text-3xl font-light text-brand-gold-dark">
-              ${breakdown.total} <span className="text-xs text-brand-dark/50 uppercase tracking-widest font-inter">usd</span>
+            <span className="font-sans text-xs font-bold uppercase tracking-wider text-brand-dark">Estimated Total</span>
+            <span className="font-cormorant text-3xl font-normal text-brand-gold-dark">
+              ${breakdown.total} <span className="text-xs font-sans text-brand-dark/50 uppercase tracking-widest font-normal">USD</span>
             </span>
           </div>
         </div>
 
         {/* Concierge Handwritten note */}
-        <div className="pt-4 border-t border-brand-gold/10 space-y-3 text-center">
-          <p className="font-handwritten text-[#A47D23] text-xl leading-relaxed max-w-xs mx-auto">
+        <div className="pt-4 border-t border-brand-gold/15 space-y-2 text-center">
+          <p className="font-handwritten text-brand-gold-dark text-lg leading-relaxed max-w-xs mx-auto">
             "Each pilgrimage is a unique canvas. We curate every journey with absolute devotion to detail."
           </p>
           <div>
-            <span className="font-handwritten text-[#A47D23] text-2xl block whitespace-nowrap">
+            <span className="font-handwritten text-brand-gold-dark text-xl block whitespace-nowrap">
               Sophea & The Angkor Lux Team
             </span>
-            <span className="font-inter text-[10px] tracking-wider text-brand-dark/40 uppercase block mt-0.5">
+            <span className="font-sans text-[10px] tracking-widest text-brand-dark/40 uppercase block mt-0.5">
               Lead Concierge
             </span>
           </div>
@@ -188,18 +195,18 @@ export const PlanTrip = () => {
       </div>
 
       {/* Action CTA Button */}
-      <div className="pt-6 mt-6 border-t border-brand-gold/15 relative z-10">
+      <div className="pt-6 mt-6 border-t border-brand-gold/20 relative z-10">
         <button
           type="button"
           onClick={() => {
             alert(`Quote Request Sent!\nYour compiled estimate total is $${breakdown.total} USD.\nLead Concierge Sophea will contact you shortly.`);
           }}
-          className="w-full bg-[#C59E3F] hover:bg-[#E5C36E] text-brand-dark py-3.5 text-[15px] font-inter font-medium tracking-[0.15em] uppercase transition-all duration-300 hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center space-x-2 rounded-md shadow-md shadow-brand-gold/10 cursor-pointer"
+          className="w-full bg-brand-gold hover:bg-brand-gold-light text-brand-dark py-4 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-2 rounded-full shadow-lg shadow-brand-gold/20 cursor-pointer"
         >
           <span>Submit to Travel Architect</span>
-          <ArrowRight size={15} />
+          <ArrowRight size={14} />
         </button>
-        <div className="text-center text-[10px] text-brand-dark/45 font-light pt-2.5">
+        <div className="text-center text-[10px] text-brand-dark/50 font-light pt-2.5">
           *Rates are subject to high/low season occupancy details.
         </div>
       </div>
@@ -207,17 +214,22 @@ export const PlanTrip = () => {
   );
 
   return (
-    <div className="pb-32 bg-brand-cream font-inter text-brand-dark min-h-screen relative">
+    <div className="pb-28 bg-brand-cream font-sans text-brand-dark min-h-screen relative">
       {/* Top Banner Header */}
-      <header className="bg-brand-forest text-brand-cream-dark pt-12 pb-14 px-6 md:px-12 text-center relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-brand-gold/10 blur-3xl pointer-events-none" />
-        <div className="max-w-4xl mx-auto space-y-3 relative z-10 animate-fade-in">
-          <span className="font-handwritten text-brand-gold text-2xl md:text-3xl tracking-wide block">
-            Crafting Your Custom Cambodian Expedition
-          </span>
-          <h1 className="font-cormorant text-4xl md:text-6xl font-normal tracking-wide text-white leading-tight uppercase">
+      <header className="bg-brand-forest text-brand-cream-dark pt-14 pb-16 px-6 md:px-12 text-center relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-brand-gold/10 blur-3xl pointer-events-none" />
+        <div className="max-w-4xl mx-auto space-y-4 relative z-10 animate-fade-in">
+          <div className="inline-flex items-center space-x-2 bg-brand-gold/15 backdrop-blur-md px-4 py-1.5 rounded-full border border-brand-gold/30">
+            <Sparkles size={12} className="text-brand-gold animate-pulse" />
+            <span className="font-handwritten text-brand-gold text-base sm:text-lg tracking-wide">
+              Crafting Your Custom Cambodian Expedition
+            </span>
+          </div>
+
+          <h1 className="font-cormorant text-4xl sm:text-6xl md:text-7xl font-normal tracking-[0.15em] text-white leading-tight uppercase">
             Plan Your Journey
           </h1>
+          
           <p className="font-sans text-sm sm:text-base font-light text-brand-cream-dark/85 max-w-xl mx-auto leading-relaxed">
             Welcome to your digital concierge. Select your preferences below to calculate a tailored itinerary estimate in real time.
           </p>
@@ -225,74 +237,78 @@ export const PlanTrip = () => {
       </header>
 
       {/* Main Split Layout Grid */}
-      <main className="max-w-7xl mx-auto px-4 md:px-8 py-10 lg:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-12 lg:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           
           {/* Left Column: Interactive Planner Sections */}
-          <div className="lg:col-span-8 space-y-12 animate-fade-in">
+          <div className="lg:col-span-8 space-y-10 animate-fade-in">
             
             {/* SECTION 1: Pacing & Companions */}
-            <section className="bg-white/35 backdrop-blur-xs border border-brand-gold/15 p-6 md:p-8 space-y-8">
-              <div className="border-b border-brand-gold/15 pb-3 flex items-center space-x-3">
-                <div className="w-6 h-6 rounded-full bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center text-brand-gold text-xs font-serif font-bold">1</div>
-                <h3 className="font-cormorant text-2xl font-light uppercase tracking-wider text-brand-dark">Journey Pacing & Companions</h3>
+            <section className="bg-white/60 backdrop-blur-md border border-brand-gold/20 p-6 md:p-8 rounded-3xl shadow-lg space-y-8">
+              <div className="border-b border-brand-gold/15 pb-4 flex items-center space-x-3">
+                <div className="w-7 h-7 rounded-full bg-brand-gold/15 border border-brand-gold/30 flex items-center justify-center text-brand-gold-dark text-xs font-bold font-mono">1</div>
+                <h3 className="font-cormorant text-2xl md:text-3xl font-normal uppercase tracking-wider text-brand-dark">Journey Pacing & Companions</h3>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Duration Counter */}
-                <div className="space-y-3 p-4 bg-[#FCFAF8] border border-brand-gold/5">
-                  <label className="font-cormorant text-xl font-light text-brand-dark block text-center">
-                    How many days are you dreaming of?
+                <div className="space-y-4 p-6 bg-[#FAF8F5] rounded-2xl border border-brand-gold/15 shadow-xs">
+                  <label className="font-cormorant text-xl font-normal text-brand-dark block text-center">
+                    Duration of Your Journey
                   </label>
                   <div className="flex items-center justify-center space-x-6 pb-2 max-w-xs mx-auto">
                     <button
                       type="button"
                       onClick={() => setDays(Math.max(3, days - 1))}
-                      className="w-10 h-10 rounded-full border border-brand-gold/20 flex items-center justify-center text-brand-dark/50 hover:text-brand-dark hover:border-brand-gold hover:bg-brand-cream-dark/15 transition-all active:scale-95 cursor-pointer"
+                      className="w-11 h-11 rounded-full border border-brand-gold/30 bg-white flex items-center justify-center text-brand-dark hover:bg-brand-gold hover:text-brand-dark hover:border-brand-gold transition-all active:scale-95 cursor-pointer shadow-xs"
+                      aria-label="Decrease days"
                     >
                       <Minus size={16} />
                     </button>
-                    <span className="font-cormorant text-3xl font-light text-brand-dark min-w-[60px] text-center">
-                      {days}
+                    <span className="font-cormorant text-4xl font-light text-brand-gold-dark min-w-[65px] text-center">
+                      {days} <span className="text-xs font-sans text-brand-dark/50 uppercase font-normal block -mt-1">Days</span>
                     </span>
                     <button
                       type="button"
                       onClick={() => setDays(Math.min(21, days + 1))}
-                      className="w-10 h-10 rounded-full border border-brand-gold/20 flex items-center justify-center text-brand-dark/50 hover:text-brand-dark hover:border-brand-gold hover:bg-brand-cream-dark/15 transition-all active:scale-95 cursor-pointer"
+                      className="w-11 h-11 rounded-full border border-brand-gold/30 bg-white flex items-center justify-center text-brand-dark hover:bg-brand-gold hover:text-brand-dark hover:border-brand-gold transition-all active:scale-95 cursor-pointer shadow-xs"
+                      aria-label="Increase days"
                     >
                       <Plus size={16} />
                     </button>
                   </div>
-                  <p className="font-inter text-xs text-brand-dark/45 text-center leading-normal">
+                  <p className="font-sans text-xs text-brand-dark/60 text-center leading-relaxed font-light">
                     Minimum 3 days. Recommend at least 7 days to absorb Siem Reap and the southern coast.
                   </p>
                 </div>
 
                 {/* Travelers Counter */}
-                <div className="space-y-3 p-4 bg-[#FCFAF8] border border-brand-gold/5">
-                  <label className="font-cormorant text-xl font-light text-brand-dark block text-center">
-                    How many are travelling?
+                <div className="space-y-4 p-6 bg-[#FAF8F5] rounded-2xl border border-brand-gold/15 shadow-xs">
+                  <label className="font-cormorant text-xl font-normal text-brand-dark block text-center">
+                    Number of Honored Guests
                   </label>
                   <div className="flex items-center justify-center space-x-6 pb-2 max-w-xs mx-auto">
                     <button
                       type="button"
                       onClick={() => setTravelers(Math.max(1, travelers - 1))}
-                      className="w-10 h-10 rounded-full border border-brand-gold/20 flex items-center justify-center text-brand-dark/50 hover:text-brand-dark hover:border-brand-gold hover:bg-brand-cream-dark/15 transition-all active:scale-95 cursor-pointer"
+                      className="w-11 h-11 rounded-full border border-brand-gold/30 bg-white flex items-center justify-center text-brand-dark hover:bg-brand-gold hover:text-brand-dark hover:border-brand-gold transition-all active:scale-95 cursor-pointer shadow-xs"
+                      aria-label="Decrease guests"
                     >
                       <Minus size={16} />
                     </button>
-                    <span className="font-cormorant text-3xl font-light text-brand-dark min-w-[60px] text-center">
-                      {travelers}
+                    <span className="font-cormorant text-4xl font-light text-brand-gold-dark min-w-[65px] text-center">
+                      {travelers} <span className="text-xs font-sans text-brand-dark/50 uppercase font-normal block -mt-1">Guests</span>
                     </span>
                     <button
                       type="button"
                       onClick={() => setTravelers(Math.min(10, travelers + 1))}
-                      className="w-10 h-10 rounded-full border border-brand-gold/20 flex items-center justify-center text-brand-dark/50 hover:text-brand-dark hover:border-brand-gold hover:bg-brand-cream-dark/15 transition-all active:scale-95 cursor-pointer"
+                      className="w-11 h-11 rounded-full border border-brand-gold/30 bg-white flex items-center justify-center text-brand-dark hover:bg-brand-gold hover:text-brand-dark hover:border-brand-gold transition-all active:scale-95 cursor-pointer shadow-xs"
+                      aria-label="Increase guests"
                     >
                       <Plus size={16} />
                     </button>
                   </div>
-                  <p className="font-inter text-xs text-brand-dark/45 text-center leading-normal">
+                  <p className="font-sans text-xs text-brand-dark/60 text-center leading-relaxed font-light">
                     Private bespoke transfers are designed for intimate groups of up to 10 guests.
                   </p>
                 </div>
@@ -300,10 +316,10 @@ export const PlanTrip = () => {
             </section>
 
             {/* SECTION 2: Sanctuary Lodging */}
-            <section className="bg-white/35 backdrop-blur-xs border border-brand-gold/15 p-6 md:p-8 space-y-6">
-              <div className="border-b border-brand-gold/15 pb-3 flex items-center space-x-3">
-                <div className="w-6 h-6 rounded-full bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center text-brand-gold text-xs font-serif font-bold">2</div>
-                <h3 className="font-cormorant text-2xl font-light uppercase tracking-wider text-brand-dark">Sanctuary Lodging</h3>
+            <section className="bg-white/60 backdrop-blur-md border border-brand-gold/20 p-6 md:p-8 rounded-3xl shadow-lg space-y-6">
+              <div className="border-b border-brand-gold/15 pb-4 flex items-center space-x-3">
+                <div className="w-7 h-7 rounded-full bg-brand-gold/15 border border-brand-gold/30 flex items-center justify-center text-brand-gold-dark text-xs font-bold font-mono">2</div>
+                <h3 className="font-cormorant text-2xl md:text-3xl font-normal uppercase tracking-wider text-brand-dark">Sanctuary Lodging</h3>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -319,46 +335,49 @@ export const PlanTrip = () => {
                       key={key}
                       type="button"
                       onClick={() => setTier(key)}
-                      className={`group relative text-left bg-[#FCFAF8] overflow-hidden transition-all duration-300 flex flex-col h-full cursor-pointer ${
+                      className={`group relative text-left bg-[#FAF8F5] rounded-2xl overflow-hidden transition-all duration-500 flex flex-col h-full cursor-pointer ${
                         isSelected 
-                          ? 'ring-2 ring-brand-gold shadow-md scale-[1.01]' 
-                          : 'border border-brand-gold/10 hover:border-brand-gold/25 hover:shadow-sm'
+                          ? 'ring-2 ring-brand-gold shadow-xl scale-[1.02] border-transparent' 
+                          : 'border border-brand-gold/20 hover:border-brand-gold/40 hover:shadow-lg'
                       }`}
                     >
-                      <div className="relative h-48 overflow-hidden">
+                      <div className="relative h-44 overflow-hidden">
                         <img 
                           src={imageMap[key]} 
                           alt={value.label} 
-                          className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500" 
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                         />
-                        <div className="absolute inset-0 bg-brand-dark/15 group-hover:bg-brand-dark/5 transition-colors" />
+                        <div className="absolute inset-0 bg-brand-dark/20 group-hover:bg-brand-dark/10 transition-colors" />
                         {isSelected && (
-                          <div className="absolute inset-0 bg-brand-gold/15 mix-blend-overlay pointer-events-none" />
+                          <div className="absolute inset-0 bg-brand-gold/20 mix-blend-overlay pointer-events-none" />
                         )}
                         {key === 'luxury' && (
-                          <span className="absolute top-3 right-3 bg-brand-gold text-brand-dark font-inter text-[9px] font-bold tracking-wider uppercase px-2 py-0.5">
-                            Signature
+                          <span className="absolute top-3 right-3 bg-brand-gold text-brand-dark font-sans text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full shadow">
+                            Signature Choice
                           </span>
                         )}
                       </div>
-                      <div className="p-4 flex-grow flex flex-col justify-between space-y-3">
+
+                      <div className="p-5 flex-grow flex flex-col justify-between space-y-4">
                         <div className="space-y-1.5">
-                          <h4 className="font-cormorant text-xl font-light text-brand-dark capitalize">
+                          <h4 className="font-cormorant text-2xl font-normal text-brand-dark capitalize">
                             {key === 'boutique' ? 'Boutique Heritage' : key === 'luxury' ? 'Luxury Resort' : 'Ultra-Luxury Villa'}
                           </h4>
-                          <p className="font-inter text-[15px] font-light text-brand-dark/70 leading-relaxed">
+                          <p className="font-sans text-xs font-light text-brand-dark/75 leading-relaxed">
                             {key === 'boutique' && 'Premium heritage properties, colonial guest houses, and local boutique hotels.'}
                             {key === 'luxury' && 'Private luxury suites, curated wellness spas, and lavish resort pools.'}
                             {key === 'ultra' && 'Ultra-luxury estates, dedicated butler service, and ultimate beachfront privacy.'}
                           </p>
                         </div>
-                        <div className="pt-2 flex justify-between items-baseline border-t border-brand-gold/10">
-                          <span className="font-inter text-[11px] tracking-wider text-brand-dark/40 uppercase">Investment Rate</span>
-                          <span className="font-cormorant text-xl font-light text-brand-gold-dark">${value.rate} <span className="font-inter text-xs text-brand-dark/40 lowercase">/ night</span></span>
+
+                        <div className="pt-3 flex justify-between items-baseline border-t border-brand-gold/15">
+                          <span className="font-sans text-[10px] tracking-widest text-brand-dark/50 uppercase font-semibold">Nightly Rate</span>
+                          <span className="font-cormorant text-2xl font-normal text-brand-gold-dark">${value.rate} <span className="font-sans text-xs text-brand-dark/50 font-light">/ night</span></span>
                         </div>
                       </div>
+
                       {isSelected && (
-                        <div className="absolute inset-0 border-2 border-brand-gold pointer-events-none" />
+                        <div className="absolute inset-0 border-2 border-brand-gold rounded-2xl pointer-events-none" />
                       )}
                     </button>
                   );
@@ -367,10 +386,10 @@ export const PlanTrip = () => {
             </section>
 
             {/* SECTION 3: Local Navigation */}
-            <section className="bg-white/35 backdrop-blur-xs border border-brand-gold/15 p-6 md:p-8 space-y-6">
-              <div className="border-b border-brand-gold/15 pb-3 flex items-center space-x-3">
-                <div className="w-6 h-6 rounded-full bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center text-brand-gold text-xs font-serif font-bold">3</div>
-                <h3 className="font-cormorant text-2xl font-light uppercase tracking-wider text-brand-dark">Local Navigation</h3>
+            <section className="bg-white/60 backdrop-blur-md border border-brand-gold/20 p-6 md:p-8 rounded-3xl shadow-lg space-y-6">
+              <div className="border-b border-brand-gold/15 pb-4 flex items-center space-x-3">
+                <div className="w-7 h-7 rounded-full bg-brand-gold/15 border border-brand-gold/30 flex items-center justify-center text-brand-gold-dark text-xs font-bold font-mono">3</div>
+                <h3 className="font-cormorant text-2xl md:text-3xl font-normal uppercase tracking-wider text-brand-dark">Local Navigation</h3>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -386,46 +405,49 @@ export const PlanTrip = () => {
                       key={key}
                       type="button"
                       onClick={() => setTransport(key)}
-                      className={`group relative text-left bg-[#FCFAF8] overflow-hidden transition-all duration-300 flex flex-col h-full cursor-pointer ${
+                      className={`group relative text-left bg-[#FAF8F5] rounded-2xl overflow-hidden transition-all duration-500 flex flex-col h-full cursor-pointer ${
                         isSelected 
-                          ? 'ring-2 ring-brand-gold shadow-md scale-[1.01]' 
-                          : 'border border-brand-gold/10 hover:border-brand-gold/25 hover:shadow-sm'
+                          ? 'ring-2 ring-brand-gold shadow-xl scale-[1.02] border-transparent' 
+                          : 'border border-brand-gold/20 hover:border-brand-gold/40 hover:shadow-lg'
                       }`}
                     >
-                      <div className="relative h-48 overflow-hidden">
+                      <div className="relative h-44 overflow-hidden">
                         <img 
                           src={imageMap[key]} 
                           alt={value.label} 
-                          className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500" 
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                         />
-                        <div className="absolute inset-0 bg-brand-dark/15 group-hover:bg-brand-dark/5 transition-colors" />
+                        <div className="absolute inset-0 bg-brand-dark/20 group-hover:bg-brand-dark/10 transition-colors" />
                         {isSelected && (
-                          <div className="absolute inset-0 bg-brand-gold/15 mix-blend-overlay pointer-events-none" />
+                          <div className="absolute inset-0 bg-brand-gold/20 mix-blend-overlay pointer-events-none" />
                         )}
                         {key === 'chauffeur' && (
-                          <span className="absolute top-3 right-3 bg-brand-gold text-brand-dark font-inter text-[9px] font-bold tracking-wider uppercase px-2 py-0.5">
+                          <span className="absolute top-3 right-3 bg-brand-gold text-brand-dark font-sans text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full shadow">
                             Recommended
                           </span>
                         )}
                       </div>
-                      <div className="p-4 flex-grow flex flex-col justify-between space-y-3">
+
+                      <div className="p-5 flex-grow flex flex-col justify-between space-y-4">
                         <div className="space-y-1.5">
-                          <h4 className="font-cormorant text-xl font-light text-brand-dark">
+                          <h4 className="font-cormorant text-2xl font-normal text-brand-dark">
                             {key === 'tuk-tuk' ? 'Tuk-Tuk Explorer' : key === 'chauffeur' ? 'Private Chauffeur' : 'Regional Flights'}
                           </h4>
-                          <p className="font-inter text-[15px] font-light text-brand-dark/70 leading-relaxed">
+                          <p className="font-sans text-xs font-light text-brand-dark/75 leading-relaxed">
                             {key === 'tuk-tuk' && 'Traditional open-air local transport for an authentic, breezy neighborhood tour.'}
                             {key === 'chauffeur' && 'Air-conditioned luxury SUV with dedicated private English guide.'}
                             {key === 'domestic-flights' && 'Private chauffeur service combined with domestic flights between provinces.'}
                           </p>
                         </div>
-                        <div className="pt-2 flex justify-between items-baseline border-t border-brand-gold/10">
-                          <span className="font-inter text-[11px] tracking-wider text-brand-dark/40 uppercase">Daily rate</span>
-                          <span className="font-cormorant text-xl font-light text-brand-gold-dark">${value.rate} <span className="font-inter text-xs text-brand-dark/40 lowercase">/ day</span></span>
+
+                        <div className="pt-3 flex justify-between items-baseline border-t border-brand-gold/15">
+                          <span className="font-sans text-[10px] tracking-widest text-brand-dark/50 uppercase font-semibold">Daily Rate</span>
+                          <span className="font-cormorant text-2xl font-normal text-brand-gold-dark">${value.rate} <span className="font-sans text-xs text-brand-dark/50 font-light">/ day</span></span>
                         </div>
                       </div>
+
                       {isSelected && (
-                        <div className="absolute inset-0 border-2 border-brand-gold pointer-events-none" />
+                        <div className="absolute inset-0 border-2 border-brand-gold rounded-2xl pointer-events-none" />
                       )}
                     </button>
                   );
@@ -434,10 +456,10 @@ export const PlanTrip = () => {
             </section>
 
             {/* SECTION 4: Curated Excursions */}
-            <section className="bg-white/35 backdrop-blur-xs border border-brand-gold/15 p-6 md:p-8 space-y-6">
-              <div className="border-b border-brand-gold/15 pb-3 flex items-center space-x-3">
-                <div className="w-6 h-6 rounded-full bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center text-brand-gold text-xs font-serif font-bold">4</div>
-                <h3 className="font-cormorant text-2xl font-light uppercase tracking-wider text-brand-dark">Curated Excursions</h3>
+            <section className="bg-white/60 backdrop-blur-md border border-brand-gold/20 p-6 md:p-8 rounded-3xl shadow-lg space-y-6">
+              <div className="border-b border-brand-gold/15 pb-4 flex items-center space-x-3">
+                <div className="w-7 h-7 rounded-full bg-brand-gold/15 border border-brand-gold/30 flex items-center justify-center text-brand-gold-dark text-xs font-bold font-mono">4</div>
+                <h3 className="font-cormorant text-2xl md:text-3xl font-normal uppercase tracking-wider text-brand-dark">Curated Excursions</h3>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -455,56 +477,56 @@ export const PlanTrip = () => {
                       key={act.id}
                       type="button"
                       onClick={() => handleActivityToggle(act.id)}
-                      className={`group relative text-left bg-brand-dark overflow-hidden transition-all duration-300 h-64 flex flex-col justify-end cursor-pointer ${
+                      className={`group relative text-left bg-brand-dark rounded-2xl overflow-hidden transition-all duration-500 h-72 flex flex-col justify-end cursor-pointer ${
                         isSelected 
-                          ? 'ring-2 ring-brand-gold shadow-md scale-[1.01]' 
-                          : 'border border-brand-gold/10 hover:border-brand-gold/25'
+                          ? 'ring-2 ring-brand-gold shadow-xl scale-[1.02]' 
+                          : 'border border-brand-gold/20 hover:border-brand-gold/40'
                       }`}
                     >
                       <img 
                         src={imageMap[act.id]} 
                         alt={act.name} 
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-103 transition-transform duration-500" 
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/25 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/95 via-brand-dark/40 to-transparent" />
                       {isSelected && (
                         <div className="absolute inset-0 bg-brand-gold/15 mix-blend-overlay pointer-events-none" />
                       )}
                       
                       {/* Check badge overlay */}
                       <div className="absolute top-4 right-4 z-20">
-                        <div className={`w-7 h-7 rounded-full border flex items-center justify-center transition-all ${
-                          isSelected ? 'border-brand-gold bg-brand-gold text-brand-dark scale-110' : 'border-white/30 bg-black/40 text-white'
+                        <div className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all ${
+                          isSelected ? 'border-brand-gold bg-brand-gold text-brand-dark scale-110 shadow' : 'border-white/40 bg-black/50 backdrop-blur-xs text-white'
                         }`}>
                           {isSelected ? (
-                            <span className="font-inter text-xs font-bold">✓</span>
+                            <Check size={16} className="text-brand-dark stroke-[3]" />
                           ) : (
-                            <span className="font-inter text-xs text-white/50">+</span>
+                            <span className="font-sans text-sm text-white/70 font-semibold">+</span>
                           )}
                         </div>
                       </div>
 
-                      <div className="relative z-10 p-5 space-y-1.5">
-                        <span className="font-inter text-[10px] font-semibold tracking-wider text-brand-gold uppercase">
+                      <div className="relative z-10 p-6 space-y-2">
+                        <span className="font-sans text-[10px] font-bold tracking-widest text-brand-gold uppercase block">
                           Private Excursion
                         </span>
-                        <h4 className="font-cormorant text-xl font-light text-white leading-tight">
+                        <h4 className="font-cormorant text-2xl font-normal text-white leading-tight">
                           {act.name}
                         </h4>
-                        <p className="font-inter text-[15px] font-light text-white/80 line-clamp-2 max-w-sm leading-relaxed">
+                        <p className="font-sans text-xs font-light text-brand-cream-dark/85 line-clamp-2 leading-relaxed">
                           {act.id === 'angkor-sunrise' && 'Witness sunrise over Angkor Wat before exploring key galleries with a lead historian.'}
                           {act.id === 'helicopter' && 'Fly above Siem Reap temples and the vast Tonle Sap lake on a scenic private flight.'}
                           {act.id === 'mekong-cruise' && 'Glide past floating villages on a restored traditional barge while dining on local gourmet recipes.'}
                           {act.id === 'rainforest-trek' && 'Trek alongside forest rangers through cardamom sanctuaries to spot wild elephants.'}
                           {act.id === 'culinary-class' && 'Pick fresh lemongrass and craft classic Royal Khmer recipes with a master chef.'}
                         </p>
-                        <div className="pt-1.5 flex justify-between items-baseline border-t border-white/10">
-                          <span className="font-inter text-[10px] text-white/50 uppercase">Rate per guest</span>
-                          <span className="font-cormorant text-lg font-light text-brand-gold-light">${act.pricePerPerson} USD</span>
+                        <div className="pt-2 flex justify-between items-baseline border-t border-white/15">
+                          <span className="font-sans text-[10px] text-brand-cream-dark/60 uppercase font-semibold">Rate Per Guest</span>
+                          <span className="font-cormorant text-xl font-normal text-brand-gold-light">${act.pricePerPerson} USD</span>
                         </div>
                       </div>
                       {isSelected && (
-                        <div className="absolute inset-0 border-2 border-brand-gold pointer-events-none" />
+                        <div className="absolute inset-0 border-2 border-brand-gold rounded-2xl pointer-events-none" />
                       )}
                     </button>
                   );
@@ -522,7 +544,7 @@ export const PlanTrip = () => {
         </div>
 
         {/* Live Weather & Currency Desk inside Trip Planner */}
-        <div className="mt-12">
+        <div className="mt-14">
           <LiveWeatherWidget
             title="Live Concierge Exchange & Regional Weather"
             subtitle="Real-time satellite weather radar and USD to KHR interbank currency calculator"
@@ -530,32 +552,34 @@ export const PlanTrip = () => {
         </div>
       </main>
 
-      {/* Floating Bottom Bar for Mobile layout (visible when summary card is hidden) */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-brand-dark/95 border-t border-brand-gold/25 p-4 flex justify-between items-center shadow-2xl backdrop-blur-md">
+      {/* Floating Bottom Bar for Mobile layout */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-brand-dark/95 border-t border-brand-gold/30 p-4 flex justify-between items-center shadow-2xl backdrop-blur-md">
         <div className="flex flex-col text-left">
-          <span className="text-[10px] tracking-widest text-brand-gold uppercase font-bold">Estimated Cost</span>
-          <span className="font-cormorant text-2xl text-white font-light mt-0.5">${breakdown.total} USD</span>
+          <span className="text-[10px] tracking-widest text-brand-gold uppercase font-bold">Estimated Total</span>
+          <span className="font-cormorant text-2xl text-white font-normal mt-0.5">${breakdown.total} USD</span>
         </div>
         <button
           type="button"
           onClick={() => setShowMobileDrawer(true)}
-          className="bg-brand-gold hover:bg-brand-gold-light text-brand-dark px-5 py-3 text-xs font-semibold tracking-wider uppercase rounded-md transition-all active:scale-95 shadow-md shadow-brand-gold/15 cursor-pointer"
+          className="bg-brand-gold hover:bg-brand-gold-light text-brand-dark px-6 py-3 text-xs font-bold tracking-widest uppercase rounded-full transition-all active:scale-95 shadow-lg shadow-brand-gold/20 cursor-pointer flex items-center space-x-1.5"
         >
-          View Estimate Summary
+          <span>View Estimate</span>
+          <ChevronRight size={14} />
         </button>
       </div>
 
       {/* Mobile Drawer (Slide-up modal detailing the estimate breakdown) */}
       {showMobileDrawer && (
-        <div className="lg:hidden fixed inset-0 z-50 bg-brand-dark/60 backdrop-blur-xs flex items-end animate-fade-in" onClick={() => setShowMobileDrawer(false)}>
+        <div className="lg:hidden fixed inset-0 z-50 bg-brand-dark/70 backdrop-blur-sm flex items-end animate-fade-in" onClick={() => setShowMobileDrawer(false)}>
           <div 
-            className="w-full bg-[#FCFAF8] max-h-[85vh] overflow-y-auto p-4 relative animate-fade-in"
+            className="w-full bg-[#FAF8F5] max-h-[88vh] overflow-y-auto p-4 rounded-t-3xl relative animate-fade-in border-t border-brand-gold/30 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close icon drawer */}
             <button
               onClick={() => setShowMobileDrawer(false)}
-              className="absolute top-4 right-4 w-9 h-9 rounded-full border border-brand-gold/25 flex items-center justify-center text-brand-dark/50 hover:text-brand-dark transition-colors cursor-pointer"
+              className="absolute top-4 right-4 w-9 h-9 rounded-full border border-brand-gold/30 flex items-center justify-center text-brand-dark/60 hover:text-brand-dark transition-colors cursor-pointer bg-white"
+              aria-label="Close summary"
             >
               <X size={16} />
             </button>
