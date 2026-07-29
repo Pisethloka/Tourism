@@ -11,6 +11,7 @@ import yeakLaom from "../assets/yeak_laom.png";
 import kohRongBeach from "../assets/koh_rong_beach.png";
 import banteaySrei from "../assets/banteay_srei.png";
 import watThmey from "../assets/wat_thmey.png";
+import bayonBuddha from "../assets/bayon_buddha_close.jpg";
 
 // Imported fallback JSON data to guarantee 100% load reliability
 import fallbackDestinations from "../../public/api/destinations.json";
@@ -29,6 +30,7 @@ const IMAGE_MAP = {
   kohRongBeach,
   banteaySrei,
   watThmey,
+  bayonBuddha,
 };
 
 // Coordinates for Cambodian cities (for Open-Meteo Live Weather API)

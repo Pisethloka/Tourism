@@ -98,17 +98,20 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
 
   // Helper filters for destinations by category
   const culturalDests = destinations.filter(
-    (d) => d.category === "Heritage" || d.category === "Cultural"
+    (d) => d.category === "Heritage" || d.category === "Cultural" || d.category === "Royalty"
   );
   const darkDests = destinations.filter(
-    (d) => d.category === "History" || d.category === "Reflection"
+    (d) => d.category === "History" || d.category === "Reflection" || d.category === "Memorial" || d.category === "Mystical"
   );
   const ecoDests = destinations.filter(
     (d) =>
       d.category === "Ecotravel" ||
       d.category === "Tonle Sap" ||
       d.category === "Sanctuary" ||
-      d.category === "Marine Eco"
+      d.category === "Marine Eco" ||
+      d.category === "Wilderness" ||
+      d.category === "Luxury" ||
+      d.category === "Historic"
   );
 
   return (
