@@ -56,12 +56,12 @@ export async function fetchDestinations() {
     const baseUrl = import.meta.env.BASE_URL || "/";
     const cleanBase = baseUrl.endsWith("/") ? baseUrl : baseUrl + "/";
     
-    // Try primary path
-    let response = await fetch(`${cleanBase}api/destinations.json`);
+    // Try primary path with cache buster
+    let response = await fetch(`${cleanBase}api/destinations.json?t=${Date.now()}`);
     
     if (!response.ok) {
-      // Try relative path
-      response = await fetch("./api/destinations.json");
+      // Try relative path with cache buster
+      response = await fetch(`./api/destinations.json?t=${Date.now()}`);
     }
 
     if (response.ok) {
