@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Plane, Compass, ArrowRight, Minus, Plus, X, Sparkles, Check, ChevronRight } from 'lucide-react';
+import { Plane, Compass, ArrowRight, Minus, Plus, X, Sparkles, Check, ChevronRight, CheckCircle2 } from 'lucide-react';
 import { LiveWeatherWidget } from '../components/LiveWeatherWidget';
 
 // Import local image assets
@@ -27,6 +27,9 @@ export const PlanTrip = () => {
 
   // Mobile layout state to toggle quick drawer for statement preview
   const [showMobileDrawer, setShowMobileDrawer] = useState(false);
+  
+  // State for quote confirmation modal
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   // 2. Pricing Database
   const tierPricing = {
@@ -199,12 +202,13 @@ export const PlanTrip = () => {
         <button
           type="button"
           onClick={() => {
-            alert(`Quote Request Sent!\nYour compiled estimate total is $${breakdown.total} USD.\nLead Concierge Sophea will contact you shortly.`);
+            setShowMobileDrawer(false);
+            setShowSuccessModal(true);
           }}
-          className="w-full bg-brand-gold hover:bg-brand-gold-light text-brand-dark py-4 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-2 rounded-full shadow-lg shadow-brand-gold/20 cursor-pointer"
+          className="w-full bg-brand-gold hover:bg-brand-gold-light text-brand-dark py-4 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-2.5 rounded-full shadow-lg shadow-brand-gold/20 cursor-pointer group"
         >
-          <span>Submit to Travel Architect</span>
-          <ArrowRight size={14} />
+          <span className="leading-none pt-[1px]">Submit to Travel Architect</span>
+          <ArrowRight size={15} className="shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
         </button>
         <div className="text-center text-[10px] text-brand-dark/50 font-light pt-2.5">
           *Rates are subject to high/low season occupancy details.
@@ -585,6 +589,103 @@ export const PlanTrip = () => {
             </button>
             <div className="pt-6">
               {renderStatementContent()}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Cool Luxury Travel Architect Confirmation Modal */}
+      {showSuccessModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-brand-dark/80 backdrop-blur-md animate-fade-in"
+          onClick={() => setShowSuccessModal(false)}
+        >
+          <div
+            className="bg-[#18130E] border border-brand-gold/40 text-brand-cream rounded-3xl p-6 sm:p-10 max-w-lg w-full shadow-2xl relative overflow-hidden space-y-6 animate-fade-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Ambient background glows */}
+            <div className="absolute -top-24 -right-24 w-60 h-60 rounded-full bg-brand-gold/15 blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-24 -left-24 w-60 h-60 rounded-full bg-brand-gold/10 blur-3xl pointer-events-none" />
+
+            {/* Close Button */}
+            <button
+              onClick={() => setShowSuccessModal(false)}
+              className="absolute top-5 right-5 w-9 h-9 rounded-full bg-white/10 border border-brand-gold/30 flex items-center justify-center text-brand-cream-dark/70 hover:text-white hover:bg-brand-gold hover:border-brand-gold hover:text-brand-dark transition-all cursor-pointer z-20"
+              aria-label="Close modal"
+            >
+              <X size={16} />
+            </button>
+
+            {/* Header Icon & Title */}
+            <div className="text-center space-y-3 relative z-10">
+              <div className="w-16 h-16 rounded-full bg-brand-gold/20 border-2 border-brand-gold flex items-center justify-center mx-auto text-brand-gold shadow-lg shadow-brand-gold/20">
+                <CheckCircle2 size={32} className="text-brand-gold animate-bounce" />
+              </div>
+
+              <div className="inline-flex items-center space-x-2 bg-brand-gold/15 px-4 py-1 rounded-full border border-brand-gold/30 text-brand-gold text-[10px] font-bold tracking-[0.25em] uppercase">
+                <Sparkles size={12} />
+                <span>BESPOKE EXPEDITION SUBMITTED</span>
+              </div>
+
+              <h3 className="font-cormorant text-3xl sm:text-4xl text-white font-normal uppercase tracking-wider leading-tight">
+                Itinerary Transmitted
+              </h3>
+              <p className="font-sans text-xs text-brand-cream-dark/80 font-light leading-relaxed max-w-sm mx-auto">
+                Your custom Cambodian journey specifications have been successfully delivered to our Lead Concierge desk.
+              </p>
+            </div>
+
+            {/* Quote Summary Ticket Box */}
+            <div className="bg-white/5 border border-brand-gold/25 rounded-2xl p-5 space-y-3 relative z-10">
+              <div className="flex justify-between items-center border-b border-brand-gold/15 pb-2.5">
+                <span className="text-[10px] text-brand-gold font-bold tracking-widest uppercase">SPECIFICATION TICKET</span>
+                <span className="font-mono text-xs text-brand-cream-dark/70">#AL-{days}D{travelers}G-2026</span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 text-xs">
+                <div>
+                  <span className="text-[10px] text-brand-cream-dark/50 uppercase block font-semibold">Duration & Guests</span>
+                  <span className="font-medium text-white">{days} Days / {travelers} Guests</span>
+                </div>
+                <div>
+                  <span className="text-[10px] text-brand-cream-dark/50 uppercase block font-semibold">Sanctuary Lodging</span>
+                  <span className="font-medium text-white capitalize">{tier}</span>
+                </div>
+                <div>
+                  <span className="text-[10px] text-brand-cream-dark/50 uppercase block font-semibold">Private Transport</span>
+                  <span className="font-medium text-white capitalize">{transport === 'tuk-tuk' ? 'Tuk-Tuk' : transport === 'chauffeur' ? 'Chauffeur' : 'Flights'}</span>
+                </div>
+                <div>
+                  <span className="text-[10px] text-brand-cream-dark/50 uppercase block font-semibold">Excursions Included</span>
+                  <span className="font-medium text-white">{selectedActivities.length} Experiences</span>
+                </div>
+              </div>
+
+              <div className="pt-3 border-t border-brand-gold/20 flex justify-between items-baseline">
+                <span className="text-xs font-bold text-brand-gold uppercase tracking-wider">Compiled Estimate</span>
+                <span className="font-cormorant text-2xl text-brand-gold font-bold">${breakdown.total} USD</span>
+              </div>
+            </div>
+
+            {/* Concierge Note */}
+            <div className="text-center space-y-1 relative z-10">
+              <p className="font-handwritten text-brand-gold text-base">
+                "Sophea will contact you within 2 hours with your private reservation privileges."
+              </p>
+              <span className="font-sans text-[10px] tracking-widest text-brand-cream-dark/40 uppercase block">
+                Angkor Lux Concierge Desk • Siem Reap
+              </span>
+            </div>
+
+            {/* Modal Action Buttons */}
+            <div className="pt-2 relative z-10 flex flex-col sm:flex-row gap-3">
+              <button
+                onClick={() => setShowSuccessModal(false)}
+                className="w-full bg-brand-gold hover:bg-brand-gold-light text-brand-dark py-3.5 rounded-full text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 hover:scale-105 shadow-lg shadow-brand-gold/20 cursor-pointer flex items-center justify-center space-x-2"
+              >
+                <span>DONE & RETURN TO PLANNER</span>
+              </button>
             </div>
           </div>
         </div>
