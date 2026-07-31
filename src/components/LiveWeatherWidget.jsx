@@ -37,7 +37,7 @@ export const LiveWeatherWidget = ({ title = "Traveler's Live Intelligence", subt
         <div>
           <div className="flex items-center space-x-2 text-brand-gold text-[10px] font-bold tracking-[0.25em] uppercase mb-1">
             <Radio size={12} className="animate-pulse text-green-400" />
-            <span>LIVE API INTELLIGENCE DESK</span>
+            <span>LIVE TRAVEL DESK</span>
           </div>
           <h3 className="font-cormorant text-2xl sm:text-3xl text-white font-normal uppercase tracking-wider">
             {title}
@@ -50,7 +50,7 @@ export const LiveWeatherWidget = ({ title = "Traveler's Live Intelligence", subt
         {/* Live Status Badge */}
         <div className="self-start sm:self-auto inline-flex items-center space-x-2 bg-brand-gold/15 border border-brand-gold/30 px-3.5 py-1.5 rounded-full text-[11px] text-brand-gold font-mono">
           <ShieldCheck size={14} className="text-green-400" />
-          <span>Real-time Data Stream</span>
+          <span>Live Data Stream</span>
         </div>
       </div>
 
@@ -66,7 +66,7 @@ export const LiveWeatherWidget = ({ title = "Traveler's Live Intelligence", subt
                 <span>Regional Weather Radar</span>
               </div>
               <span className="text-[10px] text-brand-cream-dark/50 font-mono">
-                Source: Open-Meteo Satellite API
+                Live Satellite Forecast
               </span>
             </div>
 
@@ -92,7 +92,7 @@ export const LiveWeatherWidget = ({ title = "Traveler's Live Intelligence", subt
           {loading ? (
             <div className="py-10 text-center space-y-2 text-brand-gold/80">
               <RefreshCw size={24} className="animate-spin mx-auto" />
-              <p className="text-xs font-mono">Fetching Satellite Telemetry for {selectedCity}...</p>
+              <p className="text-xs font-mono">Updating weather for {selectedCity}...</p>
             </div>
           ) : weather ? (
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center bg-brand-dark/50 p-5 rounded-xl border border-brand-gold/15">
@@ -137,7 +137,7 @@ export const LiveWeatherWidget = ({ title = "Traveler's Live Intelligence", subt
                 <span>USD to Khmer Riel (KHR)</span>
               </div>
               <span className="text-[10px] text-brand-cream-dark/50 font-mono">
-                Live Interbank Rates
+                Official Daily Exchange
               </span>
             </div>
 

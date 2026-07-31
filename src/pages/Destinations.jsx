@@ -133,14 +133,6 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
           <p className="font-handwritten text-brand-gold text-2xl tracking-wide">
             Discover the rich history, culture, and nature of Cambodia
           </p>
-
-          {/* API Badge indicator */}
-          <div className="pt-2 flex justify-center">
-            <span className="inline-flex items-center space-x-1.5 bg-brand-dark/70 border border-brand-gold/30 text-brand-gold text-[10px] font-mono tracking-widest uppercase px-3 py-1 rounded-full shadow">
-              <Database size={12} className="text-green-400" />
-              <span>Rest API Mode: /api/destinations.json</span>
-            </span>
-          </div>
         </div>
       </section>
 
@@ -151,9 +143,8 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
           <div className="py-20 text-center space-y-4">
             <Loader2 size={36} className="animate-spin text-brand-gold mx-auto" />
             <p className="font-serif text-lg text-brand-dark tracking-wide">
-              Fetching Destination Records via REST API...
+              Loading Destinations...
             </p>
-            <p className="text-xs text-brand-dark/50 font-mono">GET /api/destinations.json</p>
           </div>
         )}
 

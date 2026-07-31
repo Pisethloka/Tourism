@@ -547,7 +547,7 @@ export const PlanTrip = () => {
         <div className="mt-14">
           <LiveWeatherWidget
             title="Live Concierge Exchange & Regional Weather"
-            subtitle="Real-time satellite weather radar and USD to KHR interbank currency calculator"
+            subtitle="Real-time satellite weather radar and USD to KHR currency calculator"
           />
         </div>
       </main>
