@@ -7,7 +7,6 @@ import {
   MapPin,
   Clock,
   Calendar,
-  Sparkles,
   Info,
   Compass,
   Loader2,
@@ -16,8 +15,14 @@ import {
 import { fetchDestinations } from "../services/api";
 import { LiveWeatherWidget } from "../components/LiveWeatherWidget";
 
-// Hero Banner Image
+// Hero Banner Image & Destination Images
 import heroAngkor from "../assets/hero_angkor.png";
+import bayonTemplePhoto from "../assets/bayon_temple_photo.jpg";
+import kohRongSanloemPhoto from "../assets/koh_rong_sanloem_photo.jpg";
+import preahVihearPhoto from "../assets/preah_vihear_photo.jpg";
+import bokorHillPhoto from "../assets/bokor_hill_photo.jpg";
+import tuolSlengPhoto from "../assets/tuol_sleng_photo.jpg";
+import cardamomMountainsPhoto from "../assets/cardamom_mountains_photo.jpg";
 
 export const Destinations = ({ activeSection, setActiveTab }) => {
   const [destinations, setDestinations] = useState([]);
@@ -384,7 +389,21 @@ const DestinationCard = ({ item, isExpanded, onToggle, onClose, setActiveTab }) 
         onClick={onToggle}
       >
         <img
-          src={item.image}
+          src={
+            item.id === "cardamom-mountains" || item.title?.toLowerCase().includes("cardamom")
+              ? cardamomMountainsPhoto
+              : item.id === "tuol-sleng" || item.title?.toLowerCase().includes("tuol sleng")
+              ? tuolSlengPhoto
+              : item.id === "bokor-hill" || item.title?.toLowerCase().includes("bokor")
+              ? bokorHillPhoto
+              : item.id === "preah-vihear" || item.title?.toLowerCase().includes("preah vihear")
+              ? preahVihearPhoto
+              : item.id === "koh-rong" || item.title?.toLowerCase().includes("koh rong")
+              ? kohRongSanloemPhoto
+              : item.id === "bayon-temple" || item.title?.toLowerCase().includes("bayon")
+              ? bayonTemplePhoto
+              : item.image
+          }
           alt={item.title}
           className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         />
@@ -511,7 +530,7 @@ const DestinationCard = ({ item, isExpanded, onToggle, onClose, setActiveTab }) 
                     key={idx}
                     className="flex items-start space-x-3 text-xs sm:text-sm font-light text-brand-dark/85"
                   >
-                    <Sparkles
+                    <Compass
                       size={14}
                       className="text-brand-gold shrink-0 mt-0.5"
                     />

@@ -26,7 +26,7 @@
     "location": "Siem Reap (Angkor Thom)",
     "bestTime": "Nov – Feb (Late afternoon for golden light on stone faces)",
     "duration": "Half Day",
-    "imageKey": "bayonBuddha",
+    "imageKey": "bayonTemplePhoto",
     "shortDescription": "Famous for its 54 towers adorned with over 200 serene, smiling carved stone faces of Lokeshvara.",
     "overview": "Built in the late 12th century by King Jayavarman VII, Bayon stands at the exact center of the ancient walled city of Angkor Thom. It is renowned worldwide for its 54 gothic towers bearing 216 enigmatic, smiling faces carved directly into giant stone blocks, representing serenity, mercy, and royal wisdom.",
     "highlights": [
@@ -45,7 +45,7 @@
     "location": "Sihanoukville Coast",
     "bestTime": "Nov – May (Calm turquoise seas & bright sunshine)",
     "duration": "3 Days",
-    "imageKey": "kohRongBeach",
+    "imageKey": "kohRongSanloemPhoto",
     "shortDescription": "Crystalline turquoise waters, white sandy shores, and vibrant coral reefs under protection initiatives.",
     "overview": "Floating in the warm waters of the Gulf of Thailand, Koh Rong and Koh Rong Sanloem offer 43 kilometers of powdery white sand beaches, crystalline turquoise seas, coral reef marine reserves, and enchanting night-time bioluminescent plankton.",
     "highlights": [
@@ -64,7 +64,7 @@
     "location": "Northern Highlands",
     "bestTime": "Nov – Mar (Clear morning skies for panoramas)",
     "duration": "2 Days",
-    "imageKey": "preahVihear",
+    "imageKey": "preahVihearPhoto",
     "shortDescription": "A majestic clifftop temple perched on the edge of the Dângrêk Mountains, offering spectacular border views.",
     "overview": "Perched dramatically on a 525-meter cliff edge of the Dângrêk Mountains bordering Thailand, Preah Vihear is an exceptional UNESCO World Heritage site dedicated to Lord Shiva. Constructed over four centuries by successive Khmer monarchs, its unique linear layout stretches 800 meters along a mountain ridge.",
     "highlights": [
@@ -102,7 +102,7 @@
     "location": "Kampot Province",
     "bestTime": "Nov – Apr (Cool mountain breeze & clear coastal views)",
     "duration": "1 Day",
-    "imageKey": "bokorHill",
+    "imageKey": "bokorHillPhoto",
     "shortDescription": "A misty mountain canopy featuring haunting colonial ruins and panoramic views of the Gulf of Thailand.",
     "overview": "Elevated 1,000 meters above sea level within Preah Monivong National Park, Bokor offers a cool climate, shrouded rainforests, and haunting atmospheric ruins of a 1920s French hilltop resort town overlooking the Gulf of Thailand.",
     "highlights": [
@@ -121,7 +121,7 @@
     "location": "Phnom Penh Capital",
     "bestTime": "Year-round (Quiet morning reflections)",
     "duration": "2 Hours",
-    "imageKey": "tuolSleng",
+    "imageKey": "tuolSlengPhoto",
     "shortDescription": "A former high school turned interrogation facility, now standing as an invaluable memorial to historical truth.",
     "overview": "Formerly Tuol Svay Prey High School, this four-building complex was converted in 1975 into Security Prison 21 (S-21) by the Khmer Rouge regime. Today it stands as a solemn museum preserved in its original state to educate visitors, preserve historical evidence, and honor the memory of those lost.",
     "highlights": [
@@ -140,7 +140,7 @@
     "location": "Western Highlands",
     "bestTime": "Nov – Mar (Dry season hiking & wildlife tracking)",
     "duration": "3 Days",
-    "imageKey": "cardamomMountains",
+    "imageKey": "cardamomMountainsPhoto",
     "shortDescription": "One of Southeast Asia's last great wilderness areas, home to rare wildlife and hidden waterfalls.",
     "overview": "Spanning over 4.4 million hectares, the Cardamom Mountains constitute one of the last intact rainforest wilderness areas in mainland Southeast Asia. It protects endangered species including Asian elephants, Indochinese tigers, and Siamese crocodiles while fostering award-winning community ecotourism.",
     "highlights": [

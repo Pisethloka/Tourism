@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   X,
   ChevronLeft,
@@ -7,7 +7,23 @@ import {
   Star,
   MessageSquare,
   User,
+  ThumbsUp,
+  CheckCircle2,
+  Globe,
+  MapPin,
+  Quote,
+  Send,
+  Calendar,
+  Sparkles,
+  Loader2,
+  Trash2,
 } from "lucide-react";
+import {
+  fetchGuestbookNotes,
+  saveGuestbookNote,
+  toggleLikeGuestbookNote,
+  deleteGuestbookNote,
+} from "../services/api";
 import heroAngkor from "../assets/hero_angkor.png";
 import apsaraDancer from "../assets/apsara_dancer.png";
 import galleryCorridor from "../assets/gallery_corridor.png";
@@ -206,93 +222,79 @@ export const Gallery = () => {
   const [activeFilter, setActiveFilter] = useState("ALL PHOTOS");
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
-  // Reviews List State
-  const [reviews, setReviews] = useState([
-    {
-      id: 1,
-      name: "Jean-Pierre Laurent",
-      location: "Paris, France",
-      type: "foreigner",
-      stars: 5,
-      date: "June 02, 2026",
-      comment:
-        "An absolute masterpiece of human history. Watching the sun rise over the spires of Angkor Wat was a spiritual awakening. The local Khmer guides were incredibly knowledgeable.",
-    },
-    {
-      id: 2,
-      name: "Sopheap Sor",
-      location: "Siem Reap, Cambodia",
-      type: "local",
-      stars: 5,
-      date: "May 28, 2026",
-      comment:
-        "សប្បាយចិត្តខ្លាំងណាស់ដែលបានឃើញការអភិវឌ្ឍន៍ទេសចរណ៍ប្រកបដោយចីរភាពនៅទីនេះ។ មោទនភាពជាតិ! សូមស្វាគមន៍ភ្ញៀវទេសចរទាំងអស់មកកាន់ទឹកដីអង្គរដ៏ពិសិដ្ឋ។",
-    },
-    {
-      id: 3,
-      name: "Sarah Jenkins",
-      location: "Sydney, Australia",
-      type: "foreigner",
-      stars: 5,
-      date: "May 14, 2026",
-      comment:
-        "We spent three days in Koh Rong Sansloem. The water was crystalline and completely quiet. Angkor Lux curated details beautifully. A must-visit destination.",
-    },
-    {
-      id: 4,
-      name: "Channa Vattanak",
-      location: "Phnom Penh, Cambodia",
-      type: "local",
-      stars: 5,
-      date: "April 30, 2026",
-      comment:
-        "ព្រះរាជាណាចក្រអច្ឆរិយៈពិតប្រាកដ! ក្នុងនាមជាប្រជាជនក្នុងស្រុក យើងតែងតែស្វាគមន៍មិត្តភក្តិបរទេសដោយក្តីរីករាយ និងស្នាមញញឹម។ ស្រឡាញ់មាតុភូមិ!",
-    },
-  ]);
+  // Unified Reviews List State
+  const [reviews, setReviews] = useState([]);
+  const [loadingNotes, setLoadingNotes] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [newReview, setNewReview] = useState({
     name: "",
     location: "",
-    type: "foreigner",
     stars: 5,
     comment: "",
   });
 
   const [hoverStars, setHoverStars] = useState(null);
-  const [commentsFilter, setCommentsFilter] = useState("ALL");
+  const [showForm, setShowForm] = useState(false);
+  const [successToast, setSuccessToast] = useState(false);
 
-  const handleReviewSubmit = (e) => {
-    e.preventDefault();
-    if (!newReview.name || !newReview.comment) return;
+  // Load notes on component mount from API
+  useEffect(() => {
+    async function loadNotes() {
+      setLoadingNotes(true);
+      const data = await fetchGuestbookNotes();
+      setReviews(data);
+      setLoadingNotes(false);
+    }
+    loadNotes();
+  }, []);
 
-    const added = {
-      id: Date.now(),
-      name: newReview.name,
-      location:
-        newReview.location ||
-        (newReview.type === "local" ? "Cambodia" : "International"),
-      type: newReview.type,
-      stars: newReview.stars,
-      date: "Today",
-      comment: newReview.comment,
-    };
-
-    setReviews([added, ...reviews]);
-    setNewReview({
-      name: "",
-      location: "",
-      type: "foreigner",
-      stars: 5,
-      comment: "",
-    });
+  const handleLikeReview = async (id) => {
+    // Optimistic UI update
+    setReviews((prev) =>
+      prev.map((r) =>
+        r.id === id
+          ? {
+              ...r,
+              likes: (r.likes || 0) + (r.isLiked ? -1 : 1),
+              isLiked: !r.isLiked,
+            }
+          : r
+      )
+    );
+    await toggleLikeGuestbookNote(id);
   };
 
-  const filteredReviews = reviews.filter((rev) => {
-    if (commentsFilter === "ALL") return true;
-    if (commentsFilter === "FOREIGNERS") return rev.type === "foreigner";
-    if (commentsFilter === "LOCALS") return rev.type === "local";
-    return true;
-  });
+  const handleReviewSubmit = async (e) => {
+    e.preventDefault();
+    if (!newReview.name || !newReview.comment || isSubmitting) return;
+
+    setIsSubmitting(true);
+    try {
+      const result = await saveGuestbookNote(newReview);
+      if (result.success) {
+        setReviews(result.notes);
+        setNewReview({
+          name: "",
+          location: "",
+          stars: 5,
+          comment: "",
+        });
+        setShowForm(false);
+        setSuccessToast(true);
+        setTimeout(() => setSuccessToast(false), 4000);
+      }
+    } catch (err) {
+      console.error("Failed to post note:", err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleDeleteReview = async (id) => {
+    setReviews((prev) => prev.filter((r) => r.id !== id));
+    await deleteGuestbookNote(id);
+  };
 
   const filteredItems = galleryItems.filter(
     (item) => activeFilter === "ALL PHOTOS" || item.category === activeFilter,
@@ -414,137 +416,120 @@ export const Gallery = () => {
         </span>
       </div>
 
-      {/* Comments / Guestbook Section */}
+      {/* Unified Dark Luxury Guestbook Section */}
       <div className="max-w-4xl mx-auto px-6 md:px-12 mt-20 space-y-8 animate-fade-in">
-        <div className="bg-white rounded-none p-6 md:p-8 border border-brand-gold/10 shadow-sm space-y-6">
-          <div className="flex justify-between items-center pb-4 border-b border-brand-gold/10">
-            <h3 className="font-serif text-lg md:text-xl font-bold text-brand-dark tracking-wide uppercase flex items-center space-x-2.5">
-              <MessageSquare className="text-brand-gold" size={18} />
-              <span>Guest Guestbook</span>
-            </h3>
-          </div>
+        <div className="bg-brand-dark/95 text-brand-cream rounded-3xl p-6 sm:p-10 border border-brand-gold/30 shadow-2xl space-y-8 relative overflow-hidden backdrop-blur-xl">
+          {/* Background Ambient Radial Glow */}
+          <div className="absolute -top-32 -right-32 w-80 h-80 rounded-full bg-brand-gold/10 blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-32 -left-32 w-80 h-80 rounded-full bg-brand-gold/10 blur-3xl pointer-events-none" />
 
-          {/* Filter Navigation */}
-          <div className="flex space-x-6 text-[10px] tracking-widest font-semibold uppercase text-brand-dark/50 border-b border-brand-gold/10 pb-3">
-            {["ALL", "FOREIGNERS", "LOCALS"].map((filter) => (
-              <button
-                key={filter}
-                type="button"
-                onClick={() => setCommentsFilter(filter)}
-                className={`transition-colors py-1 relative cursor-pointer ${commentsFilter === filter ? "text-brand-gold font-bold" : "hover:text-brand-dark"}`}
-              >
-                <span>{filter}</span>
-                {commentsFilter === filter && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-brand-gold" />
-                )}
-              </button>
-            ))}
-          </div>
-
-          {/* Reviews list render */}
-          <div className="space-y-6 max-h-[400px] overflow-y-auto pr-2">
-            {filteredReviews.map((rev) => (
-              <div
-                key={rev.id}
-                className="p-5 bg-brand-cream/15 border border-brand-gold/5 flex flex-col space-y-3 animate-fade-in"
-              >
-                <div className="flex justify-between items-start">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-9 h-9 rounded-full bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center text-brand-gold shrink-0">
-                      <User size={16} />
-                    </div>
-                    <div>
-                      <h4 className="font-serif text-xs font-bold tracking-wide text-brand-dark uppercase">
-                        {rev.name}
-                      </h4>
-                      <span className="text-[9px] text-brand-dark/40 uppercase tracking-wider font-mono">
-                        {rev.location}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex text-brand-gold space-x-0.5">
-                    {[...Array(rev.stars)].map((_, i) => (
-                      <Star key={i} size={10} fill="currentColor" />
-                    ))}
-                  </div>
-                </div>
-                <p className="text-sm md:text-base font-normal text-brand-dark/90 leading-relaxed font-sans">
-                  "{rev.comment}"
-                </p>
-                <span className="text-[8px] text-brand-dark/30 text-right block font-mono">
-                  {rev.date}
+          {/* Header Bar */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-brand-gold/20 relative z-10">
+            <div>
+              <div className="flex items-center space-x-2.5">
+                <MessageSquare className="text-brand-gold shrink-0" size={24} />
+                <h3 className="font-cormorant text-2xl sm:text-3xl font-bold tracking-widest text-brand-gold uppercase">
+                  Guestbook
+                </h3>
+                <span className="text-xs font-semibold bg-brand-gold/15 text-brand-gold px-3 py-1 rounded-full border border-brand-gold/30 font-mono">
+                  {reviews.length} Notes
                 </span>
               </div>
-            ))}
+              <p className="text-sm text-brand-cream-dark/70 font-light mt-1">
+                Reflections and memories shared by travelers
+              </p>
+            </div>
+
+            {/* Header Right Actions */}
+            <div className="flex items-center space-x-3 self-start sm:self-auto">
+              <div className="hidden sm:flex items-center space-x-2 bg-white/5 border border-brand-gold/25 px-4 py-2 rounded-full text-xs text-brand-cream font-sans font-medium">
+                <span className="text-brand-gold font-bold text-sm">⭐ 4.9</span>
+                <span className="text-brand-cream-dark/40">•</span>
+                <span>Verified Notes</span>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowForm(!showForm)}
+                className="bg-brand-gold hover:bg-brand-gold-light text-brand-dark px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-brand-gold/20 cursor-pointer flex items-center space-x-1.5 font-sans"
+              >
+                <span>{showForm ? "Close Form" : "+ Write a Note"}</span>
+              </button>
+            </div>
           </div>
 
-          {/* Leave a comment form (Permanently Visible) */}
-          <div className="pt-6 border-t border-brand-gold/10">
+          {/* Success Toast Notification */}
+          {successToast && (
+            <div className="bg-green-900/90 text-green-100 border border-green-500/50 p-4 rounded-2xl text-xs flex items-center space-x-3 animate-fade-in relative z-10 shadow-lg font-sans">
+              <CheckCircle2 size={18} className="text-green-400 shrink-0" />
+              <div>
+                <span className="font-bold text-sm block">Note Published!</span>
+                <span className="text-xs text-green-200/90">
+                  Thank you! Your guestbook entry has been posted below.
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* Quick "Leave a Note" Form (Matching dark page design screenshot 100%) */}
+          {showForm && (
             <form
               onSubmit={handleReviewSubmit}
-              className="p-5 border border-brand-gold/20 bg-brand-cream-dark/15 space-y-4"
+              className="bg-brand-dark-accent/90 text-brand-cream p-6 sm:p-8 rounded-2xl border border-brand-gold/30 shadow-2xl space-y-5 relative z-10 animate-fade-in font-sans"
             >
-              <h4 className="font-serif text-xs font-bold uppercase tracking-wider text-brand-dark">
-                Share Your Experience / Leave a Comment
-              </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input
-                  type="text"
-                  required
-                  placeholder="Your Name"
-                  value={newReview.name}
-                  onChange={(e) =>
-                    setNewReview({ ...newReview, name: e.target.value })
-                  }
-                  className="w-full p-3 bg-white border border-brand-gold/20 text-xs font-light focus:outline-none focus:border-brand-gold"
-                />
-                <input
-                  type="text"
-                  placeholder="Location (e.g. London, UK)"
-                  value={newReview.location}
-                  onChange={(e) =>
-                    setNewReview({ ...newReview, location: e.target.value })
-                  }
-                  className="w-full p-3 bg-white border border-brand-gold/20 text-xs font-light focus:outline-none focus:border-brand-gold"
-                />
+              <div className="flex items-center justify-between border-b border-brand-gold/20 pb-3">
+                <h4 className="font-serif text-sm sm:text-base font-bold uppercase tracking-widest text-brand-gold">
+                  WRITE YOUR GUESTBOOK NOTE
+                </h4>
+                <button
+                  type="button"
+                  onClick={() => setShowForm(false)}
+                  className="text-brand-cream-dark/50 hover:text-white transition-colors"
+                >
+                  <X size={18} />
+                </button>
               </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="flex items-center space-x-4">
-                  <label className="text-[10px] font-bold text-brand-dark/50 uppercase">
-                    Category:
+                <div>
+                  <label className="text-[11px] font-bold text-brand-gold uppercase tracking-wider block mb-1.5 font-mono">
+                    YOUR NAME *
                   </label>
-                  <div className="flex space-x-3 text-xs">
-                    <label className="flex items-center space-x-1.5 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="type"
-                        checked={newReview.type === "foreigner"}
-                        onChange={() =>
-                          setNewReview({ ...newReview, type: "foreigner" })
-                        }
-                        className="text-brand-gold focus:ring-brand-gold"
-                      />
-                      <span>International</span>
-                    </label>
-                    <label className="flex items-center space-x-1.5 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="type"
-                        checked={newReview.type === "local"}
-                        onChange={() =>
-                          setNewReview({ ...newReview, type: "local" })
-                        }
-                        className="text-brand-gold focus:ring-brand-gold"
-                      />
-                      <span>Local</span>
-                    </label>
-                  </div>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. Jean-Pierre Laurent"
+                    value={newReview.name}
+                    onChange={(e) =>
+                      setNewReview({ ...newReview, name: e.target.value })
+                    }
+                    className="w-full p-3.5 bg-brand-dark/80 border border-brand-gold/30 rounded-xl text-sm text-white placeholder-brand-cream-dark/40 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/50 transition-all font-sans"
+                  />
                 </div>
-                <div className="flex items-center space-x-4">
-                  <label className="text-[10px] font-bold text-brand-dark/50 uppercase">
-                    Rating:
+
+                <div>
+                  <label className="text-[11px] font-bold text-brand-gold uppercase tracking-wider block mb-1.5 font-mono">
+                    LOCATION (OPTIONAL)
                   </label>
-                  <div className="flex items-center space-x-1">
+                  <input
+                    type="text"
+                    placeholder="e.g. Paris, France or Siem Reap"
+                    value={newReview.location}
+                    onChange={(e) =>
+                      setNewReview({ ...newReview, location: e.target.value })
+                    }
+                    className="w-full p-3.5 bg-brand-dark/80 border border-brand-gold/30 rounded-xl text-sm text-white placeholder-brand-cream-dark/40 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/50 transition-all font-sans"
+                  />
+                </div>
+              </div>
+
+              {/* Rating Star Picker */}
+              <div>
+                <label className="text-[11px] font-bold text-brand-gold uppercase tracking-wider block mb-1.5 font-mono">
+                  YOUR RATING
+                </label>
+                <div className="flex items-center space-x-3">
+                  <div className="flex items-center space-x-1.5 bg-brand-dark/80 px-3.5 py-2 rounded-xl border border-brand-gold/30">
                     {[1, 2, 3, 4, 5].map((starValue) => (
                       <button
                         key={starValue}
@@ -554,10 +539,10 @@ export const Gallery = () => {
                         }
                         onMouseEnter={() => setHoverStars(starValue)}
                         onMouseLeave={() => setHoverStars(null)}
-                        className="text-brand-gold hover:scale-110 transition-transform focus:outline-none cursor-pointer"
+                        className="text-brand-gold hover:scale-125 transition-transform focus:outline-none cursor-pointer"
                       >
                         <Star
-                          size={18}
+                          size={20}
                           fill={
                             (
                               hoverStars !== null
@@ -567,31 +552,181 @@ export const Gallery = () => {
                               ? "currentColor"
                               : "none"
                           }
-                          className="transition-colors duration-150"
                         />
                       </button>
                     ))}
                   </div>
+                  <span className="text-xs font-medium text-brand-cream-dark/80 font-sans">
+                    ({newReview.stars}.0 / 5.0 Rating)
+                  </span>
                 </div>
               </div>
-              <textarea
-                required
-                rows={3}
-                placeholder="Share your thoughts about your journey in Cambodia..."
-                value={newReview.comment}
-                onChange={(e) =>
-                  setNewReview({ ...newReview, comment: e.target.value })
-                }
-                className="w-full p-3 bg-white border border-brand-gold/20 text-xs font-light leading-relaxed resize-none focus:outline-none focus:border-brand-gold"
-              />
-              <button
-                type="submit"
-                className="bg-brand-dark hover:bg-brand-dark-accent text-brand-gold text-[10px] font-bold tracking-widest uppercase py-3 px-6 rounded-md transition-all cursor-pointer"
-              >
-                Submit Comment
-              </button>
+
+              {/* Message Textarea */}
+              <div>
+                <label className="text-[11px] font-bold text-brand-gold uppercase tracking-wider block mb-1.5 font-mono">
+                  YOUR REFLECTION / COMMENT *
+                </label>
+                <textarea
+                  required
+                  rows={3}
+                  placeholder="Share your thoughts about your experience in Cambodia..."
+                  value={newReview.comment}
+                  onChange={(e) =>
+                    setNewReview({ ...newReview, comment: e.target.value })
+                  }
+                  className="w-full p-3.5 bg-brand-dark/80 border border-brand-gold/30 rounded-xl text-sm text-white placeholder-brand-cream-dark/40 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/50 resize-none leading-relaxed font-sans transition-all"
+                />
+              </div>
+
+              <div className="flex justify-end space-x-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowForm(false)}
+                  className="px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-brand-cream-dark/60 hover:text-white transition-colors"
+                >
+                  CANCEL
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="bg-brand-gold hover:bg-brand-gold-light text-brand-dark px-7 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 hover:scale-105 shadow-lg shadow-brand-gold/20 flex items-center space-x-2 disabled:opacity-50 cursor-pointer"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 size={14} className="animate-spin" />
+                      <span>POSTING...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send size={14} />
+                      <span>POST NOTE</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </form>
+          )}
+
+          {/* Unified Reviews Feed */}
+          <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2 relative z-10 custom-scrollbar">
+            {loadingNotes ? (
+              <div className="py-12 text-center space-y-2 text-brand-gold">
+                <Loader2 size={24} className="animate-spin mx-auto" />
+                <span className="text-xs font-sans text-brand-cream-dark/60 block">Fetching guestbook notes...</span>
+              </div>
+            ) : reviews.length === 0 ? (
+              <div className="py-8 text-center text-xs text-brand-cream-dark/50 italic font-sans">
+                No notes posted yet. Be the first to leave a message!
+              </div>
+            ) : (
+              reviews.map((rev) => {
+                const initials = rev.name
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")
+                  .substring(0, 2)
+                  .toUpperCase();
+
+                return (
+                  <div
+                    key={rev.id}
+                    className="p-6 bg-white/5 border border-brand-gold/20 rounded-2xl flex flex-col space-y-3.5 shadow-sm hover:border-brand-gold/40 hover:bg-white/10 transition-all duration-300 relative overflow-hidden animate-fade-in font-sans"
+                  >
+                    <div className="flex justify-between items-start flex-wrap gap-2">
+                      {/* User Meta */}
+                      <div className="flex items-center space-x-3.5">
+                        <div className="w-11 h-11 rounded-full bg-brand-gold/20 border border-brand-gold/40 flex items-center justify-center font-bold text-brand-gold font-sans text-sm shrink-0">
+                          {initials}
+                        </div>
+                        <div>
+                          <div className="flex items-center space-x-1.5">
+                            <h4 className="font-sans text-base font-semibold text-white tracking-tight">
+                              {rev.name}
+                            </h4>
+                            <CheckCircle2 size={14} className="text-brand-gold" title="Verified Guest" />
+                            {rev.isMyNote && (
+                              <span className="text-[10px] font-mono font-bold bg-brand-gold/20 text-brand-gold border border-brand-gold/40 px-2 py-0.5 rounded-full">
+                                You
+                              </span>
+                            )}
+                          </div>
+                          <div className="flex items-center space-x-1 text-xs text-brand-cream-dark/60 font-medium mt-0.5">
+                            <MapPin size={11} className="text-brand-gold" />
+                            <span>{rev.location}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Rating Stars */}
+                      <div className="flex text-brand-gold space-x-1">
+                        {[...Array(rev.stars)].map((_, i) => (
+                          <Star key={i} size={14} fill="currentColor" />
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Comment text with Kantumruy Pro & Outfit typography */}
+                    <p className="text-sm sm:text-base font-normal text-brand-cream-dark/90 leading-relaxed font-sans pt-1">
+                      "{rev.comment}"
+                    </p>
+
+                    {/* Card Footer */}
+                    <div className="flex justify-between items-center pt-3 border-t border-brand-gold/15 text-xs text-brand-cream-dark/60 font-sans">
+                      <div className="flex items-center space-x-1.5">
+                        <Calendar size={12} className="text-brand-gold" />
+                        <span>{rev.date}</span>
+                      </div>
+
+                      <div className="flex items-center space-x-2">
+                        <button
+                          type="button"
+                          onClick={() => handleLikeReview(rev.id)}
+                          className={`px-3.5 py-1.5 rounded-full transition-all flex items-center space-x-1.5 cursor-pointer font-sans text-xs ${
+                            rev.isLiked
+                              ? "bg-brand-gold text-brand-dark font-bold scale-105"
+                              : "bg-white/5 border border-brand-gold/20 hover:bg-brand-gold/20 text-brand-gold"
+                          }`}
+                        >
+                          <ThumbsUp size={12} className={rev.isLiked ? "fill-brand-dark" : ""} />
+                          <span>Helpful ({rev.likes || 0})</span>
+                        </button>
+
+                        {/* Show Delete Button ONLY for notes posted by the current user */}
+                        {rev.isMyNote && (
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteReview(rev.id)}
+                            title="Delete your note"
+                            className="p-1.5 rounded-full bg-white/5 hover:bg-red-500/20 text-brand-cream-dark/50 hover:text-red-400 border border-brand-gold/15 transition-colors cursor-pointer flex items-center space-x-1"
+                          >
+                            <Trash2 size={12} />
+                            <span className="text-[10px] font-sans text-red-300 hidden sm:inline">Delete</span>
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            )}
           </div>
+
+          {/* Quick Add Note Footer Bar (if form is closed) */}
+          {!showForm && (
+            <div className="pt-4 border-t border-brand-gold/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs relative z-10">
+              <span className="text-brand-cream-dark/70 font-light">
+                Visited Cambodia recently? Add your thoughts to our Guestbook!
+              </span>
+              <button
+                type="button"
+                onClick={() => setShowForm(true)}
+                className="bg-brand-gold hover:bg-brand-gold-light text-brand-dark px-6 py-2.5 rounded-full font-bold uppercase tracking-wider transition-all cursor-pointer shadow-lg shadow-brand-gold/20"
+              >
+                + Write a Note
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

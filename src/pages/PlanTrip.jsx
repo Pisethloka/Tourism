@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Plane, Compass, ArrowRight, Minus, Plus, X, Sparkles, Check, ChevronRight, CheckCircle2 } from 'lucide-react';
+import { Plane, Compass, ArrowRight, Minus, Plus, X, Check, ChevronRight, CheckCircle2 } from 'lucide-react';
 import { LiveWeatherWidget } from '../components/LiveWeatherWidget';
 
 // Import local image assets
@@ -115,8 +115,7 @@ export const PlanTrip = () => {
       <div className="space-y-6 relative z-10">
         {/* Statement Brand Header */}
         <div className="text-center space-y-1">
-          <div className="inline-flex items-center space-x-1.5 text-brand-gold text-[10px] font-bold tracking-[0.25em] uppercase">
-            <Sparkles size={10} />
+          <div className="inline-flex items-center text-brand-gold text-[10px] font-bold tracking-[0.25em] uppercase">
             <span>BESPOKE STATEMENT</span>
           </div>
           <h3 className="font-cormorant text-2xl tracking-[0.2em] font-normal text-brand-dark uppercase">
@@ -223,8 +222,7 @@ export const PlanTrip = () => {
       <header className="bg-brand-forest text-brand-cream-dark pt-14 pb-16 px-6 md:px-12 text-center relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-brand-gold/10 blur-3xl pointer-events-none" />
         <div className="max-w-4xl mx-auto space-y-4 relative z-10 animate-fade-in">
-          <div className="inline-flex items-center space-x-2 bg-brand-gold/15 backdrop-blur-md px-4 py-1.5 rounded-full border border-brand-gold/30">
-            <Sparkles size={12} className="text-brand-gold animate-pulse" />
+          <div className="inline-flex items-center bg-brand-gold/15 backdrop-blur-md px-4 py-1.5 rounded-full border border-brand-gold/30">
             <span className="font-handwritten text-brand-gold text-base sm:text-lg tracking-wide">
               Crafting Your Custom Cambodian Expedition
             </span>
@@ -623,8 +621,7 @@ export const PlanTrip = () => {
                 <CheckCircle2 size={32} className="text-brand-gold animate-bounce" />
               </div>
 
-              <div className="inline-flex items-center space-x-2 bg-brand-gold/15 px-4 py-1 rounded-full border border-brand-gold/30 text-brand-gold text-[10px] font-bold tracking-[0.25em] uppercase">
-                <Sparkles size={12} />
+              <div className="inline-flex items-center bg-brand-gold/15 px-4 py-1 rounded-full border border-brand-gold/30 text-brand-gold text-[10px] font-bold tracking-[0.25em] uppercase">
                 <span>BESPOKE EXPEDITION SUBMITTED</span>
               </div>
 

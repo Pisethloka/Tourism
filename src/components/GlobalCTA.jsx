@@ -1,4 +1,4 @@
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export const GlobalCTA = ({ setActiveTab }) => {
   return (
@@ -7,8 +7,7 @@ export const GlobalCTA = ({ setActiveTab }) => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-xl h-80 rounded-full bg-brand-gold/10 blur-3xl pointer-events-none" />
       
       <div className="max-w-3xl mx-auto space-y-6 relative z-10">
-        <div className="inline-flex items-center space-x-2 bg-brand-gold/15 backdrop-blur-md px-4 py-1.5 rounded-full border border-brand-gold/30">
-          <Sparkles size={12} className="text-brand-gold" />
+        <div className="inline-flex items-center bg-brand-gold/15 backdrop-blur-md px-4 py-1.5 rounded-full border border-brand-gold/30">
           <span className="font-handwritten text-brand-gold text-lg tracking-wide">
             Your Bespoke Odyssey Begins Here
           </span>

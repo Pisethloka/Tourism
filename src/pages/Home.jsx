@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { ArrowRight, Compass, Sparkles, MapPin, ChevronRight } from "lucide-react";
+import {
+  ArrowRight,
+  Compass,
+  MapPin,
+  ChevronRight,
+} from "lucide-react";
 
 // Image imports
 import heroAngkor from "../assets/hero_angkor.png";
@@ -23,10 +28,22 @@ export const Home = ({ setActiveTab }) => {
   // Array of images for the auto-rotating gallery preview
   const slideshowImages = [
     { src: galleryAngkor, label: "Angkor Wat", location: "Siem Reap Province" },
-    { src: galleryMuseum, label: "National Museum", location: "Phnom Penh Capital" },
-    { src: gallerySkyline, label: "Mekong River Skyline", location: "Phnom Penh" },
+    {
+      src: galleryMuseum,
+      label: "National Museum",
+      location: "Phnom Penh Capital",
+    },
+    {
+      src: gallerySkyline,
+      label: "Mekong River Skyline",
+      location: "Phnom Penh",
+    },
     { src: galleryPubstreet, label: "Heritage Quarter", location: "Siem Reap" },
-    { src: galleryMountain, label: "Cardamom Mountains", location: "Koh Kong Wilderness" },
+    {
+      src: galleryMountain,
+      label: "Cardamom Mountains",
+      location: "Koh Kong Wilderness",
+    },
   ];
 
   // Rotate images automatically
@@ -47,23 +64,21 @@ export const Home = ({ setActiveTab }) => {
           alt="Angkor Sanctuary"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/60 via-brand-dark/40 to-brand-dark/70" />
-        
+
         <div className="relative z-10 text-center space-y-6 max-w-4xl px-6 md:px-12 mt-12">
-          <div className="inline-flex items-center space-x-2 bg-brand-gold/15 backdrop-blur-md px-4 py-1.5 rounded-full border border-brand-gold/30">
-            <Sparkles size={12} className="text-brand-gold animate-pulse" />
+          <div className="inline-flex items-center bg-brand-gold/15 backdrop-blur-md px-4 py-1.5 rounded-full border border-brand-gold/30">
             <span className="font-handwritten text-brand-gold text-base sm:text-lg tracking-wider">
               Discover the Soul of the Kingdom
             </span>
           </div>
 
-          <h1
-            className="font-cormorant text-4xl sm:text-6xl md:text-8xl text-white font-normal uppercase tracking-[0.2em] leading-none text-shadow"
-          >
+          <h1 className="font-cormorant text-4xl sm:text-6xl md:text-8xl text-white font-normal uppercase tracking-[0.2em] leading-none text-shadow">
             ANGKOR LUX
           </h1>
 
           <p className="font-sans text-sm sm:text-base md:text-lg text-brand-cream-dark/90 max-w-xl mx-auto leading-relaxed font-light">
-            Step into timeless stone sanctuaries, pristine coastal retreats, and centuries of vibrant Khmer heritage.
+            Step into timeless stone sanctuaries, pristine coastal retreats, and
+            centuries of vibrant Khmer heritage.
           </p>
 
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -74,7 +89,7 @@ export const Home = ({ setActiveTab }) => {
               <span>EXPLORE DESTINATIONS</span>
               <ArrowRight size={14} />
             </button>
-            
+
             <button
               onClick={() => setActiveTab("plan-trip")}
               className="bg-white/10 hover:bg-white/20 text-white backdrop-blur-md px-8 py-4 text-xs font-bold tracking-[0.2em] uppercase rounded-full border border-white/25 hover:border-brand-gold/50 transition-all duration-300 cursor-pointer"
@@ -89,7 +104,7 @@ export const Home = ({ setActiveTab }) => {
       <section className="bg-brand-forest text-brand-cream-dark py-28 border-y border-brand-gold/20 relative overflow-hidden">
         {/* Subtle decorative gold background glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-brand-gold/10 blur-3xl pointer-events-none" />
-        
+
         <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-center">
             {/* Left Column */}
@@ -100,7 +115,7 @@ export const Home = ({ setActiveTab }) => {
               <h2 className="font-cormorant text-3xl sm:text-5xl md:text-6xl text-white font-light tracking-wide uppercase leading-tight">
                 A Kingdom <br className="hidden md:block" /> Transcending Time
               </h2>
-              
+
               {/* Diamond Ornament Divider */}
               <div className="flex items-center space-x-3 pt-3">
                 <div className="w-2 h-2 rotate-45 bg-brand-gold" />
@@ -111,9 +126,11 @@ export const Home = ({ setActiveTab }) => {
             {/* Right Column */}
             <div className="md:col-span-7 border-l-2 border-brand-gold/30 pl-8 md:pl-12 py-3 space-y-4">
               <p className="font-sans text-base sm:text-lg text-brand-cream-dark/90 leading-relaxed font-light">
-                Welcome to Cambodia — where ancient royal empires meet untouched natural splendor. 
-                From the majestic sandstone spires of Angkor Wat to tranquil volcanic crater lakes 
-                and sun-kissed marine islands, every horizon invites an extraordinary personal narrative.
+                Welcome to Cambodia — where ancient royal empires meet untouched
+                natural splendor. From the majestic sandstone spires of Angkor
+                Wat to tranquil volcanic crater lakes and sun-kissed marine
+                islands, every horizon invites an extraordinary personal
+                narrative.
               </p>
               <p className="font-handwritten text-brand-gold text-xl sm:text-2xl">
                 Authentic, majestic, and undeniably captivating.
@@ -134,7 +151,8 @@ export const Home = ({ setActiveTab }) => {
           </h2>
           <div className="w-20 h-[1px] bg-brand-gold mx-auto" />
           <p className="font-sans text-sm sm:text-base text-brand-dark/75 max-w-lg mx-auto leading-relaxed font-light">
-            Curated pathways tailored to your spirit of exploration — from ancient heritage and poignant history to pristine ecological havens.
+            Curated pathways tailored to your spirit of exploration — from
+            ancient heritage and poignant history to pristine ecological havens.
           </p>
         </div>
 
@@ -157,7 +175,8 @@ export const Home = ({ setActiveTab }) => {
                 Cultural Tourism
               </h3>
               <p className="text-xs font-light text-brand-cream-dark/85 leading-relaxed">
-                Ancient stone sanctuaries, sacred Apsara dances, and living artisan traditions.
+                Ancient stone sanctuaries, sacred Apsara dances, and living
+                artisan traditions.
               </p>
               <div className="pt-2 flex items-center text-brand-gold text-xs font-semibold uppercase tracking-wider group-hover:translate-x-1 transition-transform">
                 <span>Explore Heritage</span>
@@ -184,7 +203,8 @@ export const Home = ({ setActiveTab }) => {
                 Dark Tourism
               </h3>
               <p className="text-xs font-light text-brand-cream-dark/85 leading-relaxed">
-                Poignant historic memorials, stories of enduring resilience, and peaceful spaces for reflection.
+                Poignant historic memorials, stories of enduring resilience, and
+                peaceful spaces for reflection.
               </p>
               <div className="pt-2 flex items-center text-brand-gold text-xs font-semibold uppercase tracking-wider group-hover:translate-x-1 transition-transform">
                 <span>Learn History</span>
@@ -211,7 +231,8 @@ export const Home = ({ setActiveTab }) => {
                 Eco Tourism
               </h3>
               <p className="text-xs font-light text-brand-cream-dark/85 leading-relaxed">
-                Volcanic crater lakes, ancient cloud forests, and protected marine archipelagos.
+                Volcanic crater lakes, ancient cloud forests, and protected
+                marine archipelagos.
               </p>
               <div className="pt-2 flex items-center text-brand-gold text-xs font-semibold uppercase tracking-wider group-hover:translate-x-1 transition-transform">
                 <span>Explore Nature</span>
@@ -233,7 +254,8 @@ export const Home = ({ setActiveTab }) => {
           </h2>
           <div className="w-16 h-[1px] bg-brand-gold mx-auto" />
           <p className="font-sans text-sm text-brand-dark/70 max-w-md mx-auto mt-2 leading-relaxed">
-            A glimpse into the stunning scenery, rich culture, and authentic flavors of Cambodia.
+            A glimpse into the stunning scenery, rich culture, and authentic
+            flavors of Cambodia.
           </p>
         </div>
 
@@ -246,7 +268,7 @@ export const Home = ({ setActiveTab }) => {
               className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent" />
-            
+
             <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end text-white">
               <div>
                 <span className="text-brand-gold text-[10px] uppercase font-bold tracking-widest block">
@@ -271,7 +293,9 @@ export const Home = ({ setActiveTab }) => {
                   key={idx}
                   onClick={() => setSlideIndex(idx)}
                   className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                    idx === slideIndex ? "bg-brand-gold scale-125" : "bg-white/40"
+                    idx === slideIndex
+                      ? "bg-brand-gold scale-125"
+                      : "bg-white/40"
                   }`}
                   aria-label={`Slide ${idx + 1}`}
                 />
@@ -295,7 +319,7 @@ export const Home = ({ setActiveTab }) => {
                 Khmer Gastronomy
               </span>
             </div>
-            
+
             <div
               className="rounded-xl overflow-hidden h-52 border border-brand-gold/15 shadow-sm group cursor-pointer relative"
               onClick={() => setActiveTab("gallery")}

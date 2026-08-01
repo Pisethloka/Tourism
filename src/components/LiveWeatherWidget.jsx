@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { CloudSun, DollarSign, RefreshCw, Radio, Sparkles, Compass, ArrowRightLeft, ShieldCheck } from "lucide-react";
+import { CloudSun, DollarSign, RefreshCw, Radio, Compass, ArrowRightLeft, ShieldCheck } from "lucide-react";
 import { fetchLiveWeather, fetchExchangeRate } from "../services/api";
 
 export const LiveWeatherWidget = ({ title = "Traveler's Live Intelligence", subtitle = "Real-time weather radar & financial exchange guide for Cambodia" }) => {
