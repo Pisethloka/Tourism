@@ -107,39 +107,39 @@ export const PlanTrip = () => {
 
   // Main Statement Card renderer
   const renderStatementContent = () => (
-    <div className="bg-[#FAF8F5] border border-brand-gold/30 p-6 md:p-8 rounded-3xl shadow-xl flex flex-col justify-between h-full relative overflow-hidden">
+    <div className="bg-[#FAF8F5] border border-brand-gold/30 p-5 md:p-6 rounded-3xl shadow-xl flex flex-col justify-between relative overflow-hidden">
       {/* Decorative ambient background glow */}
       <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-brand-gold/10 blur-2xl pointer-events-none" />
 
-      <div className="space-y-6 relative z-10">
+      <div className="space-y-3.5 relative z-10">
         {/* Statement Brand Header */}
-        <div className="text-center space-y-1">
-          <div className="inline-flex items-center text-brand-gold text-[10px] font-bold tracking-[0.25em] uppercase">
+        <div className="text-center space-y-0.5">
+          <div className="inline-flex items-center text-brand-gold text-[9px] font-bold tracking-[0.25em] uppercase">
             <span>BESPOKE STATEMENT</span>
           </div>
           <h3 className="font-cormorant text-2xl tracking-[0.2em] font-normal text-brand-dark uppercase">
             ANGKOR LUX
           </h3>
-          <span className="font-sans text-[10px] tracking-[0.25em] text-brand-dark/50 uppercase block">
+          <span className="font-sans text-[9px] tracking-[0.25em] text-brand-dark/50 uppercase block">
             Tailored Expedition Estimate
           </span>
-          <div className="w-12 h-[1px] bg-brand-gold/40 mx-auto pt-1" />
+          <div className="w-12 h-[1px] bg-brand-gold/40 mx-auto pt-0.5" />
         </div>
 
         {/* Statement Details */}
-        <div className="flex justify-between items-end text-xs font-sans text-brand-dark/60 border-b border-brand-gold/15 pb-4">
+        <div className="flex justify-between items-end text-xs font-sans text-brand-dark/60 border-b border-brand-gold/15 pb-3">
           <div>
-            <span className="block text-[10px] tracking-wider font-bold text-brand-dark/40 uppercase">PREPARED FOR</span>
+            <span className="block text-[9px] tracking-wider font-bold text-brand-dark/40 uppercase">PREPARED FOR</span>
             <span className="block mt-0.5 font-semibold text-brand-dark">Honored Guest</span>
           </div>
           <div className="text-right">
-            <span className="block text-[10px] tracking-wider font-bold text-brand-dark/40 uppercase">STATEMENT NO.</span>
+            <span className="block text-[9px] tracking-wider font-bold text-brand-dark/40 uppercase">STATEMENT NO.</span>
             <span className="block mt-0.5 font-mono text-brand-gold-dark font-semibold">#AL-{days}D{travelers}G-2026</span>
           </div>
         </div>
 
         {/* Itemized Estimate List */}
-        <div className="space-y-3.5 py-1 text-sm">
+        <div className="space-y-2 py-0.5 text-xs">
           <div className="flex justify-between items-center">
             <span className="font-sans text-xs font-light text-brand-dark/80">
               Sanctuary Lodging ({days} nights, <span className="capitalize font-medium">{tier}</span>)
@@ -170,25 +170,25 @@ export const PlanTrip = () => {
         </div>
 
         {/* Total Estimate */}
-        <div className="pt-4 border-t border-brand-gold/25">
+        <div className="pt-3 border-t border-brand-gold/25">
           <div className="flex justify-between items-baseline">
             <span className="font-sans text-xs font-bold uppercase tracking-wider text-brand-dark">Estimated Total</span>
-            <span className="font-cormorant text-3xl font-normal text-brand-gold-dark">
-              ${breakdown.total} <span className="text-xs font-sans text-brand-dark/50 uppercase tracking-widest font-normal">USD</span>
+            <span className="font-cormorant text-2xl font-normal text-brand-gold-dark">
+              ${breakdown.total} <span className="text-[10px] font-sans text-brand-dark/50 uppercase tracking-widest font-normal">USD</span>
             </span>
           </div>
         </div>
 
         {/* Concierge Handwritten note */}
-        <div className="pt-4 border-t border-brand-gold/15 space-y-2 text-center">
-          <p className="font-handwritten text-brand-gold-dark text-lg leading-relaxed max-w-xs mx-auto">
+        <div className="pt-3 border-t border-brand-gold/15 space-y-1 text-center">
+          <p className="font-handwritten text-brand-gold-dark text-base leading-snug max-w-xs mx-auto">
             "Each pilgrimage is a unique canvas. We curate every journey with absolute devotion to detail."
           </p>
           <div>
-            <span className="font-handwritten text-brand-gold-dark text-xl block whitespace-nowrap">
+            <span className="font-handwritten text-brand-gold-dark text-lg block whitespace-nowrap">
               Sophea & The Angkor Lux Team
             </span>
-            <span className="font-sans text-[10px] tracking-widest text-brand-dark/40 uppercase block mt-0.5">
+            <span className="font-sans text-[9px] tracking-widest text-brand-dark/40 uppercase block mt-0.5">
               Lead Concierge
             </span>
           </div>
@@ -196,19 +196,19 @@ export const PlanTrip = () => {
       </div>
 
       {/* Action CTA Button */}
-      <div className="pt-6 mt-6 border-t border-brand-gold/20 relative z-10">
+      <div className="pt-3.5 mt-3.5 border-t border-brand-gold/20 relative z-10">
         <button
           type="button"
           onClick={() => {
             setShowMobileDrawer(false);
             setShowSuccessModal(true);
           }}
-          className="w-full bg-brand-gold hover:bg-brand-gold-light text-brand-dark py-4 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-2.5 rounded-full shadow-lg shadow-brand-gold/20 cursor-pointer group"
+          className="w-full bg-brand-gold hover:bg-brand-gold-light text-brand-dark py-3.5 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-2.5 rounded-full shadow-lg shadow-brand-gold/20 cursor-pointer group"
         >
           <span className="leading-none pt-[1px]">Submit to Travel Architect</span>
           <ArrowRight size={15} className="shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
         </button>
-        <div className="text-center text-[10px] text-brand-dark/50 font-light pt-2.5">
+        <div className="text-center text-[9px] text-brand-dark/50 font-light pt-2">
           *Rates are subject to high/low season occupancy details.
         </div>
       </div>
@@ -538,7 +538,7 @@ export const PlanTrip = () => {
           </div>
 
           {/* Right Column: Sticky Compiled Statement invoice panel (Desktop only) */}
-          <div className="hidden lg:block lg:col-span-4 lg:sticky lg:top-28">
+          <div className="hidden lg:block lg:col-span-4 lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto">
             {renderStatementContent()}
           </div>
 
