@@ -13,7 +13,6 @@ import {
   Database,
 } from "lucide-react";
 import { fetchDestinations } from "../services/api";
-import { LiveWeatherWidget } from "../components/LiveWeatherWidget";
 
 // Hero Banner Image & Destination Images
 import heroAngkor from "../assets/hero_angkor.png";
@@ -354,14 +353,6 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
                   )}
                 </button>
               </div>
-            </section>
-
-            {/* Live Weather & Currency Exchange Desk */}
-            <section className="pt-8">
-              <LiveWeatherWidget
-                title="Cambodian Climate & Currency Guide"
-                subtitle="Live satellite weather radar and USD to Khmer Riel (KHR) exchange calculator"
-              />
             </section>
           </>
         )}

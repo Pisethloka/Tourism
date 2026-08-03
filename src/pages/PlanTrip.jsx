@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Plane, Compass, ArrowRight, Minus, Plus, X, Check, ChevronRight, CheckCircle2 } from 'lucide-react';
-import { LiveWeatherWidget } from '../components/LiveWeatherWidget';
 
 // Import local image assets
 import galleryCorridor from '../assets/gallery_corridor.png';
@@ -543,14 +542,6 @@ export const PlanTrip = () => {
             {renderStatementContent()}
           </div>
 
-        </div>
-
-        {/* Live Weather & Currency Desk inside Trip Planner */}
-        <div className="mt-14">
-          <LiveWeatherWidget
-            title="Live Concierge Exchange & Regional Weather"
-            subtitle="Real-time satellite weather radar and USD to KHR currency calculator"
-          />
         </div>
       </main>
 

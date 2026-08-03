@@ -58,7 +58,7 @@ const IMAGE_MAP = {
 const CITIES_COORDS = {
   "Siem Reap": { lat: 13.36, lon: 103.86 },
   "Phnom Penh": { lat: 11.55, lon: 104.92 },
-  "Kampot": { lat: 10.61, lon: 104.18 },
+  Kampot: { lat: 10.61, lon: 104.18 },
   "Koh Rong": { lat: 10.62, lon: 103.52 },
 };
 
@@ -76,10 +76,12 @@ export async function fetchDestinations() {
   try {
     const baseUrl = import.meta.env.BASE_URL || "/";
     const cleanBase = baseUrl.endsWith("/") ? baseUrl : baseUrl + "/";
-    
+
     // Try primary path with cache buster
-    let response = await fetch(`${cleanBase}api/destinations.json?t=${Date.now()}`);
-    
+    let response = await fetch(
+      `${cleanBase}api/destinations.json?t=${Date.now()}`,
+    );
+
     if (!response.ok) {
       // Try relative path with cache buster
       response = await fetch(`./api/destinations.json?t=${Date.now()}`);
@@ -104,17 +106,35 @@ export async function fetchDestinations() {
   // Map image keys to actual imported image assets
   return data.map((dest) => {
     let img = IMAGE_MAP[dest.imageKey];
-    if (dest.id === "cardamom-mountains" || dest.title?.toLowerCase().includes("cardamom")) {
+    if (
+      dest.id === "cardamom-mountains" ||
+      dest.title?.toLowerCase().includes("cardamom")
+    ) {
       img = cardamomMountainsPhoto;
-    } else if (dest.id === "tuol-sleng" || dest.title?.toLowerCase().includes("tuol sleng")) {
+    } else if (
+      dest.id === "tuol-sleng" ||
+      dest.title?.toLowerCase().includes("tuol sleng")
+    ) {
       img = tuolSlengPhoto;
-    } else if (dest.id === "bokor-hill" || dest.title?.toLowerCase().includes("bokor")) {
+    } else if (
+      dest.id === "bokor-hill" ||
+      dest.title?.toLowerCase().includes("bokor")
+    ) {
       img = bokorHillPhoto;
-    } else if (dest.id === "preah-vihear" || dest.title?.toLowerCase().includes("preah vihear")) {
+    } else if (
+      dest.id === "preah-vihear" ||
+      dest.title?.toLowerCase().includes("preah vihear")
+    ) {
       img = preahVihearPhoto;
-    } else if (dest.id === "koh-rong" || dest.title?.toLowerCase().includes("koh rong")) {
+    } else if (
+      dest.id === "koh-rong" ||
+      dest.title?.toLowerCase().includes("koh rong")
+    ) {
       img = kohRongSanloemPhoto;
-    } else if (dest.id === "bayon-temple" || dest.title?.toLowerCase().includes("bayon")) {
+    } else if (
+      dest.id === "bayon-temple" ||
+      dest.title?.toLowerCase().includes("bayon")
+    ) {
       img = bayonTemplePhoto;
     } else if (!img) {
       img = heroAngkor;
@@ -225,7 +245,10 @@ function getMyNoteIds() {
 function addMyNoteId(id) {
   try {
     const current = getMyNoteIds();
-    localStorage.setItem(MY_NOTES_STORAGE_KEY, JSON.stringify([...current, id]));
+    localStorage.setItem(
+      MY_NOTES_STORAGE_KEY,
+      JSON.stringify([...current, id]),
+    );
   } catch (e) {}
 }
 
@@ -240,7 +263,7 @@ const DEFAULT_GUESTBOOK_NOTES = [
     isLiked: false,
     isMyNote: false,
     comment:
-      "An absolute masterpiece of human history. Watching the sun rise over the spires of Angkor Wat was a spiritual awakening. The local Khmer guides were incredibly knowledgeable.",
+      "Pictures really don't do Angkor Wat justice. It's huge, beautiful, and full of history. I spent hours exploring the temples, and every corner had something amazing to see.",
   },
   {
     id: 2,
@@ -304,14 +327,14 @@ export async function fetchGuestbookNotes() {
         notes = parsed.filter(
           (n) =>
             !n.comment?.toLowerCase().includes("sdfsdfs") &&
-            !n.comment?.toLowerCase().includes("test")
+            !n.comment?.toLowerCase().includes("test"),
         );
       }
     }
   } catch (err) {
     console.warn("Error loading saved guestbook notes:", err);
   }
-  
+
   const myNoteIds = getMyNoteIds();
   return notes.map((note) => ({
     ...note,
@@ -363,7 +386,7 @@ export async function toggleLikeGuestbookNote(noteId) {
             likes: (note.likes || 0) + (note.isLiked ? -1 : 1),
             isLiked: !note.isLiked,
           }
-        : note
+        : note,
     );
     localStorage.setItem(GUESTBOOK_STORAGE_KEY, JSON.stringify(updated));
     return updated;
