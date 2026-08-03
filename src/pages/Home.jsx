@@ -159,9 +159,9 @@ export const Home = ({ setActiveTab }) => {
 
           <div className="relative rounded-3xl overflow-hidden border-2 border-brand-gold/30 shadow-2xl bg-brand-dark aspect-video">
             <iframe
-              src="https://www.youtube.com/embed/RTAP1Nk9fEE?autoplay=0&rel=0"
+              src="https://www.youtube.com/embed/RTAP1Nk9fEE?autoplay=1&mute=1&loop=1&playlist=RTAP1Nk9fEE&rel=0"
               title="Cambodia Showcase Video"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
               className="w-full h-full object-cover"
             />
