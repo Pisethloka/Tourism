@@ -288,9 +288,14 @@ export const Home = ({ setActiveTab }) => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          {/* Main Slideshow Frame */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Main Slideshow Frame: Cambodian Destinations */}
           <div className="lg:col-span-6 relative rounded-2xl overflow-hidden aspect-[4/3] border border-brand-gold/20 shadow-xl group">
+            {/* Destination Place Badge (Left Top) */}
+            <span className="absolute top-4 left-4 bg-brand-gold text-brand-dark backdrop-blur-md px-3.5 py-1 text-[10px] font-bold tracking-[0.2em] uppercase rounded-full shadow border border-brand-gold z-10 flex items-center space-x-1">
+              <span>📍 CAMBODIAN DESTINATION</span>
+            </span>
+
             <img
               src={slideshowImages[slideIndex].src}
               alt={slideshowImages[slideIndex].label}
@@ -316,7 +321,7 @@ export const Home = ({ setActiveTab }) => {
             </div>
 
             {/* Slide indicators */}
-            <div className="absolute top-4 right-4 flex space-x-1.5">
+            <div className="absolute top-4 right-4 flex space-x-1.5 z-10">
               {slideshowImages.map((_, idx) => (
                 <button
                   key={idx}
@@ -332,51 +337,61 @@ export const Home = ({ setActiveTab }) => {
             </div>
           </div>
 
-          {/* Right Preview Grid */}
-          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div
-              className="rounded-xl overflow-hidden h-52 border border-brand-gold/15 shadow-sm group cursor-pointer relative"
-              onClick={() => setActiveTab("gallery")}
-            >
-              <img
-                src={galleryFood1}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                alt="Khmer Platter"
-              />
-              <div className="absolute inset-0 bg-brand-dark/25 group-hover:bg-brand-dark/10 transition-colors" />
-              <span className="absolute bottom-3 left-3 text-white text-xs font-serif tracking-wider uppercase bg-brand-dark/60 backdrop-blur-xs px-3 py-1 rounded">
-                Khmer Gastronomy
+          {/* Right Preview Grid: Cambodian Food */}
+          <div className="lg:col-span-6 space-y-4">
+            {/* Header label for Cambodian Food section */}
+            <div className="flex items-center justify-between pb-2 border-b border-brand-gold/25">
+              <span className="text-brand-gold-dark text-xs font-bold tracking-[0.2em] uppercase flex items-center space-x-1.5">
+                <span>🍲 CAMBODIAN FOOD & CUISINE</span>
               </span>
+              <span className="text-[10px] text-brand-dark/50 uppercase font-sans">Authentic Local Dishes</span>
             </div>
 
-            <div
-              className="rounded-xl overflow-hidden h-52 border border-brand-gold/15 shadow-sm group cursor-pointer relative"
-              onClick={() => setActiveTab("gallery")}
-            >
-              <img
-                src={galleryFood2}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                alt="Fish Amok"
-              />
-              <div className="absolute inset-0 bg-brand-dark/25 group-hover:bg-brand-dark/10 transition-colors" />
-              <span className="absolute bottom-3 left-3 text-white text-xs font-serif tracking-wider uppercase bg-brand-dark/60 backdrop-blur-xs px-3 py-1 rounded">
-                Traditional Amok
-              </span>
-            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div
+                className="rounded-xl overflow-hidden h-44 border border-brand-gold/15 shadow-sm group cursor-pointer relative"
+                onClick={() => setActiveTab("gallery")}
+              >
+                <img
+                  src={galleryFood1}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  alt="Khmer Gastronomy"
+                />
+                <div className="absolute inset-0 bg-brand-dark/30 group-hover:bg-brand-dark/15 transition-colors" />
+                <span className="absolute bottom-3 left-3 text-white text-[10px] font-bold tracking-widest uppercase bg-brand-dark/70 backdrop-blur-xs px-3 py-1 rounded border border-brand-gold/20">
+                  Khmer Gastronomy
+                </span>
+              </div>
 
-            <div
-              className="sm:col-span-2 rounded-xl overflow-hidden h-52 border border-brand-gold/15 shadow-sm group cursor-pointer relative"
-              onClick={() => setActiveTab("gallery")}
-            >
-              <img
-                src={galleryFood3}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                alt="Street Food Market"
-              />
-              <div className="absolute inset-0 bg-brand-dark/25 group-hover:bg-brand-dark/10 transition-colors" />
-              <span className="absolute bottom-4 left-4 text-white text-xs font-serif tracking-wider uppercase bg-brand-dark/60 backdrop-blur-xs px-3.5 py-1.5 rounded">
-                Night Market Delicacies
-              </span>
+              <div
+                className="rounded-xl overflow-hidden h-44 border border-brand-gold/15 shadow-sm group cursor-pointer relative"
+                onClick={() => setActiveTab("gallery")}
+              >
+                <img
+                  src={galleryFood2}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  alt="Fish Amok"
+                />
+                <div className="absolute inset-0 bg-brand-dark/30 group-hover:bg-brand-dark/15 transition-colors" />
+                <span className="absolute bottom-3 left-3 text-white text-[10px] font-bold tracking-widest uppercase bg-brand-dark/70 backdrop-blur-xs px-3 py-1 rounded border border-brand-gold/20">
+                  Traditional Amok
+                </span>
+              </div>
+
+              <div
+                className="sm:col-span-2 rounded-xl overflow-hidden h-44 border border-brand-gold/15 shadow-sm group cursor-pointer relative"
+                onClick={() => setActiveTab("gallery")}
+              >
+                <img
+                  src={galleryFood3}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  alt="Street Food Market"
+                />
+                <div className="absolute inset-0 bg-brand-dark/30 group-hover:bg-brand-dark/15 transition-colors" />
+                <span className="absolute bottom-3 left-3 text-white text-[10px] font-bold tracking-widest uppercase bg-brand-dark/70 backdrop-blur-xs px-3 py-1 rounded border border-brand-gold/20">
+                  Night Market Delicacies
+                </span>
+              </div>
             </div>
           </div>
         </div>
