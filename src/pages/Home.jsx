@@ -113,7 +113,7 @@ export const Home = ({ setActiveTab }) => {
                 — KINGDOM OF WONDER —
               </span>
               <h2 className="font-cormorant text-3xl sm:text-5xl md:text-6xl text-white font-light tracking-wide uppercase leading-tight">
-                A Kingdom <br className="hidden md:block" /> Transcending Time
+                Discover <br className="hidden md:block" /> Cambodia’s Story
               </h2>
 
               {/* Diamond Ornament Divider */}
@@ -126,14 +126,15 @@ export const Home = ({ setActiveTab }) => {
             {/* Right Column */}
             <div className="md:col-span-7 border-l-2 border-brand-gold/30 pl-8 md:pl-12 py-3 space-y-4">
               <p className="font-sans text-base sm:text-lg text-brand-cream-dark/90 leading-relaxed font-light">
-                Welcome to Cambodia — where ancient royal empires meet untouched
-                natural splendor. From the majestic sandstone spires of Angkor
-                Wat to tranquil volcanic crater lakes and sun-kissed marine
-                islands, every horizon invites an extraordinary personal
-                narrative.
+                Cambodia is a country filled with rich history, warm people, and
+                unforgettable places to explore. Hundreds of years ago, it was the
+                heart of the powerful Khmer Empire, who built world-famous stone
+                temples like Angkor Wat. Today, you can walk through centuries of
+                history, enjoy authentic local food, relax on white-sand beaches, and
+                explore lush green rainforests.
               </p>
               <p className="font-handwritten text-brand-gold text-xl sm:text-2xl">
-                Authentic, majestic, and undeniably captivating.
+                Rich history, beautiful nature, and warm Khmer smiles everywhere you go.
               </p>
             </div>
           </div>
