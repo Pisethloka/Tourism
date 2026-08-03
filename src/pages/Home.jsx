@@ -141,6 +141,34 @@ export const Home = ({ setActiveTab }) => {
         </div>
       </section>
 
+      {/* Cinematic Cambodia Video Showcase */}
+      <section className="py-20 bg-brand-cream relative overflow-hidden">
+        <div className="max-w-5xl mx-auto px-6 md:px-12 space-y-8">
+          <div className="text-center space-y-3">
+            <span className="text-brand-gold-dark text-xs tracking-[0.3em] uppercase block font-semibold">
+              — CINEMATIC SHOWCASE —
+            </span>
+            <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl text-brand-dark tracking-wide uppercase">
+              Experience the Magic of Cambodia
+            </h2>
+            <div className="w-20 h-[1px] bg-brand-gold mx-auto" />
+            <p className="font-sans text-sm sm:text-base text-brand-dark/75 max-w-xl mx-auto leading-relaxed font-light">
+              A brief video showcase highlighting the ancient heritage, vibrant cultures, and natural beauty awaiting your journey.
+            </p>
+          </div>
+
+          <div className="relative rounded-3xl overflow-hidden border-2 border-brand-gold/30 shadow-2xl bg-brand-dark aspect-video">
+            <iframe
+              src="https://www.youtube.com/embed/RTAP1Nk9fEE?autoplay=0&rel=0"
+              title="Cambodia Showcase Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* 3. Journey Sectors with Banners */}
       <section className="py-28 max-w-7xl mx-auto px-6 md:px-12 space-y-16">
         <div className="text-center space-y-3">
