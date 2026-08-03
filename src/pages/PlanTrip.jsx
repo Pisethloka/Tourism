@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Plane, Compass, ArrowRight, Minus, Plus, X, Check, ChevronRight, CheckCircle2 } from 'lucide-react';
+import { Plane, Compass, ArrowRight, Minus, Plus, X, Check, ChevronRight, CheckCircle2, Loader2 } from 'lucide-react';
 
 // Import local image assets
 import galleryCorridor from '../assets/gallery_corridor.png';
@@ -27,8 +27,9 @@ export const PlanTrip = () => {
   // Mobile layout state to toggle quick drawer for statement preview
   const [showMobileDrawer, setShowMobileDrawer] = useState(false);
   
-  // State for quote confirmation modal
+  // State for quote confirmation modal and submission loading
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // 2. Pricing Database
   const tierPricing = {
@@ -103,6 +104,43 @@ export const PlanTrip = () => {
     } else {
       setSelectedActivities([...selectedActivities, id]);
     }
+  };
+
+  // Handle submission with storage persistence and loading animation
+  const handleSubmitInquiry = () => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
+    const inquiry = {
+      id: `AL-${Date.now()}`,
+      statementNo: `#AL-${days}D${travelers}G-2026`,
+      days,
+      travelers,
+      tier,
+      transport,
+      selectedActivities,
+      breakdown,
+      submittedAt: new Date().toISOString(),
+      status: "TRANSMITTED",
+    };
+
+    try {
+      const existingInquiries = JSON.parse(
+        localStorage.getItem("ANGKOR_LUX_EXPEDITION_INQUIRIES") || "[]"
+      );
+      localStorage.setItem(
+        "ANGKOR_LUX_EXPEDITION_INQUIRIES",
+        JSON.stringify([inquiry, ...existingInquiries])
+      );
+    } catch (err) {
+      console.error("Failed to save expedition inquiry to storage:", err);
+    }
+
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setShowMobileDrawer(false);
+      setShowSuccessModal(true);
+    }, 1500);
   };
 
   // Main Statement Card renderer
@@ -199,14 +237,23 @@ export const PlanTrip = () => {
       <div className="pt-3.5 mt-3.5 border-t border-brand-gold/20 relative z-10">
         <button
           type="button"
-          onClick={() => {
-            setShowMobileDrawer(false);
-            setShowSuccessModal(true);
-          }}
-          className="w-full bg-brand-gold hover:bg-brand-gold-light text-brand-dark py-3.5 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-2.5 rounded-full shadow-lg shadow-brand-gold/20 cursor-pointer group"
+          disabled={isSubmitting}
+          onClick={handleSubmitInquiry}
+          className={`w-full bg-brand-gold hover:bg-brand-gold-light text-brand-dark py-3.5 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-2.5 rounded-full shadow-lg shadow-brand-gold/20 cursor-pointer group ${
+            isSubmitting ? 'opacity-85 cursor-not-allowed' : ''
+          }`}
         >
-          <span className="leading-none pt-[1px]">Submit to Travel Architect</span>
-          <ArrowRight size={15} className="shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
+          {isSubmitting ? (
+            <>
+              <Loader2 size={16} className="animate-spin text-brand-dark shrink-0" />
+              <span className="leading-none pt-[1px]">Transmitting to Concierge...</span>
+            </>
+          ) : (
+            <>
+              <span className="leading-none pt-[1px]">Submit to Travel Architect</span>
+              <ArrowRight size={15} className="shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
+            </>
+          )}
         </button>
         <div className="text-center text-[9px] text-brand-dark/50 font-light pt-2">
           *Rates are subject to high/low season occupancy details.
