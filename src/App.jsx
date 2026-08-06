@@ -1,9 +1,16 @@
-import { useState, useEffect } from 'react';
+/**
+ * App.jsx - Main Application Container & Client-Side Router
+ * Handles top-level tab state, hash navigation (#home, #destinations, #map, etc.),
+ * smooth section scrolling, and global layout component rendering (Navbar, Footer, CTA).
+ */
+
+import { useState, useEffect, useCallback } from 'react';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { Home } from './pages/Home';
 import { Destinations } from './pages/Destinations';
 import { Gallery } from './pages/Gallery';
+import { Guestbook } from './pages/Guestbook';
 import { Map } from './pages/Map';
 import { PlanTrip } from './pages/PlanTrip';
 import { GlobalCTA } from './components/GlobalCTA';
@@ -16,7 +23,7 @@ function App() {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '');
-      if (hash && ['home', 'destinations', 'gallery', 'map', 'plan-trip'].includes(hash)) {
+      if (hash && ['home', 'destinations', 'gallery', 'guestbook', 'map', 'plan-trip'].includes(hash)) {
         setActiveTab(hash);
       }
     };
@@ -29,7 +36,7 @@ function App() {
     };
   }, []);
 
-  const handleTabChange = (tab, sectionId = null) => {
+  const handleTabChange = useCallback((tab, sectionId = null) => {
     setActiveTab(tab);
     setActiveSection(sectionId);
     window.location.hash = tab;
@@ -43,7 +50,7 @@ function App() {
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  };
+  }, []);
 
   const renderContent = () => {
     switch (activeTab) {
@@ -53,8 +60,10 @@ function App() {
         return <Destinations activeSection={activeSection} setActiveSection={setActiveSection} setActiveTab={handleTabChange} />;
       case 'gallery':
         return <Gallery />;
+      case 'guestbook':
+        return <Guestbook />;
       case 'map':
-        return <Map />;
+        return <Map setActiveTab={handleTabChange} />;
       case 'plan-trip':
         return <PlanTrip />;
       default:

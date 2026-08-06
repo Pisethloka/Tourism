@@ -12,17 +12,18 @@
   --color-brand-forest: #1e3322;
   --color-brand-forest-light: #3d5a42;
   
-  --font-serif: "Playfair Display", "Cinzel", Georgia, serif;
-  --font-sans: "Outfit", "Kantumruy Pro", "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-khmer: "Kantumruy Pro", "Outfit", "Plus Jakarta Sans", sans-serif;
-  --font-cormorant: "Cinzel", "Playfair Display", serif;
-  --font-inter: "Outfit", "Plus Jakarta Sans", sans-serif;
-  --font-handwritten: "Marcellus", "Playfair Display", serif;
+  --font-serif: "Plus Jakarta Sans", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", "Outfit", "Kantumruy Pro", system-ui, sans-serif;
+  --font-khmer: "Kantumruy Pro", "Plus Jakarta Sans", "Outfit", sans-serif;
+  --font-cormorant: "Plus Jakarta Sans", "Outfit", sans-serif;
+  --font-inter: "Plus Jakarta Sans", "Outfit", sans-serif;
+  --font-handwritten: "Plus Jakarta Sans", "Outfit", sans-serif;
 }
 
 /* Base resets & typography */
 html {
   scroll-behavior: smooth;
+  font-size: 16px;
 }
 
 body {
@@ -33,6 +34,14 @@ body {
   background-image: url('./assets/khmer_pattern_v2.png');
   background-repeat: repeat;
   background-size: 200px 200px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Focus styles for keyboard accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-brand-gold);
+  outline-offset: 2px;
 }
 
 .bg-brand-cream {
@@ -48,21 +57,31 @@ h4,
 h5,
 h6 {
   font-family: var(--font-cormorant);
+  line-height: 1.25;
 }
 
 /* Glassmorphism utility */
 .glass {
-  background: rgba(18, 14, 10, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(197, 158, 63, 0.2);
+  background: rgba(18, 14, 10, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(197, 158, 63, 0.25);
 }
 
 .glass-light {
-  background: rgba(253, 251, 250, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(197, 158, 63, 0.15);
+  background: rgba(253, 251, 250, 0.9);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(197, 158, 63, 0.2);
+}
+
+/* Typography contrast helper classes */
+.text-subtle-dark {
+  color: rgba(18, 14, 10, 0.85);
+}
+
+.text-subtle-light {
+  color: rgba(244, 239, 224, 0.9);
 }
 
 /* Premium destination typography utilities */
@@ -73,7 +92,7 @@ h6 {
 .soft-shadow { box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
 @keyframes scaleUp {
   from { transform: scale(1); }
-  to { transform: scale(1.04); }
+  to { transform: scale(1.03); }
 }
 .hover\:scale-up:hover { animation: scaleUp 0.2s forwards; }
 
@@ -96,7 +115,7 @@ h6 {
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(15px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -105,5 +124,5 @@ h6 {
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.6s ease-out forwards;
+  animation: fadeIn 0.5s ease-out forwards;
 }

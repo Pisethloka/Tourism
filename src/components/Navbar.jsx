@@ -1,5 +1,11 @@
+/**
+ * Navbar.jsx - Global Header Navigation Bar
+ * Renders the brand logo, navigation links (Home, Destinations, Gallery, Guestbook, Map),
+ * mobile hamburger menu drawer, and the primary "Plan Your Trip" CTA button.
+ */
+
 import { useState } from 'react';
-import { Menu, X, Image, MapPin, Home, Map } from 'lucide-react';
+import { Menu, X, Image, MapPin, Home, Map, MessageSquare } from 'lucide-react';
 import logoImg from '../assets/logo_gold.png';
 
 export const Navbar = ({ activeTab, setActiveTab }) => {
@@ -9,6 +15,7 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
     { id: 'home', label: 'Home', icon: Home },
     { id: 'destinations', label: 'Destinations', icon: MapPin },
     { id: 'gallery', label: 'Gallery', icon: Image },
+    { id: 'guestbook', label: 'Guestbook', icon: MessageSquare },
     { id: 'map', label: 'Map', icon: Map },
   ];
 
@@ -19,6 +26,10 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
         <div 
           className="flex items-center space-x-3 cursor-pointer group justify-self-start"
           onClick={() => { setActiveTab('home'); setIsOpen(false); }}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveTab('home'); setIsOpen(false); } }}
+          role="button"
+          tabIndex={0}
+          aria-label="Go to homepage"
         >
           <img src={logoImg} className="h-10 w-10 object-contain transition-transform duration-300 group-hover:scale-105" alt="Angkor Lux Logo" />
           <span className="font-serif text-2xl font-bold tracking-widest text-brand-gold group-hover:text-brand-gold-light transition-colors whitespace-nowrap">
@@ -33,11 +44,12 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
             return (
               <button
                 key={item.id}
+                type="button"
                 onClick={() => setActiveTab(item.id)}
-                className={`relative flex items-center space-x-2 text-sm font-medium tracking-wide uppercase transition-all duration-300 py-1.5 px-3 rounded-lg ${
+                className={`relative flex items-center space-x-2 text-sm font-medium tracking-wide uppercase transition-all duration-300 py-1.5 px-3 rounded-lg focus-visible:ring-2 focus-visible:ring-brand-gold ${
                   isActive 
                     ? 'text-brand-gold font-bold' 
-                    : 'text-brand-cream-dark/80 hover:text-brand-gold'
+                    : 'text-brand-cream-dark/95 hover:text-brand-gold'
                 }`}
               >
                 <span>{item.label}</span>
@@ -52,8 +64,9 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
         {/* Desktop CTA Button */}
         <div className="hidden md:flex justify-self-end">
           <button 
+            type="button"
             onClick={() => setActiveTab('plan-trip')}
-            className="bg-brand-gold hover:bg-brand-gold-light text-brand-dark px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-brand-gold/20 hover:shadow-brand-gold/40 cursor-pointer"
+            className="bg-brand-gold hover:bg-brand-gold-light text-brand-dark px-6 py-2.5 rounded-full text-xs md:text-sm font-bold tracking-widest uppercase transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-brand-gold/20 hover:shadow-brand-gold/40 cursor-pointer focus-visible:ring-2 focus-visible:ring-brand-gold"
           >
             PLAN YOUR TRIP
           </button>
@@ -62,8 +75,10 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
         {/* Mobile menu button */}
         <div className="flex md:hidden">
           <button
+            type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="text-brand-cream-dark hover:text-brand-gold transition-colors p-1"
+            className="text-brand-cream-dark hover:text-brand-gold transition-colors p-2 focus-visible:ring-2 focus-visible:ring-brand-gold rounded-lg"
+            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -80,6 +95,7 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
               return (
                 <button
                   key={item.id}
+                  type="button"
                   onClick={() => {
                     setActiveTab(item.id);
                     setIsOpen(false);
@@ -87,21 +103,22 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
                   className={`w-full flex items-center space-x-4 px-4 py-3 rounded-xl transition-all duration-300 ${
                     isActive 
                       ? 'text-brand-gold bg-brand-gold/10 font-semibold border-l-4 border-brand-gold' 
-                      : 'text-brand-cream-dark/80 hover:bg-brand-gold/5'
+                      : 'text-brand-cream-dark/95 hover:bg-brand-gold/10'
                   }`}
                 >
-                  <Icon size={18} className={isActive ? 'text-brand-gold' : 'text-brand-cream-dark/60'} />
+                  <Icon size={18} className={isActive ? 'text-brand-gold' : 'text-brand-cream-dark/70'} />
                   <span className="text-sm tracking-wide uppercase">{item.label}</span>
                 </button>
               );
             })}
             <div className="pt-2 border-t border-brand-gold/10">
               <button
+                type="button"
                 onClick={() => {
                   setActiveTab('plan-trip');
                   setIsOpen(false);
                 }}
-                className="w-full bg-brand-gold hover:bg-brand-gold-light text-brand-dark py-3 rounded-md text-sm font-semibold tracking-wider uppercase transition-all duration-300 text-center block shadow-md shadow-brand-gold/20"
+                className="w-full bg-brand-gold hover:bg-brand-gold-light text-brand-dark py-3 rounded-xl text-xs sm:text-sm font-semibold tracking-wider uppercase transition-all duration-300 text-center block shadow-md shadow-brand-gold/20"
               >
                 PLAN YOUR TRIP
               </button>

@@ -1,617 +1,1011 @@
-import { useState } from 'react';
-import { Plane, Compass, ArrowRight, Minus, Plus, X, Check, ChevronRight, CheckCircle2, Loader2 } from 'lucide-react';
+/**
+ * PlanTrip.jsx - Expedition Calculator & Itinerary Estimator Component
+ * Allows travelers to customize trip duration, guest count, accommodation tier,
+ * local transfer modes, and private excursions with an instant PNG itinerary download.
+ */
 
-// Import local image assets
-import galleryCorridor from '../assets/gallery_corridor.png';
-import phnomPenhPalace from '../assets/phnom_penh_palace.png';
-import heroAngkor from '../assets/hero_angkor.png';
-import tonleSap from '../assets/tonle_sap.png';
-import bokorHill from '../assets/bokor_hill.png';
-import preahVihear from '../assets/preah_vihear.png';
-import cardamomMountains from '../assets/cardamom_mountains.png';
-import galleryBoat from '../assets/gallery_boat.png';
-import galleryForest from '../assets/gallery_forest.png';
-import cambodianCulinary from '../assets/cambodian_culinary.png';
+import { useState, useMemo, useCallback } from "react";
+import {
+  Plane,
+  Compass,
+  Minus,
+  Plus,
+  X,
+  Check,
+  ChevronRight,
+  Download,
+} from "lucide-react";
+
+// Import local image assets (Real Photographs)
+import galleryAngkor from "../assets/gallery_angkor.jpg";
+import galleryMuseum from "../assets/gallery_museum.jpg";
+import gallerySkyline from "../assets/gallery_skyline.jpg";
+import kohRongSanloemPhoto from "../assets/koh_rong_sanloem_photo.jpg";
+import ecoIslandLagoon from "../assets/eco_island_lagoon.jpg";
+import ecoRainforestCanopy from "../assets/eco_rainforest_canopy.jpg";
+import cardamomMountainsPhoto from "../assets/cardamom_mountains_photo.jpg";
+import tukTukReal from "../assets/tuk_tuk_real.jpg";
+import foodKhmerPlatter from "../assets/food_khmer_platter.jpg";
+
+// 2. Accurate Pricing Database (Real 2026 Rates in USD $)
+const tierPricing = {
+  boutique: { label: "Boutique Hotel ($85/night)", rate: 85 },
+  luxury: { label: "Luxury Resort ($280/night)", rate: 280 },
+  ultra: { label: "Ultra-Luxury Villa ($650/night)", rate: 650 },
+};
+
+const transportPricing = {
+  "tuk-tuk": { label: "Local Tuk-Tuk ($20/day)", rate: 20 },
+  chauffeur: { label: "Private Chauffeur & SUV ($55/day)", rate: 55 },
+  "domestic-flights": {
+    label: "Private Chauffeur + Flights ($130/day)",
+    rate: 130,
+  },
+};
+
+const activityOptions = [
+  {
+    id: "angkor-sunrise",
+    name: "Private Angkor Wat Sunrise Tour",
+    pricePerPerson: 75,
+    icon: <Compass size={16} />,
+  },
+  {
+    id: "helicopter",
+    name: "Scenic Angkor Helicopter Flight",
+    pricePerPerson: 180,
+    icon: <Plane size={16} />,
+  },
+  {
+    id: "mekong-cruise",
+    name: "Mekong River Sunset Dinner Cruise",
+    pricePerPerson: 35,
+    icon: <Compass size={16} />,
+  },
+  {
+    id: "rainforest-trek",
+    name: "Cardamoms Private Ranger Eco-Trek",
+    pricePerPerson: 65,
+    icon: <Compass size={16} />,
+  },
+  {
+    id: "culinary-class",
+    name: "Private Khmer Cooking & Spice Tour",
+    pricePerPerson: 45,
+    icon: <Compass size={16} />,
+  },
+];
 
 export const PlanTrip = () => {
   // 1. Calculator Input States
   const [days, setDays] = useState(7);
   const [travelers, setTravelers] = useState(2);
-  const [tier, setTier] = useState('luxury');
-  const [transport, setTransport] = useState('chauffeur');
+  const [tier, setTier] = useState("luxury");
+  const [transport, setTransport] = useState("chauffeur");
   const [selectedActivities, setSelectedActivities] = useState([
-    'angkor-sunrise',
-    'mekong-cruise'
+    "angkor-sunrise",
+    "mekong-cruise",
   ]);
 
   // Mobile layout state to toggle quick drawer for statement preview
   const [showMobileDrawer, setShowMobileDrawer] = useState(false);
-  
-  // State for quote confirmation modal and submission loading
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // 2. Pricing Database
-  const tierPricing = {
-    boutique: { label: 'Boutique Hotel ($120/night)', rate: 120 },
-    luxury: { label: 'Luxury Resort ($350/night)', rate: 350 },
-    ultra: { label: 'Ultra-Luxury Villa ($850/night)', rate: 850 }
-  };
-
-  const transportPricing = {
-    'tuk-tuk': { label: 'Local Tuk-Tuk ($25/day)', rate: 25 },
-    chauffeur: { label: 'Private Chauffeur & SUV ($90/day)', rate: 90 },
-    'domestic-flights': { label: 'Private Chauffeur + Flights ($160/day)', rate: 160 }
-  };
-
-  const activityOptions = [
-    {
-      id: 'angkor-sunrise',
-      name: 'Private Angkor Wat Sunrise Tour',
-      pricePerPerson: 95,
-      icon: <Compass size={16} />
-    },
-    {
-      id: 'helicopter',
-      name: 'Scenic Angkor Helicopter Flight',
-      pricePerPerson: 380,
-      icon: <Plane size={16} />
-    },
-    {
-      id: 'mekong-cruise',
-      name: 'Mekong River Sunset Dinner Cruise',
-      pricePerPerson: 75,
-      icon: <Compass size={16} />
-    },
-    {
-      id: 'rainforest-trek',
-      name: 'Cardamoms Private Ranger Eco-Trek',
-      pricePerPerson: 130,
-      icon: <Compass size={16} />
-    },
-    {
-      id: 'culinary-class',
-      name: 'Private Khmer Cooking & Spice Tour',
-      pricePerPerson: 65,
-      icon: <Compass size={16} />
-    }
-  ];
+  // Controls whether the cost estimate breakdown is visible
+  const [showEstimate, setShowEstimate] = useState(false);
 
   // 3. Dynamic Calculation logic
-  const accommodationCost = days * tierPricing[tier].rate;
-  const transportCost = days * transportPricing[transport].rate;
-  
-  const activitiesCost = activityOptions
-    .filter(act => selectedActivities.includes(act.id))
-    .reduce((sum, act) => sum + (act.pricePerPerson * travelers), 0);
-  
-  const baseTotal = accommodationCost + transportCost + activitiesCost;
-  const conciergeFee = Math.round(baseTotal * 0.08); // 8% luxury service fee
-  const total = baseTotal + conciergeFee;
+  const breakdown = useMemo(() => {
+    const accommodationCost = days * tierPricing[tier].rate;
+    const transportCost = days * transportPricing[transport].rate;
 
-  const breakdown = {
-    accommodation: accommodationCost,
-    transport: transportCost,
-    activities: activitiesCost,
-    conciergeFee: conciergeFee,
-    total: total
-  };
+    const selectedActivityDetails = activityOptions
+      .filter((act) => selectedActivities.includes(act.id))
+      .map((act) => ({
+        ...act,
+        cost: act.pricePerPerson * travelers,
+      }));
+
+    const activitiesCost = selectedActivityDetails.reduce(
+      (sum, act) => sum + act.cost,
+      0,
+    );
+    const total = accommodationCost + transportCost + activitiesCost;
+
+    return {
+      accommodation: accommodationCost,
+      transport: transportCost,
+      activities: activitiesCost,
+      selectedActivityDetails,
+      total,
+    };
+  }, [days, travelers, tier, transport, selectedActivities]);
 
   // Toggle activity selection
-  const handleActivityToggle = (id) => {
-    if (selectedActivities.includes(id)) {
-      setSelectedActivities(selectedActivities.filter(actId => actId !== id));
+  const handleActivityToggle = useCallback(
+    (id) => {
+      if (selectedActivities.includes(id)) {
+        setSelectedActivities(
+          selectedActivities.filter((actId) => actId !== id),
+        );
+      } else {
+        setSelectedActivities([...selectedActivities, id]);
+      }
+    },
+    [selectedActivities],
+  );
+
+  // PNG Image Export Handler
+  const handleSaveAsPng = useCallback(() => {
+    const canvas = document.createElement("canvas");
+    const width = 600;
+    const activitiesCount = breakdown.selectedActivityDetails.length;
+    const height = 530 + activitiesCount * 26;
+    const scale = 2; // High resolution retina scale
+
+    canvas.width = width * scale;
+    canvas.height = height * scale;
+    const ctx = canvas.getContext("2d");
+    ctx.scale(scale, scale);
+
+    // Canvas background
+    ctx.fillStyle = "#FAF8F5";
+    ctx.fillRect(0, 0, width, height);
+
+    // Outer and Inner Gold Borders
+    ctx.strokeStyle = "rgba(197, 158, 63, 0.4)";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(16, 16, width - 32, height - 32);
+
+    ctx.strokeStyle = "rgba(197, 158, 63, 0.2)";
+    ctx.lineWidth = 1;
+    ctx.strokeRect(22, 22, width - 44, height - 44);
+
+    // Header Title
+    ctx.fillStyle = "#c59e3f";
+    ctx.font = "bold 12px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("ESTIMATED TRIP COST", width / 2, 55);
+
+    ctx.fillStyle = "#120e0a";
+    ctx.font = "bold 24px serif";
+    ctx.fillText("CAMBODIA EXPEDITION ESTIMATE", width / 2, 88);
+
+    ctx.fillStyle = "rgba(18, 14, 10, 0.7)";
+    ctx.font = "500 13px sans-serif";
+    ctx.fillText(
+      `${days} Days  •  ${travelers} ${travelers === 1 ? "Guest" : "Guests"}`,
+      width / 2,
+      112,
+    );
+
+    ctx.strokeStyle = "rgba(197, 158, 63, 0.3)";
+    ctx.beginPath();
+    ctx.moveTo(60, 128);
+    ctx.lineTo(width - 60, 128);
+    ctx.stroke();
+
+    // Total Cost Box
+    const boxY = 145;
+    ctx.fillStyle = "rgba(197, 158, 63, 0.12)";
+    ctx.fillRect(50, boxY, width - 100, 75);
+    ctx.strokeStyle = "rgba(197, 158, 63, 0.4)";
+    ctx.strokeRect(50, boxY, width - 100, 75);
+
+    ctx.fillStyle = "rgba(18, 14, 10, 0.7)";
+    ctx.font = "bold 11px sans-serif";
+    ctx.fillText("TOTAL ESTIMATED COST", width / 2, boxY + 24);
+
+    ctx.fillStyle = "#a47d23";
+    ctx.font = "bold 30px serif";
+    ctx.fillText(
+      `$${breakdown.total.toLocaleString()} USD`,
+      width / 2,
+      boxY + 58,
+    );
+
+    // Selected Options
+    let currentY = 260;
+    ctx.textAlign = "left";
+    ctx.fillStyle = "#120e0a";
+    ctx.font = "bold 12px sans-serif";
+    ctx.fillText("YOUR SELECTED OPTIONS", 50, currentY);
+
+    ctx.strokeStyle = "rgba(197, 158, 63, 0.25)";
+    ctx.beginPath();
+    ctx.moveTo(50, currentY + 8);
+    ctx.lineTo(width - 50, currentY + 8);
+    ctx.stroke();
+
+    currentY += 32;
+
+    // Lodging
+    ctx.font = "600 13px sans-serif";
+    ctx.fillStyle = "#120e0a";
+    ctx.fillText(`Lodging (${days} nights)`, 50, currentY);
+    ctx.textAlign = "right";
+    ctx.font = "bold 14px monospace";
+    ctx.fillText(
+      `$${breakdown.accommodation.toLocaleString()}`,
+      width - 50,
+      currentY,
+    );
+
+    currentY += 18;
+    ctx.textAlign = "left";
+    ctx.font = "12px sans-serif";
+    ctx.fillStyle = "rgba(18, 14, 10, 0.7)";
+    ctx.fillText(tierPricing[tier].label, 50, currentY);
+
+    currentY += 28;
+
+    // Transfers
+    ctx.font = "600 13px sans-serif";
+    ctx.fillStyle = "#120e0a";
+    ctx.fillText(`Transfers (${days} days)`, 50, currentY);
+    ctx.textAlign = "right";
+    ctx.font = "bold 14px monospace";
+    ctx.fillText(
+      `$${breakdown.transport.toLocaleString()}`,
+      width - 50,
+      currentY,
+    );
+
+    currentY += 18;
+    ctx.textAlign = "left";
+    ctx.font = "12px sans-serif";
+    ctx.fillStyle = "rgba(18, 14, 10, 0.7)";
+    ctx.fillText(transportPricing[transport].label, 50, currentY);
+
+    currentY += 28;
+
+    // Excursions
+    ctx.font = "600 13px sans-serif";
+    ctx.fillStyle = "#120e0a";
+    ctx.fillText(`Selected Excursions (${activitiesCount})`, 50, currentY);
+    ctx.textAlign = "right";
+    ctx.font = "bold 14px monospace";
+    ctx.fillText(
+      `$${breakdown.activities.toLocaleString()}`,
+      width - 50,
+      currentY,
+    );
+
+    currentY += 22;
+    ctx.textAlign = "left";
+    if (activitiesCount > 0) {
+      breakdown.selectedActivityDetails.forEach((act) => {
+        ctx.font = "12px sans-serif";
+        ctx.fillStyle = "rgba(18, 14, 10, 0.85)";
+        ctx.fillText(
+          `• ${act.name} ($${act.pricePerPerson}/guest)`,
+          62,
+          currentY,
+        );
+        ctx.textAlign = "right";
+        ctx.font = "500 12px monospace";
+        ctx.fillText(`$${act.cost}`, width - 50, currentY);
+        ctx.textAlign = "left";
+        currentY += 24;
+      });
     } else {
-      setSelectedActivities([...selectedActivities, id]);
-    }
-  };
-
-  // Handle submission with storage persistence and loading animation
-  const handleSubmitInquiry = () => {
-    if (isSubmitting) return;
-    setIsSubmitting(true);
-
-    const inquiry = {
-      id: `AL-${Date.now()}`,
-      statementNo: `#AL-${days}D${travelers}G-2026`,
-      days,
-      travelers,
-      tier,
-      transport,
-      selectedActivities,
-      breakdown,
-      submittedAt: new Date().toISOString(),
-      status: "TRANSMITTED",
-    };
-
-    try {
-      const existingInquiries = JSON.parse(
-        localStorage.getItem("ANGKOR_LUX_EXPEDITION_INQUIRIES") || "[]"
-      );
-      localStorage.setItem(
-        "ANGKOR_LUX_EXPEDITION_INQUIRIES",
-        JSON.stringify([inquiry, ...existingInquiries])
-      );
-    } catch (err) {
-      console.error("Failed to save expedition inquiry to storage:", err);
+      ctx.font = "italic 12px sans-serif";
+      ctx.fillStyle = "rgba(18, 14, 10, 0.5)";
+      ctx.fillText("No excursions selected", 62, currentY);
+      currentY += 24;
     }
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setShowMobileDrawer(false);
-      setShowSuccessModal(true);
-    }, 1500);
-  };
+    // Watermark Footer
+    currentY += 20;
+    ctx.strokeStyle = "rgba(197, 158, 63, 0.25)";
+    ctx.beginPath();
+    ctx.moveTo(50, currentY);
+    ctx.lineTo(width - 50, currentY);
+    ctx.stroke();
 
-  // Main Statement Card renderer
+    currentY += 25;
+    ctx.textAlign = "center";
+    ctx.font = "11px sans-serif";
+    ctx.fillStyle = "rgba(18, 14, 10, 0.5)";
+    ctx.fillText(
+      "Calculated via Cambodia Tourism Itinerary Planner",
+      width / 2,
+      currentY,
+    );
+
+    // Trigger PNG Download
+    const link = document.createElement("a");
+    link.download = `Cambodia_Trip_Estimate_${days}Days.png`;
+    link.href = canvas.toDataURL("image/png");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }, [breakdown, days, travelers, tier, transport]);
+
+  // Main Calculation Summary Renderer
   const renderStatementContent = () => (
-    <div className="bg-[#FAF8F5] border border-brand-gold/30 p-5 md:p-6 rounded-3xl shadow-xl flex flex-col justify-between relative overflow-hidden">
+    <div
+      id="estimate-panel"
+      className="bg-[#FAF8F5] border-2 border-brand-gold/40 p-6 md:p-8 rounded-3xl shadow-2xl flex flex-col justify-between relative overflow-hidden space-y-4"
+    >
       {/* Decorative ambient background glow */}
       <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-brand-gold/10 blur-2xl pointer-events-none" />
 
-      <div className="space-y-3.5 relative z-10">
-        {/* Statement Brand Header */}
-        <div className="text-center space-y-0.5">
-          <div className="inline-flex items-center text-brand-gold text-[9px] font-bold tracking-[0.25em] uppercase">
-            <span>BESPOKE STATEMENT</span>
-          </div>
-          <h3 className="font-cormorant text-2xl tracking-[0.2em] font-normal text-brand-dark uppercase">
-            ANGKOR LUX
-          </h3>
-          <span className="font-sans text-[9px] tracking-[0.25em] text-brand-dark/50 uppercase block">
-            Tailored Expedition Estimate
+      <div className="space-y-4 relative z-10">
+        {/* Header */}
+        <div className="text-center space-y-1 pb-3 border-b border-brand-gold/20">
+          <span className="text-brand-gold text-xs font-bold tracking-[0.25em] uppercase block">
+            ESTIMATED TRIP COST
           </span>
-          <div className="w-12 h-[1px] bg-brand-gold/40 mx-auto pt-0.5" />
+          <h3 className="font-cormorant text-2xl md:text-3xl text-brand-dark font-normal uppercase tracking-wider">
+            Calculation Summary
+          </h3>
+          <span className="text-xs font-sans text-brand-dark/70 block font-medium">
+            {days} Days - {travelers} {travelers === 1 ? "Guest" : "Guests"}
+          </span>
         </div>
 
-        {/* Statement Details */}
-        <div className="flex justify-between items-end text-xs font-sans text-brand-dark/60 border-b border-brand-gold/15 pb-3">
-          <div>
-            <span className="block text-[9px] tracking-wider font-bold text-brand-dark/40 uppercase">PREPARED FOR</span>
-            <span className="block mt-0.5 font-semibold text-brand-dark">Honored Guest</span>
-          </div>
-          <div className="text-right">
-            <span className="block text-[9px] tracking-wider font-bold text-brand-dark/40 uppercase">STATEMENT NO.</span>
-            <span className="block mt-0.5 font-mono text-brand-gold-dark font-semibold">#AL-{days}D{travelers}G-2026</span>
-          </div>
+        {/* Total Cost Highlight Box */}
+        <div className="bg-brand-gold/10 border border-brand-gold/30 rounded-2xl p-4 text-center space-y-1">
+          <span className="text-xs text-brand-dark/70 uppercase font-bold tracking-widest block">
+            Total Estimated Cost
+          </span>
+          <span className="font-cormorant text-3xl sm:text-4xl font-bold text-brand-gold-dark block">
+            ${breakdown.total.toLocaleString()}{" "}
+            <span className="text-xs font-sans font-bold text-brand-dark/80 uppercase">
+              USD
+            </span>
+          </span>
         </div>
 
-        {/* Itemized Estimate List */}
-        <div className="space-y-2 py-0.5 text-xs">
-          <div className="flex justify-between items-center">
-            <span className="font-sans text-xs font-light text-brand-dark/80">
-              Sanctuary Lodging ({days} nights, <span className="capitalize font-medium">{tier}</span>)
+        {/* Selected Options List */}
+        <div className="space-y-3 pt-1">
+          <span className="text-xs font-bold uppercase tracking-wider text-brand-dark/80 block border-b border-brand-gold/15 pb-1.5">
+            Your Selected Options
+          </span>
+
+          {/* 1. Lodging Choice */}
+          <div className="space-y-0.5">
+            <div className="flex justify-between items-baseline text-xs sm:text-sm">
+              <span className="font-semibold text-brand-dark">
+                Lodging ({days} nights)
+              </span>
+              <span className="font-mono font-bold text-brand-dark">
+                ${breakdown.accommodation.toLocaleString()}
+              </span>
+            </div>
+            <span className="text-xs text-brand-dark/70 block">
+              {tierPricing[tier].label}
             </span>
-            <span className="font-cormorant text-base font-semibold text-brand-dark">${breakdown.accommodation}</span>
           </div>
 
-          <div className="flex justify-between items-center">
-            <span className="font-sans text-xs font-light text-brand-dark/80">
-              Private Transfers ({days} days, <span className="capitalize font-medium">{transport === 'tuk-tuk' ? 'Tuk-Tuk' : transport === 'chauffeur' ? 'Chauffeur' : 'Flights'}</span>)
-            </span>
-            <span className="font-cormorant text-base font-semibold text-brand-dark">${breakdown.transport}</span>
-          </div>
-
-          <div className="flex justify-between items-center">
-            <span className="font-sans text-xs font-light text-brand-dark/80">
-              Curated Excursions ({travelers} {travelers === 1 ? 'guest' : 'guests'})
-            </span>
-            <span className="font-cormorant text-base font-semibold text-brand-dark">${breakdown.activities}</span>
-          </div>
-
-          <div className="flex justify-between items-center">
-            <span className="font-sans text-xs font-light text-brand-dark/80">
-              Concierge Service Fee (8%)
-            </span>
-            <span className="font-cormorant text-base font-semibold text-brand-dark">${breakdown.conciergeFee}</span>
-          </div>
-        </div>
-
-        {/* Total Estimate */}
-        <div className="pt-3 border-t border-brand-gold/25">
-          <div className="flex justify-between items-baseline">
-            <span className="font-sans text-xs font-bold uppercase tracking-wider text-brand-dark">Estimated Total</span>
-            <span className="font-cormorant text-2xl font-normal text-brand-gold-dark">
-              ${breakdown.total} <span className="text-[10px] font-sans text-brand-dark/50 uppercase tracking-widest font-normal">USD</span>
+          {/* 2. Transportation Choice */}
+          <div className="space-y-0.5 pt-1.5 border-t border-brand-gold/10">
+            <div className="flex justify-between items-baseline text-xs sm:text-sm">
+              <span className="font-semibold text-brand-dark">
+                Transfers ({days} days)
+              </span>
+              <span className="font-mono font-bold text-brand-dark">
+                ${breakdown.transport.toLocaleString()}
+              </span>
+            </div>
+            <span className="text-xs text-brand-dark/70 block">
+              {transportPricing[transport].label}
             </span>
           </div>
-        </div>
 
-        {/* Concierge Handwritten note */}
-        <div className="pt-3 border-t border-brand-gold/15 space-y-1 text-center">
-          <p className="font-handwritten text-brand-gold-dark text-base leading-snug max-w-xs mx-auto">
-            "Each pilgrimage is a unique canvas. We curate every journey with absolute devotion to detail."
-          </p>
-          <div>
-            <span className="font-handwritten text-brand-gold-dark text-lg block whitespace-nowrap">
-              Sophea & The Angkor Lux Team
-            </span>
-            <span className="font-sans text-[9px] tracking-widest text-brand-dark/40 uppercase block mt-0.5">
-              Lead Concierge
-            </span>
+          {/* 3. Selected Excursions */}
+          <div className="space-y-1.5 pt-1.5 border-t border-brand-gold/10">
+            <div className="flex justify-between items-baseline text-xs sm:text-sm">
+              <span className="font-semibold text-brand-dark">
+                Selected Excursions ({breakdown.selectedActivityDetails.length})
+              </span>
+              <span className="font-mono font-bold text-brand-dark">
+                ${breakdown.activities.toLocaleString()}
+              </span>
+            </div>
+
+            {breakdown.selectedActivityDetails.length > 0 ? (
+              <div className="space-y-1 pl-2 border-l-2 border-brand-gold/30 mt-1">
+                {breakdown.selectedActivityDetails.map((act) => (
+                  <div
+                    key={act.id}
+                    className="flex justify-between text-xs text-brand-dark/85"
+                  >
+                    <span className="truncate pr-2">
+                      • {act.name} (${act.pricePerPerson}/guest)
+                    </span>
+                    <span className="font-mono font-medium shrink-0">
+                      ${act.cost}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <span className="text-xs text-brand-dark/50 italic block pl-2">
+                No excursions selected
+              </span>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Action CTA Button */}
-      <div className="pt-3.5 mt-3.5 border-t border-brand-gold/20 relative z-10">
+      {/* Actions */}
+      <div className="pt-3 border-t border-brand-gold/20 space-y-2 relative z-10">
         <button
           type="button"
-          disabled={isSubmitting}
-          onClick={handleSubmitInquiry}
-          className={`w-full bg-brand-gold hover:bg-brand-gold-light text-brand-dark py-3.5 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-2.5 rounded-full shadow-lg shadow-brand-gold/20 cursor-pointer group ${
-            isSubmitting ? 'opacity-85 cursor-not-allowed' : ''
-          }`}
+          onClick={handleSaveAsPng}
+          className="w-full bg-brand-gold hover:bg-brand-gold-light text-brand-dark py-3.5 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] rounded-full shadow-lg shadow-brand-gold/20 cursor-pointer flex items-center justify-center space-x-2"
         >
-          {isSubmitting ? (
-            <>
-              <Loader2 size={16} className="animate-spin text-brand-dark shrink-0" />
-              <span className="leading-none pt-[1px]">Transmitting to Concierge...</span>
-            </>
-          ) : (
-            <>
-              <span className="leading-none pt-[1px]">Submit to Travel Architect</span>
-              <ArrowRight size={15} className="shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
-            </>
-          )}
+          <Download size={16} />
+          <span>Save as PNG</span>
         </button>
-        <div className="text-center text-[9px] text-brand-dark/50 font-light pt-2">
-          *Rates are subject to high/low season occupancy details.
-        </div>
       </div>
     </div>
   );
 
   return (
     <div className="pb-28 bg-brand-cream font-sans text-brand-dark min-h-screen relative">
-      {/* Top Banner Header */}
-      <header className="bg-brand-forest text-brand-cream-dark pt-14 pb-16 px-6 md:px-12 text-center relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-brand-gold/10 blur-3xl pointer-events-none" />
-        <div className="max-w-4xl mx-auto space-y-4 relative z-10 animate-fade-in">
-          <div className="inline-flex items-center bg-brand-gold/15 backdrop-blur-md px-4 py-1.5 rounded-full border border-brand-gold/30">
-            <span className="font-handwritten text-brand-gold text-base sm:text-lg tracking-wide">
-              Crafting Your Custom Cambodian Expedition
+      {/* Editorial Main Container Layout */}
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 pt-28 pb-12">
+        <div className="space-y-10 animate-fade-in">
+          {/* Template Intro Section */}
+          <section className="bg-[#FAF8F5] border border-brand-gold/40 rounded-3xl p-8 sm:p-10 md:p-12 relative overflow-hidden shadow-md hover:shadow-lg transition-shadow text-left">
+            {/* Right Side Faded Angkor Background Image */}
+            <div className="absolute top-0 right-0 bottom-0 w-1/2 pointer-events-none hidden md:block overflow-hidden">
+              <img
+                src={galleryAngkor}
+                alt="Angkor Wat Reflection"
+                className="w-full h-full object-cover opacity-20 mix-blend-multiply filter contrast-125"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/80 to-transparent" />
+            </div>
+
+            <div className="max-w-[560px] space-y-3.5 relative z-10">
+              {/* Temple Crest Icon & Line */}
+              <div className="flex items-center space-x-3 mb-1">
+                <svg
+                  width="36"
+                  height="20"
+                  viewBox="0 0 40 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="text-brand-gold-dark"
+                >
+                  <path d="M20 1L23 7H17L20 1Z" fill="currentColor" />
+                  <path d="M20 6L24 14H16L20 6Z" fill="currentColor" />
+                  <path d="M11 8L14 14H8L11 8Z" fill="currentColor" />
+                  <path d="M29 8L32 14H26L29 8Z" fill="currentColor" />
+                  <path d="M5 13L7 18H3L5 13Z" fill="currentColor" />
+                  <path d="M35 13L37 18H33L35 13Z" fill="currentColor" />
+                  <rect
+                    x="1"
+                    y="18"
+                    width="38"
+                    height="2"
+                    rx="1"
+                    fill="currentColor"
+                  />
+                </svg>
+                <div className="w-12 h-[1px] bg-brand-gold/50" />
+              </div>
+
+              {/* Title: PLAN in gold, YOUR JOURNEY in dark */}
+              <div className="space-y-2">
+                <h1 className="font-cormorant text-4xl sm:text-5xl font-normal tracking-[0.15em] uppercase leading-tight">
+                  <span className="text-brand-gold-dark font-semibold">
+                    PLAN
+                  </span>{" "}
+                  <span className="text-brand-dark">YOUR JOURNEY</span>
+                </h1>
+                <div className="w-16 h-[2px] bg-brand-gold/60" />
+              </div>
+
+              {/* Description */}
+              <p className="font-sans text-sm sm:text-base text-brand-dark/80 leading-relaxed max-w-lg font-light">
+                Choose your destination, accommodation, transportation, and
+                activities to receive an estimated trip cost.
+              </p>
+            </div>
+          </section>
+
+          {/* SECTION 1: Pacing & Companions */}
+          <section className="bg-[#FAF8F5] border border-brand-gold/35 p-6 md:p-10 rounded-3xl shadow-md space-y-6">
+            {/* Section Header */}
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 rounded-full bg-brand-dark flex items-center justify-center text-white text-xs font-bold font-mono shadow-xs">
+                1
+              </div>
+              <h3 className="font-cormorant text-2xl md:text-3xl font-normal uppercase tracking-wider text-brand-dark">
+                JOURNEY PACING & COMPANIONS
+              </h3>
+            </div>
+
+            {/* Divider line with centered gold diamond */}
+            <div className="relative my-4">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-brand-gold/35" />
+              </div>
+              <div className="relative flex justify-center">
+                <span className="bg-[#FAF8F5] px-3 text-brand-gold-dark text-xs">
+                  ◆
+                </span>
+              </div>
+            </div>
+
+            {/* Inner Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Duration Counter */}
+              <div className="space-y-4 p-6 sm:p-8 bg-[#FAF8F5]/90 rounded-2xl border border-brand-gold/30 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                <label className="font-cormorant text-xl font-normal tracking-wide text-brand-dark uppercase block text-center">
+                  Duration of Your Journey
+                </label>
+
+                <div className="flex items-center justify-center space-x-6 py-2">
+                  <button
+                    type="button"
+                    onClick={() => setDays(Math.max(3, days - 1))}
+                    className="w-11 h-11 rounded-full border border-brand-gold/50 bg-white flex items-center justify-center text-brand-gold-dark hover:bg-brand-gold hover:text-brand-dark transition-all active:scale-95 cursor-pointer shadow-xs"
+                    aria-label="Decrease days"
+                  >
+                    <Minus size={14} />
+                  </button>
+
+                  <div className="flex flex-col items-center min-w-[70px]">
+                    <span className="font-cormorant text-4xl sm:text-5xl font-light text-brand-gold-dark leading-none">
+                      {days}
+                    </span>
+                    <span className="text-[10px] font-sans text-brand-dark/70 font-bold uppercase tracking-widest mt-1">
+                      DAYS
+                    </span>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setDays(Math.min(21, days + 1))}
+                    className="w-11 h-11 rounded-full border border-brand-gold/50 bg-white flex items-center justify-center text-brand-gold-dark hover:bg-brand-gold hover:text-brand-dark transition-all active:scale-95 cursor-pointer shadow-xs"
+                    aria-label="Increase days"
+                  >
+                    <Plus size={14} />
+                  </button>
+                </div>
+
+                <p className="font-sans text-xs text-brand-dark/65 text-center leading-relaxed font-normal max-w-xs mx-auto">
+                  Minimum 3 days. Recommend at least 7 days to absorb Siem Reap
+                  and the southern coast.
+                </p>
+              </div>
+
+              {/* Travelers Counter */}
+              <div className="space-y-4 p-6 sm:p-8 bg-[#FAF8F5]/90 rounded-2xl border border-brand-gold/30 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                <label className="font-cormorant text-xl font-normal tracking-wide text-brand-dark uppercase block text-center">
+                  Number of Honored Guests
+                </label>
+
+                <div className="flex items-center justify-center space-x-6 py-2">
+                  <button
+                    type="button"
+                    onClick={() => setTravelers(Math.max(1, travelers - 1))}
+                    className="w-11 h-11 rounded-full border border-brand-gold/50 bg-white flex items-center justify-center text-brand-gold-dark hover:bg-brand-gold hover:text-brand-dark transition-all active:scale-95 cursor-pointer shadow-xs"
+                    aria-label="Decrease guests"
+                  >
+                    <Minus size={14} />
+                  </button>
+
+                  <div className="flex flex-col items-center min-w-[70px]">
+                    <span className="font-cormorant text-4xl sm:text-5xl font-light text-brand-gold-dark leading-none">
+                      {travelers}
+                    </span>
+                    <span className="text-[10px] font-sans text-brand-dark/70 font-bold uppercase tracking-widest mt-1">
+                      GUESTS
+                    </span>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setTravelers(Math.min(10, travelers + 1))}
+                    className="w-11 h-11 rounded-full border border-brand-gold/50 bg-white flex items-center justify-center text-brand-gold-dark hover:bg-brand-gold hover:text-brand-dark transition-all active:scale-95 cursor-pointer shadow-xs"
+                    aria-label="Increase guests"
+                  >
+                    <Plus size={14} />
+                  </button>
+                </div>
+
+                <p className="font-sans text-xs text-brand-dark/65 text-center leading-relaxed font-normal max-w-xs mx-auto">
+                  Private transfers are designed for intimate groups of up to 10
+                  guests.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* SECTION 2: Sanctuary Lodging */}
+          <section className="bg-[#FAF8F5] border border-brand-gold/35 p-6 md:p-10 rounded-3xl shadow-md space-y-6">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 rounded-full bg-brand-dark flex items-center justify-center text-white text-xs font-bold font-mono shadow-xs">
+                2
+              </div>
+              <h3 className="font-cormorant text-2xl md:text-3xl font-normal uppercase tracking-wider text-brand-dark">
+                SANCTUARY LODGING
+              </h3>
+            </div>
+
+            {/* Divider line with centered gold diamond */}
+            <div className="relative my-4">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-brand-gold/35" />
+              </div>
+              <div className="relative flex justify-center">
+                <span className="bg-[#FAF8F5] px-3 text-brand-gold-dark text-xs">
+                  ◆
+                </span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {Object.entries(tierPricing).map(([key, value]) => {
+                const isSelected = tier === key;
+                const imageMap = {
+                  boutique: galleryMuseum,
+                  luxury: kohRongSanloemPhoto,
+                  ultra: ecoIslandLagoon,
+                };
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => setTier(key)}
+                    className={`group relative text-left bg-[#FAF8F5] rounded-2xl overflow-hidden transition-all duration-500 flex flex-col h-full cursor-pointer shadow-sm ${
+                      isSelected
+                        ? "ring-2 ring-brand-gold shadow-xl scale-[1.02] border-transparent"
+                        : "border border-brand-gold/30 hover:border-brand-gold/60 hover:shadow-lg"
+                    }`}
+                  >
+                    <div className="relative h-44 overflow-hidden">
+                      <img
+                        src={imageMap[key]}
+                        alt={value.label}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                      <div className="absolute inset-0 bg-brand-dark/20 group-hover:bg-brand-dark/10 transition-colors" />
+                      {isSelected && (
+                        <div className="absolute inset-0 bg-brand-gold/20 mix-blend-overlay pointer-events-none" />
+                      )}
+                      {key === "luxury" && (
+                        <span className="absolute top-3 right-3 bg-brand-gold text-brand-dark font-sans text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full shadow">
+                          Signature Choice
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="p-5 flex-grow flex flex-col justify-between space-y-4">
+                      <div className="space-y-1.5">
+                        <h4 className="font-cormorant text-2xl font-normal text-brand-dark capitalize">
+                          {key === "boutique"
+                            ? "Boutique Heritage"
+                            : key === "luxury"
+                              ? "Luxury Resort"
+                              : "Ultra-Luxury Villa"}
+                        </h4>
+                        <p className="font-sans text-xs font-light text-brand-dark/75 leading-relaxed">
+                          {key === "boutique" &&
+                            "Premium heritage properties, colonial guest houses, and local boutique hotels."}
+                          {key === "luxury" &&
+                            "Private luxury suites, curated wellness spas, and lavish resort pools."}
+                          {key === "ultra" &&
+                            "Ultra-luxury estates, dedicated butler service, and ultimate beachfront privacy."}
+                        </p>
+                      </div>
+
+                      <div className="pt-3 flex justify-between items-baseline border-t border-brand-gold/20">
+                        <span className="font-sans text-xs tracking-widest text-brand-dark/50 uppercase font-semibold">
+                          Nightly Rate
+                        </span>
+                        <span className="font-cormorant text-2xl font-normal text-brand-gold-dark">
+                          ${value.rate}{" "}
+                          <span className="font-sans text-xs text-brand-dark/50 font-light">
+                            / night
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+
+                    {isSelected && (
+                      <div className="absolute inset-0 border-2 border-brand-gold rounded-2xl pointer-events-none" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* SECTION 3: Local Navigation */}
+          <section className="bg-[#FAF8F5] border border-brand-gold/35 p-6 md:p-10 rounded-3xl shadow-md space-y-6">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 rounded-full bg-brand-dark flex items-center justify-center text-white text-xs font-bold font-mono shadow-xs">
+                3
+              </div>
+              <h3 className="font-cormorant text-2xl md:text-3xl font-normal uppercase tracking-wider text-brand-dark">
+                LOCAL NAVIGATION
+              </h3>
+            </div>
+
+            {/* Divider line with centered gold diamond */}
+            <div className="relative my-4">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-brand-gold/35" />
+              </div>
+              <div className="relative flex justify-center">
+                <span className="bg-[#FAF8F5] px-3 text-brand-gold-dark text-xs">
+                  ◆
+                </span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {Object.entries(transportPricing).map(([key, value]) => {
+                const isSelected = transport === key;
+                const imageMap = {
+                  "tuk-tuk": tukTukReal,
+                  chauffeur: gallerySkyline,
+                  "domestic-flights": ecoRainforestCanopy,
+                };
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => setTransport(key)}
+                    className={`group relative text-left bg-[#FAF8F5] rounded-2xl overflow-hidden transition-all duration-500 flex flex-col h-full cursor-pointer shadow-sm ${
+                      isSelected
+                        ? "ring-2 ring-brand-gold shadow-xl scale-[1.02] border-transparent"
+                        : "border border-brand-gold/30 hover:border-brand-gold/60 hover:shadow-lg"
+                    }`}
+                  >
+                    <div className="relative h-44 overflow-hidden">
+                      <img
+                        src={imageMap[key]}
+                        alt={value.label}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                      <div className="absolute inset-0 bg-brand-dark/20 group-hover:bg-brand-dark/10 transition-colors" />
+                      {isSelected && (
+                        <div className="absolute inset-0 bg-brand-gold/20 mix-blend-overlay pointer-events-none" />
+                      )}
+                      {key === "chauffeur" && (
+                        <span className="absolute top-3 right-3 bg-brand-gold text-brand-dark font-sans text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full shadow">
+                          Recommended
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="p-5 flex-grow flex flex-col justify-between space-y-4">
+                      <div className="space-y-1.5">
+                        <h4 className="font-cormorant text-2xl font-normal text-brand-dark">
+                          {key === "tuk-tuk"
+                            ? "Tuk-Tuk Explorer"
+                            : key === "chauffeur"
+                              ? "Private Chauffeur"
+                              : "Regional Flights"}
+                        </h4>
+                        <p className="font-sans text-xs font-light text-brand-dark/75 leading-relaxed">
+                          {key === "tuk-tuk" &&
+                            "Traditional open-air local transport for an authentic, breezy neighborhood tour."}
+                          {key === "chauffeur" &&
+                            "Air-conditioned luxury SUV with dedicated private English guide."}
+                          {key === "domestic-flights" &&
+                            "Private chauffeur service combined with domestic flights between provinces."}
+                        </p>
+                      </div>
+
+                      <div className="pt-3 flex justify-between items-baseline border-t border-brand-gold/20">
+                        <span className="font-sans text-xs tracking-widest text-brand-dark/50 uppercase font-semibold">
+                          Daily Rate
+                        </span>
+                        <span className="font-cormorant text-2xl font-normal text-brand-gold-dark">
+                          ${value.rate}{" "}
+                          <span className="font-sans text-xs text-brand-dark/50 font-light">
+                            / day
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+
+                    {isSelected && (
+                      <div className="absolute inset-0 border-2 border-brand-gold rounded-2xl pointer-events-none" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* SECTION 4: Curated Excursions */}
+          <section className="bg-[#FAF8F5] border border-brand-gold/35 p-6 md:p-10 rounded-3xl shadow-md space-y-6">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 rounded-full bg-brand-dark flex items-center justify-center text-white text-xs font-bold font-mono shadow-xs">
+                4
+              </div>
+              <h3 className="font-cormorant text-2xl md:text-3xl font-normal uppercase tracking-wider text-brand-dark">
+                CURATED EXCURSIONS
+              </h3>
+            </div>
+
+            {/* Divider line with centered gold diamond */}
+            <div className="relative my-4">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-brand-gold/35" />
+              </div>
+              <div className="relative flex justify-center">
+                <span className="bg-[#FAF8F5] px-3 text-brand-gold-dark text-xs">
+                  ◆
+                </span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {activityOptions.map((act) => {
+                const isSelected = selectedActivities.includes(act.id);
+                const imageMap = {
+                  "angkor-sunrise": galleryAngkor,
+                  helicopter: ecoRainforestCanopy,
+                  "mekong-cruise": gallerySkyline,
+                  "rainforest-trek": cardamomMountainsPhoto,
+                  "culinary-class": foodKhmerPlatter,
+                };
+                return (
+                  <button
+                    key={act.id}
+                    type="button"
+                    onClick={() => handleActivityToggle(act.id)}
+                    className={`group relative text-left bg-brand-dark rounded-2xl overflow-hidden transition-all duration-500 h-72 flex flex-col justify-end cursor-pointer ${
+                      isSelected
+                        ? "ring-2 ring-brand-gold shadow-xl scale-[1.02]"
+                        : "border border-brand-gold/20 hover:border-brand-gold/40"
+                    }`}
+                  >
+                    <img
+                      src={imageMap[act.id]}
+                      alt={act.name}
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/95 via-brand-dark/40 to-transparent" />
+                    {isSelected && (
+                      <div className="absolute inset-0 bg-brand-gold/15 mix-blend-overlay pointer-events-none" />
+                    )}
+
+                    {/* Check badge overlay */}
+                    <div className="absolute top-4 right-4 z-20">
+                      <div
+                        className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all ${
+                          isSelected
+                            ? "border-brand-gold bg-brand-gold text-brand-dark scale-110 shadow"
+                            : "border-white/40 bg-black/50 backdrop-blur-xs text-white"
+                        }`}
+                      >
+                        {isSelected ? (
+                          <Check
+                            size={16}
+                            className="text-brand-dark stroke-[3]"
+                          />
+                        ) : (
+                          <span className="font-sans text-sm text-white/70 font-semibold">
+                            +
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="relative z-10 p-6 space-y-2">
+                      <span className="font-sans text-xs font-bold tracking-widest text-brand-gold uppercase block">
+                        Private Excursion
+                      </span>
+                      <h4 className="font-cormorant text-2xl font-normal text-white leading-tight">
+                        {act.name}
+                      </h4>
+                      <p className="font-sans text-xs font-light text-brand-cream-dark/85 line-clamp-2 leading-relaxed">
+                        {act.id === "angkor-sunrise" &&
+                          "Witness sunrise over Angkor Wat before exploring key galleries with a lead historian."}
+                        {act.id === "helicopter" &&
+                          "Fly above Siem Reap temples and the vast Tonle Sap lake on a scenic private flight."}
+                        {act.id === "mekong-cruise" &&
+                          "Glide past floating villages on a restored traditional barge while dining on local gourmet recipes."}
+                        {act.id === "rainforest-trek" &&
+                          "Trek alongside forest rangers through cardamom sanctuaries to spot wild elephants."}
+                        {act.id === "culinary-class" &&
+                          "Pick fresh lemongrass and craft classic Royal Khmer recipes with a master chef."}
+                      </p>
+                      <div className="pt-2 flex justify-between items-baseline border-t border-white/15">
+                        <span className="font-sans text-xs text-brand-cream-dark/60 uppercase font-semibold">
+                          Rate Per Guest
+                        </span>
+                        <span className="font-cormorant text-xl font-normal text-brand-gold-light">
+                          ${act.pricePerPerson} USD
+                        </span>
+                      </div>
+                    </div>
+                    {isSelected && (
+                      <div className="absolute inset-0 border-2 border-brand-gold rounded-2xl pointer-events-none" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* 2026 Bottom Calculation Action Trigger */}
+          <div className="pt-8 flex flex-col items-center space-y-3">
+            <button
+              type="button"
+              onClick={() => {
+                setShowEstimate(true);
+                setTimeout(() => {
+                  const el = document.getElementById("estimate-panel");
+                  if (el)
+                    el.scrollIntoView({ behavior: "smooth", block: "center" });
+                }, 100);
+              }}
+              className="bg-brand-gold hover:bg-brand-gold-light text-brand-dark px-12 py-4 text-xs sm:text-sm font-bold tracking-[0.25em] uppercase rounded-full shadow-2xl shadow-brand-gold/30 hover:scale-[1.03] active:scale-[0.97] transition-all duration-300 cursor-pointer flex items-center space-x-3 group"
+            >
+              <span>Calculate Trip Estimate</span>
+              <span className="text-lg transition-transform duration-300 group-hover:translate-x-1">
+                ➔
+              </span>
+            </button>
+            <span className="text-xs text-brand-dark/60 font-normal">
+              No email or registration required
             </span>
           </div>
 
-          <h1 className="font-cormorant text-4xl sm:text-6xl md:text-7xl font-normal tracking-[0.15em] text-white leading-tight uppercase">
-            Plan Your Journey
-          </h1>
-          
-          <p className="font-sans text-sm sm:text-base font-light text-brand-cream-dark/85 max-w-xl mx-auto leading-relaxed">
-            Welcome to your digital concierge. Select your preferences below to calculate a tailored itinerary estimate in real time.
-          </p>
-        </div>
-      </header>
-
-      {/* Main Split Layout Grid */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-12 lg:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          
-          {/* Left Column: Interactive Planner Sections */}
-          <div className="lg:col-span-8 space-y-10 animate-fade-in">
-            
-            {/* SECTION 1: Pacing & Companions */}
-            <section className="bg-white/60 backdrop-blur-md border border-brand-gold/20 p-6 md:p-8 rounded-3xl shadow-lg space-y-8">
-              <div className="border-b border-brand-gold/15 pb-4 flex items-center space-x-3">
-                <div className="w-7 h-7 rounded-full bg-brand-gold/15 border border-brand-gold/30 flex items-center justify-center text-brand-gold-dark text-xs font-bold font-mono">1</div>
-                <h3 className="font-cormorant text-2xl md:text-3xl font-normal uppercase tracking-wider text-brand-dark">Journey Pacing & Companions</h3>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Duration Counter */}
-                <div className="space-y-4 p-6 bg-[#FAF8F5] rounded-2xl border border-brand-gold/15 shadow-xs">
-                  <label className="font-cormorant text-xl font-normal text-brand-dark block text-center">
-                    Duration of Your Journey
-                  </label>
-                  <div className="flex items-center justify-center space-x-6 pb-2 max-w-xs mx-auto">
-                    <button
-                      type="button"
-                      onClick={() => setDays(Math.max(3, days - 1))}
-                      className="w-11 h-11 rounded-full border border-brand-gold/30 bg-white flex items-center justify-center text-brand-dark hover:bg-brand-gold hover:text-brand-dark hover:border-brand-gold transition-all active:scale-95 cursor-pointer shadow-xs"
-                      aria-label="Decrease days"
-                    >
-                      <Minus size={16} />
-                    </button>
-                    <span className="font-cormorant text-4xl font-light text-brand-gold-dark min-w-[65px] text-center">
-                      {days} <span className="text-xs font-sans text-brand-dark/50 uppercase font-normal block -mt-1">Days</span>
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => setDays(Math.min(21, days + 1))}
-                      className="w-11 h-11 rounded-full border border-brand-gold/30 bg-white flex items-center justify-center text-brand-dark hover:bg-brand-gold hover:text-brand-dark hover:border-brand-gold transition-all active:scale-95 cursor-pointer shadow-xs"
-                      aria-label="Increase days"
-                    >
-                      <Plus size={16} />
-                    </button>
-                  </div>
-                  <p className="font-sans text-xs text-brand-dark/60 text-center leading-relaxed font-light">
-                    Minimum 3 days. Recommend at least 7 days to absorb Siem Reap and the southern coast.
-                  </p>
-                </div>
-
-                {/* Travelers Counter */}
-                <div className="space-y-4 p-6 bg-[#FAF8F5] rounded-2xl border border-brand-gold/15 shadow-xs">
-                  <label className="font-cormorant text-xl font-normal text-brand-dark block text-center">
-                    Number of Honored Guests
-                  </label>
-                  <div className="flex items-center justify-center space-x-6 pb-2 max-w-xs mx-auto">
-                    <button
-                      type="button"
-                      onClick={() => setTravelers(Math.max(1, travelers - 1))}
-                      className="w-11 h-11 rounded-full border border-brand-gold/30 bg-white flex items-center justify-center text-brand-dark hover:bg-brand-gold hover:text-brand-dark hover:border-brand-gold transition-all active:scale-95 cursor-pointer shadow-xs"
-                      aria-label="Decrease guests"
-                    >
-                      <Minus size={16} />
-                    </button>
-                    <span className="font-cormorant text-4xl font-light text-brand-gold-dark min-w-[65px] text-center">
-                      {travelers} <span className="text-xs font-sans text-brand-dark/50 uppercase font-normal block -mt-1">Guests</span>
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => setTravelers(Math.min(10, travelers + 1))}
-                      className="w-11 h-11 rounded-full border border-brand-gold/30 bg-white flex items-center justify-center text-brand-dark hover:bg-brand-gold hover:text-brand-dark hover:border-brand-gold transition-all active:scale-95 cursor-pointer shadow-xs"
-                      aria-label="Increase guests"
-                    >
-                      <Plus size={16} />
-                    </button>
-                  </div>
-                  <p className="font-sans text-xs text-brand-dark/60 text-center leading-relaxed font-light">
-                    Private bespoke transfers are designed for intimate groups of up to 10 guests.
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* SECTION 2: Sanctuary Lodging */}
-            <section className="bg-white/60 backdrop-blur-md border border-brand-gold/20 p-6 md:p-8 rounded-3xl shadow-lg space-y-6">
-              <div className="border-b border-brand-gold/15 pb-4 flex items-center space-x-3">
-                <div className="w-7 h-7 rounded-full bg-brand-gold/15 border border-brand-gold/30 flex items-center justify-center text-brand-gold-dark text-xs font-bold font-mono">2</div>
-                <h3 className="font-cormorant text-2xl md:text-3xl font-normal uppercase tracking-wider text-brand-dark">Sanctuary Lodging</h3>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {Object.entries(tierPricing).map(([key, value]) => {
-                  const isSelected = tier === key;
-                  const imageMap = {
-                    boutique: galleryCorridor,
-                    luxury: phnomPenhPalace,
-                    ultra: heroAngkor
-                  };
-                  return (
-                    <button
-                      key={key}
-                      type="button"
-                      onClick={() => setTier(key)}
-                      className={`group relative text-left bg-[#FAF8F5] rounded-2xl overflow-hidden transition-all duration-500 flex flex-col h-full cursor-pointer ${
-                        isSelected 
-                          ? 'ring-2 ring-brand-gold shadow-xl scale-[1.02] border-transparent' 
-                          : 'border border-brand-gold/20 hover:border-brand-gold/40 hover:shadow-lg'
-                      }`}
-                    >
-                      <div className="relative h-44 overflow-hidden">
-                        <img 
-                          src={imageMap[key]} 
-                          alt={value.label} 
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                        />
-                        <div className="absolute inset-0 bg-brand-dark/20 group-hover:bg-brand-dark/10 transition-colors" />
-                        {isSelected && (
-                          <div className="absolute inset-0 bg-brand-gold/20 mix-blend-overlay pointer-events-none" />
-                        )}
-                        {key === 'luxury' && (
-                          <span className="absolute top-3 right-3 bg-brand-gold text-brand-dark font-sans text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full shadow">
-                            Signature Choice
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="p-5 flex-grow flex flex-col justify-between space-y-4">
-                        <div className="space-y-1.5">
-                          <h4 className="font-cormorant text-2xl font-normal text-brand-dark capitalize">
-                            {key === 'boutique' ? 'Boutique Heritage' : key === 'luxury' ? 'Luxury Resort' : 'Ultra-Luxury Villa'}
-                          </h4>
-                          <p className="font-sans text-xs font-light text-brand-dark/75 leading-relaxed">
-                            {key === 'boutique' && 'Premium heritage properties, colonial guest houses, and local boutique hotels.'}
-                            {key === 'luxury' && 'Private luxury suites, curated wellness spas, and lavish resort pools.'}
-                            {key === 'ultra' && 'Ultra-luxury estates, dedicated butler service, and ultimate beachfront privacy.'}
-                          </p>
-                        </div>
-
-                        <div className="pt-3 flex justify-between items-baseline border-t border-brand-gold/15">
-                          <span className="font-sans text-[10px] tracking-widest text-brand-dark/50 uppercase font-semibold">Nightly Rate</span>
-                          <span className="font-cormorant text-2xl font-normal text-brand-gold-dark">${value.rate} <span className="font-sans text-xs text-brand-dark/50 font-light">/ night</span></span>
-                        </div>
-                      </div>
-
-                      {isSelected && (
-                        <div className="absolute inset-0 border-2 border-brand-gold rounded-2xl pointer-events-none" />
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            </section>
-
-            {/* SECTION 3: Local Navigation */}
-            <section className="bg-white/60 backdrop-blur-md border border-brand-gold/20 p-6 md:p-8 rounded-3xl shadow-lg space-y-6">
-              <div className="border-b border-brand-gold/15 pb-4 flex items-center space-x-3">
-                <div className="w-7 h-7 rounded-full bg-brand-gold/15 border border-brand-gold/30 flex items-center justify-center text-brand-gold-dark text-xs font-bold font-mono">3</div>
-                <h3 className="font-cormorant text-2xl md:text-3xl font-normal uppercase tracking-wider text-brand-dark">Local Navigation</h3>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {Object.entries(transportPricing).map(([key, value]) => {
-                  const isSelected = transport === key;
-                  const imageMap = {
-                    'tuk-tuk': tonleSap,
-                    chauffeur: bokorHill,
-                    'domestic-flights': preahVihear
-                  };
-                  return (
-                    <button
-                      key={key}
-                      type="button"
-                      onClick={() => setTransport(key)}
-                      className={`group relative text-left bg-[#FAF8F5] rounded-2xl overflow-hidden transition-all duration-500 flex flex-col h-full cursor-pointer ${
-                        isSelected 
-                          ? 'ring-2 ring-brand-gold shadow-xl scale-[1.02] border-transparent' 
-                          : 'border border-brand-gold/20 hover:border-brand-gold/40 hover:shadow-lg'
-                      }`}
-                    >
-                      <div className="relative h-44 overflow-hidden">
-                        <img 
-                          src={imageMap[key]} 
-                          alt={value.label} 
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                        />
-                        <div className="absolute inset-0 bg-brand-dark/20 group-hover:bg-brand-dark/10 transition-colors" />
-                        {isSelected && (
-                          <div className="absolute inset-0 bg-brand-gold/20 mix-blend-overlay pointer-events-none" />
-                        )}
-                        {key === 'chauffeur' && (
-                          <span className="absolute top-3 right-3 bg-brand-gold text-brand-dark font-sans text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full shadow">
-                            Recommended
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="p-5 flex-grow flex flex-col justify-between space-y-4">
-                        <div className="space-y-1.5">
-                          <h4 className="font-cormorant text-2xl font-normal text-brand-dark">
-                            {key === 'tuk-tuk' ? 'Tuk-Tuk Explorer' : key === 'chauffeur' ? 'Private Chauffeur' : 'Regional Flights'}
-                          </h4>
-                          <p className="font-sans text-xs font-light text-brand-dark/75 leading-relaxed">
-                            {key === 'tuk-tuk' && 'Traditional open-air local transport for an authentic, breezy neighborhood tour.'}
-                            {key === 'chauffeur' && 'Air-conditioned luxury SUV with dedicated private English guide.'}
-                            {key === 'domestic-flights' && 'Private chauffeur service combined with domestic flights between provinces.'}
-                          </p>
-                        </div>
-
-                        <div className="pt-3 flex justify-between items-baseline border-t border-brand-gold/15">
-                          <span className="font-sans text-[10px] tracking-widest text-brand-dark/50 uppercase font-semibold">Daily Rate</span>
-                          <span className="font-cormorant text-2xl font-normal text-brand-gold-dark">${value.rate} <span className="font-sans text-xs text-brand-dark/50 font-light">/ day</span></span>
-                        </div>
-                      </div>
-
-                      {isSelected && (
-                        <div className="absolute inset-0 border-2 border-brand-gold rounded-2xl pointer-events-none" />
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            </section>
-
-            {/* SECTION 4: Curated Excursions */}
-            <section className="bg-white/60 backdrop-blur-md border border-brand-gold/20 p-6 md:p-8 rounded-3xl shadow-lg space-y-6">
-              <div className="border-b border-brand-gold/15 pb-4 flex items-center space-x-3">
-                <div className="w-7 h-7 rounded-full bg-brand-gold/15 border border-brand-gold/30 flex items-center justify-center text-brand-gold-dark text-xs font-bold font-mono">4</div>
-                <h3 className="font-cormorant text-2xl md:text-3xl font-normal uppercase tracking-wider text-brand-dark">Curated Excursions</h3>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {activityOptions.map((act) => {
-                  const isSelected = selectedActivities.includes(act.id);
-                  const imageMap = {
-                    'angkor-sunrise': heroAngkor,
-                    helicopter: cardamomMountains,
-                    'mekong-cruise': galleryBoat,
-                    'rainforest-trek': galleryForest,
-                    'culinary-class': cambodianCulinary
-                  };
-                  return (
-                    <button
-                      key={act.id}
-                      type="button"
-                      onClick={() => handleActivityToggle(act.id)}
-                      className={`group relative text-left bg-brand-dark rounded-2xl overflow-hidden transition-all duration-500 h-72 flex flex-col justify-end cursor-pointer ${
-                        isSelected 
-                          ? 'ring-2 ring-brand-gold shadow-xl scale-[1.02]' 
-                          : 'border border-brand-gold/20 hover:border-brand-gold/40'
-                      }`}
-                    >
-                      <img 
-                        src={imageMap[act.id]} 
-                        alt={act.name} 
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/95 via-brand-dark/40 to-transparent" />
-                      {isSelected && (
-                        <div className="absolute inset-0 bg-brand-gold/15 mix-blend-overlay pointer-events-none" />
-                      )}
-                      
-                      {/* Check badge overlay */}
-                      <div className="absolute top-4 right-4 z-20">
-                        <div className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all ${
-                          isSelected ? 'border-brand-gold bg-brand-gold text-brand-dark scale-110 shadow' : 'border-white/40 bg-black/50 backdrop-blur-xs text-white'
-                        }`}>
-                          {isSelected ? (
-                            <Check size={16} className="text-brand-dark stroke-[3]" />
-                          ) : (
-                            <span className="font-sans text-sm text-white/70 font-semibold">+</span>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="relative z-10 p-6 space-y-2">
-                        <span className="font-sans text-[10px] font-bold tracking-widest text-brand-gold uppercase block">
-                          Private Excursion
-                        </span>
-                        <h4 className="font-cormorant text-2xl font-normal text-white leading-tight">
-                          {act.name}
-                        </h4>
-                        <p className="font-sans text-xs font-light text-brand-cream-dark/85 line-clamp-2 leading-relaxed">
-                          {act.id === 'angkor-sunrise' && 'Witness sunrise over Angkor Wat before exploring key galleries with a lead historian.'}
-                          {act.id === 'helicopter' && 'Fly above Siem Reap temples and the vast Tonle Sap lake on a scenic private flight.'}
-                          {act.id === 'mekong-cruise' && 'Glide past floating villages on a restored traditional barge while dining on local gourmet recipes.'}
-                          {act.id === 'rainforest-trek' && 'Trek alongside forest rangers through cardamom sanctuaries to spot wild elephants.'}
-                          {act.id === 'culinary-class' && 'Pick fresh lemongrass and craft classic Royal Khmer recipes with a master chef.'}
-                        </p>
-                        <div className="pt-2 flex justify-between items-baseline border-t border-white/15">
-                          <span className="font-sans text-[10px] text-brand-cream-dark/60 uppercase font-semibold">Rate Per Guest</span>
-                          <span className="font-cormorant text-xl font-normal text-brand-gold-light">${act.pricePerPerson} USD</span>
-                        </div>
-                      </div>
-                      {isSelected && (
-                        <div className="absolute inset-0 border-2 border-brand-gold rounded-2xl pointer-events-none" />
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            </section>
-
-          </div>
-
-          {/* Right Column: Sticky Compiled Statement invoice panel (Desktop only) */}
-          <div className="hidden lg:block lg:col-span-4 lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto">
-            {renderStatementContent()}
-          </div>
-
+          {/* Calculated Cost Estimate Panel (Revealed smoothly when showEstimate is true) */}
+          {showEstimate && (
+            <div className="pt-6 animate-fade-in">
+              {renderStatementContent()}
+            </div>
+          )}
         </div>
       </main>
 
       {/* Floating Bottom Bar for Mobile layout */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-brand-dark/95 border-t border-brand-gold/30 p-4 flex justify-between items-center shadow-2xl backdrop-blur-md">
-        <div className="flex flex-col text-left">
-          <span className="text-[10px] tracking-widest text-brand-gold uppercase font-bold">Estimated Total</span>
-          <span className="font-cormorant text-2xl text-white font-normal mt-0.5">${breakdown.total} USD</span>
-        </div>
-        <button
-          type="button"
-          onClick={() => setShowMobileDrawer(true)}
-          className="bg-brand-gold hover:bg-brand-gold-light text-brand-dark px-6 py-3 text-xs font-bold tracking-widest uppercase rounded-full transition-all active:scale-95 shadow-lg shadow-brand-gold/20 cursor-pointer flex items-center space-x-1.5"
-        >
-          <span>View Estimate</span>
-          <ChevronRight size={14} />
-        </button>
+        {showEstimate ? (
+          <>
+            <div className="flex flex-col text-left">
+              <span className="text-xs tracking-widest text-brand-gold uppercase font-bold">
+                Estimated Total
+              </span>
+              <span className="font-cormorant text-2xl text-white font-normal mt-0.5">
+                ${breakdown.total} USD
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowMobileDrawer(true)}
+              className="bg-brand-gold hover:bg-brand-gold-light text-brand-dark px-6 py-3 text-xs font-bold tracking-widest uppercase rounded-full transition-all active:scale-95 shadow-lg shadow-brand-gold/20 cursor-pointer flex items-center space-x-1.5"
+            >
+              <span>View Details</span>
+              <ChevronRight size={14} />
+            </button>
+          </>
+        ) : (
+          <button
+            type="button"
+            onClick={() => {
+              setShowEstimate(true);
+              setShowMobileDrawer(true);
+            }}
+            className="w-full bg-brand-gold hover:bg-brand-gold-light text-brand-dark py-3.5 text-xs font-bold tracking-[0.2em] uppercase transition-all active:scale-[0.98] rounded-full shadow-lg shadow-brand-gold/20 cursor-pointer flex items-center justify-center"
+          >
+            <span>Estimate My Trip</span>
+          </button>
+        )}
       </div>
 
       {/* Mobile Drawer (Slide-up modal detailing the estimate breakdown) */}
       {showMobileDrawer && (
-        <div className="lg:hidden fixed inset-0 z-50 bg-brand-dark/70 backdrop-blur-sm flex items-end animate-fade-in" onClick={() => setShowMobileDrawer(false)}>
-          <div 
+        <div
+          className="lg:hidden fixed inset-0 z-50 bg-brand-dark/70 backdrop-blur-sm flex items-end animate-fade-in"
+          onClick={() => setShowMobileDrawer(false)}
+        >
+          <div
             className="w-full bg-[#FAF8F5] max-h-[88vh] overflow-y-auto p-4 rounded-t-3xl relative animate-fade-in border-t border-brand-gold/30 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
@@ -623,105 +1017,7 @@ export const PlanTrip = () => {
             >
               <X size={16} />
             </button>
-            <div className="pt-6">
-              {renderStatementContent()}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Cool Luxury Travel Architect Confirmation Modal */}
-      {showSuccessModal && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-brand-dark/80 backdrop-blur-md animate-fade-in"
-          onClick={() => setShowSuccessModal(false)}
-        >
-          <div
-            className="bg-[#18130E] border border-brand-gold/40 text-brand-cream rounded-3xl p-6 sm:p-10 max-w-lg w-full shadow-2xl relative overflow-hidden space-y-6 animate-fade-in"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Ambient background glows */}
-            <div className="absolute -top-24 -right-24 w-60 h-60 rounded-full bg-brand-gold/15 blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-24 -left-24 w-60 h-60 rounded-full bg-brand-gold/10 blur-3xl pointer-events-none" />
-
-            {/* Close Button */}
-            <button
-              onClick={() => setShowSuccessModal(false)}
-              className="absolute top-5 right-5 w-9 h-9 rounded-full bg-white/10 border border-brand-gold/30 flex items-center justify-center text-brand-cream-dark/70 hover:text-white hover:bg-brand-gold hover:border-brand-gold hover:text-brand-dark transition-all cursor-pointer z-20"
-              aria-label="Close modal"
-            >
-              <X size={16} />
-            </button>
-
-            {/* Header Icon & Title */}
-            <div className="text-center space-y-3 relative z-10">
-              <div className="w-16 h-16 rounded-full bg-brand-gold/20 border-2 border-brand-gold flex items-center justify-center mx-auto text-brand-gold shadow-lg shadow-brand-gold/20">
-                <CheckCircle2 size={32} className="text-brand-gold animate-bounce" />
-              </div>
-
-              <div className="inline-flex items-center bg-brand-gold/15 px-4 py-1 rounded-full border border-brand-gold/30 text-brand-gold text-[10px] font-bold tracking-[0.25em] uppercase">
-                <span>BESPOKE EXPEDITION SUBMITTED</span>
-              </div>
-
-              <h3 className="font-cormorant text-3xl sm:text-4xl text-white font-normal uppercase tracking-wider leading-tight">
-                Itinerary Transmitted
-              </h3>
-              <p className="font-sans text-xs text-brand-cream-dark/80 font-light leading-relaxed max-w-sm mx-auto">
-                Your custom Cambodian journey specifications have been successfully delivered to our Lead Concierge desk.
-              </p>
-            </div>
-
-            {/* Quote Summary Ticket Box */}
-            <div className="bg-white/5 border border-brand-gold/25 rounded-2xl p-5 space-y-3 relative z-10">
-              <div className="flex justify-between items-center border-b border-brand-gold/15 pb-2.5">
-                <span className="text-[10px] text-brand-gold font-bold tracking-widest uppercase">SPECIFICATION TICKET</span>
-                <span className="font-mono text-xs text-brand-cream-dark/70">#AL-{days}D{travelers}G-2026</span>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3 text-xs">
-                <div>
-                  <span className="text-[10px] text-brand-cream-dark/50 uppercase block font-semibold">Duration & Guests</span>
-                  <span className="font-medium text-white">{days} Days / {travelers} Guests</span>
-                </div>
-                <div>
-                  <span className="text-[10px] text-brand-cream-dark/50 uppercase block font-semibold">Sanctuary Lodging</span>
-                  <span className="font-medium text-white capitalize">{tier}</span>
-                </div>
-                <div>
-                  <span className="text-[10px] text-brand-cream-dark/50 uppercase block font-semibold">Private Transport</span>
-                  <span className="font-medium text-white capitalize">{transport === 'tuk-tuk' ? 'Tuk-Tuk' : transport === 'chauffeur' ? 'Chauffeur' : 'Flights'}</span>
-                </div>
-                <div>
-                  <span className="text-[10px] text-brand-cream-dark/50 uppercase block font-semibold">Excursions Included</span>
-                  <span className="font-medium text-white">{selectedActivities.length} Experiences</span>
-                </div>
-              </div>
-
-              <div className="pt-3 border-t border-brand-gold/20 flex justify-between items-baseline">
-                <span className="text-xs font-bold text-brand-gold uppercase tracking-wider">Compiled Estimate</span>
-                <span className="font-cormorant text-2xl text-brand-gold font-bold">${breakdown.total} USD</span>
-              </div>
-            </div>
-
-            {/* Concierge Note */}
-            <div className="text-center space-y-1 relative z-10">
-              <p className="font-handwritten text-brand-gold text-base">
-                "Sophea will contact you within 2 hours with your private reservation privileges."
-              </p>
-              <span className="font-sans text-[10px] tracking-widest text-brand-cream-dark/40 uppercase block">
-                Angkor Lux Concierge Desk • Siem Reap
-              </span>
-            </div>
-
-            {/* Modal Action Buttons */}
-            <div className="pt-2 relative z-10 flex flex-col sm:flex-row gap-3">
-              <button
-                onClick={() => setShowSuccessModal(false)}
-                className="w-full bg-brand-gold hover:bg-brand-gold-light text-brand-dark py-3.5 rounded-full text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 hover:scale-105 shadow-lg shadow-brand-gold/20 cursor-pointer flex items-center justify-center space-x-2"
-              >
-                <span>DONE & RETURN TO PLANNER</span>
-              </button>
-            </div>
+            <div className="pt-6">{renderStatementContent()}</div>
           </div>
         </div>
       )}

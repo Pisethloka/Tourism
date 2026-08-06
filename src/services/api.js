@@ -1,3 +1,9 @@
+/**
+ * api.js - Destination Data Service & Local Mock API
+ * Fetches destination details from /api/destinations.json with fallback data,
+ * maps image keys to local photo assets, and filters by section category.
+ */
+
 // Image asset mappings for destination images
 import heroAngkor from "../assets/hero_angkor.png";
 import phnomPenhPalace from "../assets/phnom_penh_palace.png";
@@ -18,6 +24,8 @@ import banteaySrei from "../assets/banteay_srei.png";
 import watThmey from "../assets/wat_thmey.png";
 import bayonBuddha from "../assets/bayon_buddha_close.jpg";
 import bayonTemplePhoto from "../assets/bayon_temple_photo.jpg";
+
+import { supabase, isSupabaseConfigured } from "./supabase";
 
 // Imported fallback JSON data to guarantee 100% load reliability
 import fallbackDestinations from "../../public/api/destinations.json";
@@ -249,7 +257,9 @@ function addMyNoteId(id) {
       MY_NOTES_STORAGE_KEY,
       JSON.stringify([...current, id]),
     );
-  } catch (e) {}
+  } catch (e) {
+    console.warn("Failed to save note ID to localStorage:", e);
+  }
 }
 
 const DEFAULT_GUESTBOOK_NOTES = [
@@ -304,6 +314,15 @@ const DEFAULT_GUESTBOOK_NOTES = [
 ];
 
 export async function deleteGuestbookNote(noteId) {
+  if (isSupabaseConfigured && supabase) {
+    try {
+      await supabase.from("guestbook_reviews").delete().eq("id", noteId);
+      return await fetchGuestbookNotes();
+    } catch (err) {
+      console.warn("Supabase delete failed, using local fallback:", err);
+    }
+  }
+
   try {
     const current = await fetchGuestbookNotes();
     const updated = current.filter((note) => note.id !== noteId);
@@ -316,7 +335,33 @@ export async function deleteGuestbookNote(noteId) {
 }
 
 export async function fetchGuestbookNotes() {
-  // Simulate network API request latency (300ms)
+  if (isSupabaseConfigured && supabase) {
+    try {
+      const { data, error } = await supabase
+        .from("guestbook_reviews")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (!error && Array.isArray(data) && data.length > 0) {
+        const myNoteIds = getMyNoteIds();
+        return data.map((note) => ({
+          id: note.id,
+          name: note.name,
+          location: note.location || "Explorer",
+          stars: Number(note.stars) || 5,
+          date: note.date,
+          likes: note.likes || 0,
+          isLiked: false,
+          isMyNote: Boolean(myNoteIds.includes(note.id)),
+          comment: note.comment,
+        }));
+      }
+    } catch (err) {
+      console.warn("Supabase fetch failed, using local storage fallback:", err);
+    }
+  }
+
+  // Fallback to local storage / default mock data
   await new Promise((resolve) => setTimeout(resolve, 300));
   let notes = DEFAULT_GUESTBOOK_NOTES;
   try {
@@ -343,9 +388,45 @@ export async function fetchGuestbookNotes() {
 }
 
 export async function saveGuestbookNote(noteData) {
-  // Simulate network API request latency (500ms)
-  await new Promise((resolve) => setTimeout(resolve, 500));
+  const formattedDate = new Date().toLocaleDateString("en-US", {
+    month: "short",
+    day: "2-digit",
+    year: "numeric",
+  });
 
+  if (isSupabaseConfigured && supabase) {
+    try {
+      const payload = {
+        name: noteData.name,
+        location: noteData.location || "Explorer",
+        stars: Number(noteData.stars) || 5,
+        date: formattedDate,
+        likes: 0,
+        comment: noteData.comment,
+      };
+
+      const { data, error } = await supabase
+        .from("guestbook_reviews")
+        .insert([payload])
+        .select()
+        .single();
+
+      if (!error && data) {
+        addMyNoteId(data.id);
+        const updatedNotes = await fetchGuestbookNotes();
+        return {
+          success: true,
+          note: { ...data, isMyNote: true },
+          notes: updatedNotes,
+        };
+      }
+    } catch (err) {
+      console.warn("Supabase insert failed, using local storage fallback:", err);
+    }
+  }
+
+  // Fallback local save
+  await new Promise((resolve) => setTimeout(resolve, 400));
   const noteId = Date.now();
   addMyNoteId(noteId);
 
@@ -354,11 +435,7 @@ export async function saveGuestbookNote(noteData) {
     name: noteData.name,
     location: noteData.location || "Explorer",
     stars: Number(noteData.stars) || 5,
-    date: new Date().toLocaleDateString("en-US", {
-      month: "short",
-      day: "2-digit",
-      year: "numeric",
-    }),
+    date: formattedDate,
     likes: 0,
     isLiked: false,
     isMyNote: true,
@@ -376,15 +453,29 @@ export async function saveGuestbookNote(noteData) {
   }
 }
 
-export async function toggleLikeGuestbookNote(noteId) {
+export async function toggleLikeGuestbookNote(noteId, currentLikes, isCurrentlyLiked) {
+  const newLikes = (currentLikes || 0) + (isCurrentlyLiked ? -1 : 1);
+
+  if (isSupabaseConfigured && supabase) {
+    try {
+      await supabase
+        .from("guestbook_reviews")
+        .update({ likes: Math.max(0, newLikes) })
+        .eq("id", noteId);
+      return await fetchGuestbookNotes();
+    } catch (err) {
+      console.warn("Supabase upvote update failed, using local fallback:", err);
+    }
+  }
+
   try {
     const current = await fetchGuestbookNotes();
     const updated = current.map((note) =>
       note.id === noteId
         ? {
             ...note,
-            likes: (note.likes || 0) + (note.isLiked ? -1 : 1),
-            isLiked: !note.isLiked,
+            likes: Math.max(0, newLikes),
+            isLiked: !isCurrentlyLiked,
           }
         : note,
     );

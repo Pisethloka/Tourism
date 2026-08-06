@@ -2,229 +2,229 @@
   {
     "id": "angkor-wat",
     "title": "Angkor Wat",
-    "subtitle": "The Crown Jewel of Ancient Khmer Civilization",
+    "subtitle": "Cambodia's Iconic Wonder & World's Largest Ancient Temple",
     "category": "Heritage",
     "location": "Siem Reap Province",
     "bestTime": "Nov – Feb (Sunrise 5:15 AM - 6:00 AM)",
     "duration": "Full Day",
     "imageKey": "heroAngkor",
-    "shortDescription": "The soul of the Khmer Empire, a vast stone symphony and the largest religious monument in the world.",
-    "overview": "Angkor Wat is the ultimate symbol of Khmer civilization, built by King Suryavarman II in the early 12th century as a Hindu temple dedicated to Vishnu before gradually transforming into a Theravada Buddhist sanctuary. Its iconic five towers reflect Mount Meru, the sacred center of the universe in Hindu mythology.",
+    "shortDescription": "The heart of Cambodia and the world's largest ancient temple complex.",
+    "overview": "Built in the early 12th century, Angkor Wat is Cambodia's proud national symbol. Originally constructed as a Hindu temple for Lord Vishnu, it later became a sacred Buddhist sanctuary. Its iconic five lotus towers represent Mount Meru, the center of the universe in ancient tradition.",
     "highlights": [
-      "World's longest continuous sandstone bas-reliefs depicting ancient Khmer epics and celestial battles.",
-      "Spectacular sunrise views over the central lotus towers reflected in the front lily ponds.",
-      "Intricate Apsara dancer carvings adorning over 1,800 distinct stone surfaces throughout the galleries.",
-      "Ascend to the central Bakan sanctuary tier for breathtaking 360-degree views over the ancient jungle canopy."
+      "Watch a breathtaking sunrise over the central lotus towers reflected in the front lily ponds.",
+      "Explore grand stone wall carvings telling ancient stories and epic historical legends.",
+      "Discover over 1,800 detailed carvings of celestial Apsara dancers throughout the galleries.",
+      "Climb up to the central top tier sanctuary for amazing 360-degree views of the jungle."
     ],
-    "practicalInfo": "Angkor Pass required (1-Day, 3-Day, or 7-Day option). Strict dress code is enforced at the upper Bakan tier: shoulders and knees must be covered. Wearing comfortable walking shoes and bringing sun protection is highly recommended."
+    "practicalInfo": "You will need an Angkor Pass to visit. Please dress respectfully by covering your shoulders and knees, wear comfortable walking shoes, and bring a hat and sunscreen!"
   },
   {
     "id": "bayon-temple",
     "title": "Bayon Temple",
-    "subtitle": "The Temple of 216 Smiling Stone Faces",
+    "subtitle": "The Famous Temple of 216 Smiling Stone Faces",
     "category": "Cultural",
     "location": "Siem Reap (Angkor Thom)",
     "bestTime": "Nov – Feb (Late afternoon for golden light on stone faces)",
     "duration": "Half Day",
     "imageKey": "bayonTemplePhoto",
-    "shortDescription": "Famous for its 54 towers adorned with over 200 serene, smiling carved stone faces of Lokeshvara.",
-    "overview": "Built in the late 12th century by King Jayavarman VII, Bayon stands at the exact center of the ancient walled city of Angkor Thom. It is renowned worldwide for its 54 gothic towers bearing 216 enigmatic, smiling faces carved directly into giant stone blocks, representing serenity, mercy, and royal wisdom.",
+    "shortDescription": "Famous for its 54 stone towers decorated with giant, peaceful smiling faces.",
+    "overview": "Built in the late 12th century by King Jayavarman VII, Bayon stands right at the center of the ancient walled city of Angkor Thom. It is world-famous for its 54 towers bearing 216 giant smiling stone faces carved into the rock, representing peace, kindness, and royal wisdom.",
     "highlights": [
-      "216 serene smiling stone faces looking out towards the four cardinal directions.",
-      "Vivid outer gallery bas-reliefs depicting daily 12th-century Khmer market life, cockfights, and naval battles on Tonle Sap Lake.",
-      "Intricate stone labyrinths, narrow corridors, and towering central sanctuaries.",
-      "Golden hour photography when afternoon sunlight illuminates the smiling stone expressions."
+      "See 216 gentle, smiling stone faces looking out in every direction.",
+      "Explore detailed wall carvings showing daily village life, markets, and ancient boat battles.",
+      "Walk through stone hallways, towers, and hidden passages inside the temple.",
+      "Visit in the late afternoon for warm golden sunlight on the smiling expressions."
     ],
-    "practicalInfo": "Included under the standard Angkor Pass. Located inside Angkor Thom, just 1.5 km north of Angkor Wat. Combine with visits to Baphuon, Phimeanakas, and the Terrace of the Elephants."
+    "practicalInfo": "Included with your Angkor Pass. Located inside Angkor Thom, just a 5-minute drive north of Angkor Wat."
   },
   {
     "id": "koh-rong",
     "title": "Koh Rong & Sanloem",
-    "subtitle": "Turquoise Marine Havens & Glowing Plankton Bays",
+    "subtitle": "Tropical Islands with White Sand & Clear Blue Water",
     "category": "Luxury",
     "location": "Sihanoukville Coast",
     "bestTime": "Nov – May (Calm turquoise seas & bright sunshine)",
     "duration": "3 Days",
     "imageKey": "kohRongSanloemPhoto",
-    "shortDescription": "Crystalline turquoise waters, white sandy shores, and vibrant coral reefs under protection initiatives.",
-    "overview": "Floating in the warm waters of the Gulf of Thailand, Koh Rong and Koh Rong Sanloem offer 43 kilometers of powdery white sand beaches, crystalline turquoise seas, coral reef marine reserves, and enchanting night-time bioluminescent plankton.",
+    "shortDescription": "Crystal-clear waters, soft white sand beaches, and magical glowing plankton at night.",
+    "overview": "Located off the coast of Sihanoukville in the Gulf of Thailand, Koh Rong and Koh Rong Sanloem offer 43 kilometers of soft white sand beaches, clear turquoise waters, colorful coral reefs, and bioluminescent plankton that glow in the ocean at night.",
     "highlights": [
-      "Pristine white sand stretches including Sok San Beach, Long Set Beach, and Saracen Bay.",
-      "Magical nighttime swimming tours to witness blue glowing bioluminescent plankton under starry skies.",
-      "Snorkeling and scuba diving along healthy coral reefs teeming with colorful tropical fish.",
-      "Lush jungle interior trails leading to hidden waterfalls and quiet secluded coves."
+      "Relax on soft white sand beaches like Sok San Beach, Long Set Beach, and Saracen Bay.",
+      "Take a night boat trip to swim with blue glowing plankton under starry skies.",
+      "Snorkel and dive along healthy coral reefs filled with colorful tropical fish.",
+      "Hike short jungle paths leading to quiet waterfalls and hidden beach coves."
     ],
-    "practicalInfo": "Daily high-speed ferry catamarans depart from Sihanoukville mainland (45-minute trip). Help preserve marine biodiversity by using reef-safe sunscreen and avoiding stepping on living coral."
+    "practicalInfo": "Speedboats run daily from Sihanoukville (takes about 45 minutes). Please use reef-safe sunscreen to help keep ocean life safe!"
   },
   {
     "id": "preah-vihear",
     "title": "Preah Vihear Temple",
-    "subtitle": "Sacred Clifftop Sanctuary Overlooking the Plains",
-    "category": "Mystical",
+    "subtitle": "Ancient Clifftop Temple Overlooking the Plains",
+    "category": "Heritage",
     "location": "Northern Highlands",
-    "bestTime": "Nov – Mar (Clear morning skies for panoramas)",
+    "bestTime": "Nov – Mar (Clear morning skies for mountain views)",
     "duration": "2 Days",
     "imageKey": "preahVihearPhoto",
-    "shortDescription": "A majestic clifftop temple perched on the edge of the Dângrêk Mountains, offering spectacular border views.",
-    "overview": "Perched dramatically on a 525-meter cliff edge of the Dângrêk Mountains bordering Thailand, Preah Vihear is an exceptional UNESCO World Heritage site dedicated to Lord Shiva. Constructed over four centuries by successive Khmer monarchs, its unique linear layout stretches 800 meters along a mountain ridge.",
+    "shortDescription": "A majestic temple perched on a high mountain cliff with incredible views across the country.",
+    "overview": "Perched dramatically on a 525-meter cliff in the Dângrêk Mountains, Preah Vihear is a magnificent UNESCO World Heritage site dedicated to Lord Shiva. Built over 400 years by succession of Khmer kings, this mountain temple stretches 800 meters along the cliff ridge.",
     "highlights": [
-      "Unrivaled 800-meter long processional axis climbing through five distinct gopuras (gated pavilions).",
-      "Breathtaking 360-degree cliffside panoramas overlooking the vast Cambodian plains below.",
-      "Remarkably preserved lintel carvings depicting the Churning of the Ocean of Milk.",
-      "Secluded mountain atmosphere far removed from standard tourist routes."
+      "Walk up an impressive 800-meter stone pathway passing through five grand stone gates.",
+      "Enjoy sweeping 360-degree views from the top cliff edge overlooking the plains below.",
+      "Admire beautifully preserved stone carvings telling ancient stories.",
+      "Experience a peaceful mountain atmosphere far away from crowded tourist spots."
     ],
-    "practicalInfo": "Passport verification required at the base ticket office. A 4WD vehicle or mountain motorbike taxi is required to ascend the steep summit road. Ticket includes access to all summit pavilions."
+    "practicalInfo": "Bring your passport for a quick entrance check. Local 4WD vehicles or motorbikes are available at the base to take you up the steep hill."
   },
   {
     "id": "tonle-sap",
     "title": "Tonle Sap Lake",
-    "subtitle": "The Beating Heart of Cambodia's Water Ecosystem",
+    "subtitle": "Southeast Asia's Largest Lake & Unique Floating Villages",
     "category": "Ecotravel",
     "location": "Siem Reap Province",
-    "bestTime": "Aug – Feb (High water season with flooded mangrove forests)",
+    "bestTime": "Aug – Feb (High water season for flooded forest boat rides)",
     "duration": "Half Day",
     "imageKey": "tonleSap",
-    "shortDescription": "The beating heart of Cambodia, featuring unique floating communities and seasonal floods.",
-    "overview": "Tonle Sap is the largest freshwater lake in Southeast Asia and a designated UNESCO Biosphere Reserve. It experiences a unique hydrological phenomenon twice a year when the Mekong River forces the Tonle Sap River to reverse its flow, expanding the lake fourfold and nourishing floating communities.",
+    "shortDescription": "Discover unique floating communities, stilted villages, and rich birdlife.",
+    "overview": "Tonle Sap is the largest freshwater lake in Southeast Asia and a UNESCO Biosphere Reserve. Twice a year, the river reverses its flow, expanding the lake four times bigger and creating rich water habitats for local floating communities.",
     "highlights": [
-      "Fascinating floating villages of Chong Kneas and Mechrey, and towering stilted homes of Kampong Phluk.",
-      "Prek Toal Core Bird Sanctuary, protecting endangered waterbirds like spot-billed pelicans and adjutants.",
-      "Floating schools, markets, pagodas, and fish farms adapting dynamically to changing water levels.",
-      "Unforgettable sunset boat rides across the vast, sea-like freshwater horizon."
+      "Visit unique floating villages like Chong Kneas and tall stilted homes in Kampong Phluk.",
+      "Spot rare water birds like pelicans at the Prek Toal Bird Sanctuary.",
+      "See floating schools, markets, pagodas, and fish farms adapting to changing water levels.",
+      "Enjoy a relaxing boat ride to watch the sunset across the open water."
     ],
-    "practicalInfo": "High water season (August to February) is best for boat navigation into flooded mangrove forests. Book responsible community-guided boat tours to ensure safety and direct support for local families."
+    "practicalInfo": "August to February is the best time for boat trips through the flooded mangrove forest. Joining local community tours directly supports resident families!"
   },
   {
     "id": "bokor-hill",
     "title": "Bokor Hill Station",
-    "subtitle": "Misty Mountain Canopy & Colonial Ruins",
+    "subtitle": "Cool Mountain Air, Historic Ruins & Coastal Views",
     "category": "Historic",
     "location": "Kampot Province",
     "bestTime": "Nov – Apr (Cool mountain breeze & clear coastal views)",
     "duration": "1 Day",
     "imageKey": "bokorHillPhoto",
-    "shortDescription": "A misty mountain canopy featuring haunting colonial ruins and panoramic views of the Gulf of Thailand.",
-    "overview": "Elevated 1,000 meters above sea level within Preah Monivong National Park, Bokor offers a cool climate, shrouded rainforests, and haunting atmospheric ruins of a 1920s French hilltop resort town overlooking the Gulf of Thailand.",
+    "shortDescription": "A cool mountain park featuring historic French colonial buildings and sweeping sea views.",
+    "overview": "Located 1,000 meters above sea level within Preah Monivong National Park in Kampot, Bokor Hill offers pleasant cool weather, misty rainforests, and historic French buildings from the 1920s overlooking the sea.",
     "highlights": [
-      "Haunting historic ruins of the 1920s Le Bokor Palace Hotel and Old French Catholic Church.",
-      "Wat Sampov Pram (Temple of 5 Boats) offering sheer cliff drop-offs over the Gulf of Thailand and Phu Quoc Island.",
-      "Popokvil Waterfalls and high-altitude hiking trails amidst protected cloud forest habitats.",
-      "Refreshing cool mountain temperatures contrasting with lowland heat."
+      "Explore the historic Le Bokor Palace hotel and old French Catholic church.",
+      "Visit Wat Sampov Pram temple for spectacular cliffside views of the ocean.",
+      "See Popokvil Waterfall and enjoy refreshing mountain hiking trails.",
+      "Enjoy cool, refreshing temperatures away from the lowland heat."
     ],
-    "practicalInfo": "Mountain temperatures can be 5-10°C cooler than the coast; carrying a light jacket or windbreaker is advised. Located a scenic 45-minute drive up the mountain highway from Kampot."
+    "practicalInfo": "The weather on the mountain is cooler, so bring a light sweater or jacket! It is an easy 45-minute scenic drive up from Kampot town."
   },
   {
     "id": "tuol-sleng",
-    "title": "Tuol Sleng (S-21)",
-    "subtitle": "A Sacred Memorial to Historical Truth & Resilience",
+    "title": "Tuol Sleng\n(S-21)",
+    "subtitle": "A Historic Memorial & Museum of Resilience",
     "category": "Memorial",
     "location": "Phnom Penh Capital",
     "bestTime": "Year-round (Quiet morning reflections)",
     "duration": "2 Hours",
     "imageKey": "tuolSlengPhoto",
-    "shortDescription": "A former high school turned interrogation facility, now standing as an invaluable memorial to historical truth.",
-    "overview": "Formerly Tuol Svay Prey High School, this four-building complex was converted in 1975 into Security Prison 21 (S-21) by the Khmer Rouge regime. Today it stands as a solemn museum preserved in its original state to educate visitors, preserve historical evidence, and honor the memory of those lost.",
+    "shortDescription": "A former school turned memorial museum, preserving history to educate future generations.",
+    "overview": "Originally a high school, this site was converted into Security Prison 21 (S-21) during the 1970s. Today, it stands as a solemn museum preserved in its original state to educate visitors, preserve history, and honor memory.",
     "highlights": [
-      "Comprehensive audio tour featuring deeply moving eyewitness testimonies from survivors and historians.",
-      "Preserved classroom cells, interrogation rooms, and original photographic archives of detainees.",
-      "Memorial stupa courtyard offering a peaceful space for prayer and quiet reflection.",
-      "Opportunities to meet remaining living survivors and historical authors at the site."
+      "Listen to an informative audio guide featuring personal stories from survivors.",
+      "See preserved classrooms, historic photo displays, and original records.",
+      "Visit the quiet courtyard memorial stupa for prayer and peaceful reflection.",
+      "Meet living survivors and learn about Cambodia's inspiring journey of healing."
     ],
-    "practicalInfo": "Reverent conduct and modest clothing required. Renting the official audio guide (available in 15+ languages) is strongly recommended for proper context and historic understanding."
+    "practicalInfo": "Please dress modestly and speak quietly out of respect. We highly recommend getting the audio guide at the entrance to learn the full history during your visit."
   },
   {
     "id": "cardamom-mountains",
     "title": "Cardamom Mountains",
-    "subtitle": "One of Southeast Asia's Greatest Rainforest Wildernesses",
+    "subtitle": "Cambodia's Great Rainforest & Wildlife Sanctuary",
     "category": "Wilderness",
     "location": "Western Highlands",
     "bestTime": "Nov – Mar (Dry season hiking & wildlife tracking)",
     "duration": "3 Days",
     "imageKey": "cardamomMountainsPhoto",
-    "shortDescription": "One of Southeast Asia's last great wilderness areas, home to rare wildlife and hidden waterfalls.",
-    "overview": "Spanning over 4.4 million hectares, the Cardamom Mountains constitute one of the last intact rainforest wilderness areas in mainland Southeast Asia. It protects endangered species including Asian elephants, Indochinese tigers, and Siamese crocodiles while fostering award-winning community ecotourism.",
+    "shortDescription": "One of Southeast Asia's largest rainforests, rich in wildlife, rivers, and waterfalls.",
+    "overview": "Covering over 4.4 million hectares, the Cardamom Mountains are one of the largest intact rainforests in Southeast Asia. This vast green sanctuary protects wild elephants, rare birds, and pristine river networks while supporting community ecotourism.",
     "highlights": [
-      "Community-Based Ecotourism (CBET) villages like Chi Phat and Stung Areng offering homestays and forest guides.",
-      "Jungle river kayaking, mountain biking, hidden waterfall trekking, and night wildlife safaris.",
-      "World-class eco-lodges and luxury river canvas tents dedicated to rainforest conservation.",
-      "Dense evergreen forests filled with exotic birdlife, gibbons, and orchid species."
+      "Stay with local villagers in eco-friendly communities like Chi Phat and Stung Areng.",
+      "Enjoy jungle river kayaking, mountain biking, waterfall trekking, and wildlife safaris.",
+      "Stay in peaceful eco-lodges surrounded by lush rainforest nature.",
+      "Explore dense green forests filled with wild orchids, gibbons, and tropical birds."
     ],
-    "practicalInfo": "Always travel with licensed local guides for safety when venturing into deep jungle trails. Pack eco-friendly insect repellent, sturdy hiking boots, and reusable hydration gear."
+    "practicalInfo": "Always hire a trusted local guide for safety when hiking in the forest. Remember to bring bug spray, good walking shoes, and water!"
   },
   {
     "id": "royal-palace",
-    "title": "Royal Palace PP",
-    "subtitle": "A Shining Symbol of Khmer Royalty and Sacred Treasures",
+    "title": "Royal Palace",
+    "subtitle": "The Official Home of Cambodia's King & Sacred Golden Treasures",
     "category": "Royalty",
     "location": "Phnom Penh Capital",
     "bestTime": "Oct – Mar (Morning visits 8:00 AM - 10:30 AM)",
     "duration": "Half Day",
     "imageKey": "phnomPenhPalace",
-    "shortDescription": "A shining example of Khmer architecture with its classic gilded roofs and tranquil palace grounds.",
-    "overview": "Built in 1866 under King Norodom, the Royal Palace serves as the official royal residence of King Norodom Sihamoni. Located along the banks of the Chaktomuk River, the complex showcases traditional Khmer architecture featuring spires, gilded roofs, and pristine tropical gardens alongside the famed Silver Pagoda.",
+    "shortDescription": "A grand palace complex featuring traditional Khmer golden roofs, gardens, and the Silver Pagoda.",
+    "overview": "Built in 1866, the Royal Palace is the official home of King Norodom Sihamoni. Located right along the river in Phnom Penh, this stunning landmark features traditional Cambodian golden roofs, beautiful gardens, and the world-famous Silver Pagoda.",
     "highlights": [
-      "Silver Pagoda floor paved with over 5,000 genuine solid silver tiles weighing 1kg each.",
-      "Life-sized Emerald Buddha and Gold Maitreya Buddha encrusted with 9,584 diamonds.",
-      "Throne Hall (Preah Thineang Dhevinnichhay) featuring a 59-meter central spire used for royal coronations.",
-      "Phochani Pavilion and historical royal costume exhibits detailing centuries of Kingdom heritage."
+      "Walk on a floor paved with over 5,000 real solid silver tiles.",
+      "See the famous Emerald Buddha and a solid gold Buddha covered in over 9,500 sparkling diamonds.",
+      "Explore the majestic Throne Hall with its high 59-meter spire, used for crowning Cambodian kings.",
+      "View historic royal clothes and traditional artifacts from Cambodia's rich history."
     ],
-    "practicalInfo": "Modest attire mandatory (no sleeveless tops or shorts above knees). Photography is strictly prohibited inside the main Silver Pagoda sanctuary. Morning visits are recommended to avoid midday heat."
+    "practicalInfo": "Please dress respectfully by covering your shoulders and knees. Photos are not allowed inside the Silver Pagoda. We recommend visiting in the morning to enjoy cooler, pleasant weather!"
   },
   {
     "id": "banteay-srei",
     "title": "Banteay Srei",
-    "subtitle": "The Citadel of Women & Jewel of Khmer Carving",
+    "subtitle": "The Citadel of Women & Masterpiece of Stone Carvings",
     "category": "Heritage",
     "location": "Siem Reap Province",
     "bestTime": "Nov – Feb (Early morning 7:30 AM for warm pink light)",
     "duration": "2 Hours",
     "imageKey": "banteaySrei",
-    "shortDescription": "Built with pink sandstone, this temple is renowned for its miniature scale and exquisite, detailed relief carvings.",
-    "overview": "Consecrated in 967 AD, Banteay Srei translates to 'Citadel of Women', so named because of the unbelievable delicacy of its relief carvings. Constructed from fine rose-pink sandstone, this compact temple displays the sharpest, deepest, and most elaborate ornamentation found anywhere in ancient Khmer architecture.",
+    "shortDescription": "A beautiful pink sandstone temple famous for its extraordinarily detailed stone carvings.",
+    "overview": "Built in 967 AD, Banteay Srei translates to 'Citadel of Women', named for the delicate beauty of its stone artwork. Crafted from rose-pink sandstone, this compact temple features some of the sharpest and most detailed stone wall carvings in ancient Khmer history.",
     "highlights": [
-      "Masterpiece pink sandstone relief carvings depicting Hindu tales of Indra and Ravana.",
-      "Uniquely intimate, human-scale architecture surrounded by peaceful lotus-filled moats.",
-      "Extremely well-preserved Devata goddess statues carved into niches along sanctuary walls.",
-      "Adjacent visitor center detailing historical restoration efforts using traditional techniques."
+      "See masterpiece pink sandstone carvings depicting famous ancient legends.",
+      "Enjoy a quiet, intimate temple layout surrounded by lotus-filled water ponds.",
+      "Admire remarkably preserved goddess statues carved directly into the stone walls.",
+      "Learn about temple restoration efforts at the modern visitor center near the entrance."
     ],
-    "practicalInfo": "Included under the standard Angkor Pass. Located 37km north of main Siem Reap; ideal to combine with visits to Kbal Spean or the Cambodia Landmine Museum."
+    "practicalInfo": "Included with your Angkor Pass. Located about 45 minutes north of Siem Reap—easy to combine with a visit to the nearby Landmine Museum!"
   },
   {
     "id": "killing-fields",
     "title": "The Killing Fields",
-    "subtitle": "A Peaceful Sanctuary for Remembrance & Reflection",
+    "subtitle": "A Peaceful Memorial Garden for Reflection & Peace",
     "category": "Memorial",
     "location": "Choeung Ek",
     "bestTime": "Year-round (Mornings or late afternoons)",
     "duration": "2 Hours",
     "imageKey": "killingFields",
-    "shortDescription": "A site of deep solemnity, offering a vital space for reflection on the nation's past and path forward.",
-    "overview": "Choeung Ek was the main execution and burial site for political prisoners held at S-21 during the late 1970s. Today, it has been transformed into a peaceful memorial garden dominated by a striking Buddhist Stupa containing over 8,000 human skulls organized by age and gender.",
+    "shortDescription": "A quiet memorial site dedicated to honoring history and promoting peace for the future.",
+    "overview": "Choeung Ek was a major historical site in the late 1970s. Today, it has been transformed into a peaceful memorial park dominated by a tall glass Buddhist Stupa, surrounded by quiet green trees and orchards.",
     "highlights": [
-      "Central Glass Memorial Stupa paying tribute to victims of historical tragedy.",
-      "Self-guided audio walking path past historical markers, mass grave sites, and the Magic Tree.",
-      "On-site museum building displaying documentary films and international peace messages.",
-      "Quiet natural grounds shaded by orchards encouraging solemn contemplation."
+      "Visit the central Glass Memorial Stupa created to honor victims and promote peace.",
+      "Follow a gentle self-guided audio walking path around the peaceful memorial grounds.",
+      "Visit the small museum exhibit to watch documentary films and learn about peace initiatives.",
+      "Walk along quiet orchard paths designed for peaceful thought and reflection."
     ],
-    "practicalInfo": "Modest attire required. Silence and high respect expected throughout the sanctuary grounds. Tuk-tuks and taxi apps easily reach Choeung Ek from Phnom Penh city center."
+    "practicalInfo": "Please dress modestly and speak quietly out of respect. Conveniently reached by tuk-tuk or ride-hailing app from central Phnom Penh."
   },
   {
     "id": "yeak-laom",
     "title": "Yeak Laom Lake",
-    "subtitle": "Pristine Emerald Waters Wrapped in Sacred Jungle",
+    "subtitle": "Clear Emerald Volcanic Lake Surrounded by Jungle",
     "category": "Sanctuary",
     "location": "Ratanakiri Province",
     "bestTime": "Nov – Apr (Crystal clear emerald swimming conditions)",
     "duration": "3 Hours",
     "imageKey": "yeakLaom",
-    "shortDescription": "A pristine volcanic crater lake in Ratanakiri wrapped in sacred indigenous folklore and dense jungle.",
-    "overview": "Formed over 700,000 years ago by a volcanic eruption, Yeak Laom is a nearly perfect circular crater lake measuring 800 meters across and 48 meters deep. Located in the remote northeastern province of Ratanakiri, the lake is revered as a sacred sanctuary by the indigenous Tampuen people.",
+    "shortDescription": "A clear, circular crater lake hidden in the jungle of Ratanakiri.",
+    "overview": "Formed over 700,000 years ago by a natural volcano, Yeak Laom is a clear circular lake surrounded by lush green jungle. Located in Ratanakiri, this peaceful spot is protected and cared for by the local indigenous Tampuen community.",
     "highlights": [
-      "Swimming in exceptionally clear, fresh emerald-green waters amidst peaceful jungle sounds.",
-      "Shaded 3km walking trail looping entirely around the perimeter of the crater rim.",
-      "Indigenous Tampuen Cultural Center showcasing traditional crafts, instruments, and forest heritage.",
-      "Rich biodiversity of tropical birds, butterflies, and rare botanical plants lining the banks."
+      "Swim in clear, fresh emerald waters while listening to peaceful jungle sounds.",
+      "Walk along the shaded 3km path that loops around the entire crater rim.",
+      "Visit the Tampuen Cultural Center to see traditional crafts and musical instruments.",
+      "Discover colorful butterflies, birds, and tropical plants along the water's edge."
     ],
-    "practicalInfo": "Respect local Tampuen customs by swimming only from designated wooden docks. Small eco-entry fee collected at the gate directly supports lake conservation and local indigenous community projects."
+    "practicalInfo": "Please swim only from designated wooden docks to respect local community rules. A small ticket fee at the entrance supports local village conservation!"
   }
 ]

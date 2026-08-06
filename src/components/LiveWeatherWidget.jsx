@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { CloudSun, DollarSign, RefreshCw, Radio, Compass, ArrowRightLeft, ShieldCheck } from "lucide-react";
+import { CloudSun, DollarSign, RefreshCw, Compass, ArrowRightLeft, ShieldCheck } from "lucide-react";
 import { fetchLiveWeather, fetchExchangeRate } from "../services/api";
 
 export const LiveWeatherWidget = ({ title = "Traveler's Live Intelligence", subtitle = "Real-time weather radar & financial exchange guide for Cambodia" }) => {
@@ -35,22 +35,22 @@ export const LiveWeatherWidget = ({ title = "Traveler's Live Intelligence", subt
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-brand-gold/20 pb-6 mb-8 relative z-10">
         <div>
-          <div className="flex items-center space-x-2 text-brand-gold text-[10px] font-bold tracking-[0.25em] uppercase mb-1">
-            <Radio size={12} className="animate-pulse text-green-400" />
+          <div className="flex items-center space-x-2 text-brand-gold text-xs font-bold tracking-[0.25em] uppercase mb-1">
+            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
             <span>LIVE TRAVEL DESK</span>
           </div>
           <h3 className="font-cormorant text-2xl sm:text-3xl text-white font-normal uppercase tracking-wider">
             {title}
           </h3>
-          <p className="text-xs text-brand-cream-dark/70 font-light mt-0.5">
+          <p className="text-xs text-brand-cream-dark/80 font-normal mt-0.5">
             {subtitle}
           </p>
         </div>
 
         {/* Live Status Badge */}
-        <div className="self-start sm:self-auto inline-flex items-center space-x-2 bg-brand-gold/15 border border-brand-gold/30 px-3.5 py-1.5 rounded-full text-[11px] text-brand-gold font-mono">
+        <div className="self-start sm:self-auto inline-flex items-center space-x-2 bg-brand-gold/15 border border-brand-gold/30 px-3.5 py-1.5 rounded-full text-xs text-brand-gold font-mono">
           <ShieldCheck size={14} className="text-green-400" />
-          <span>Live Data Stream</span>
+          <span>Live</span>
         </div>
       </div>
 
@@ -65,7 +65,7 @@ export const LiveWeatherWidget = ({ title = "Traveler's Live Intelligence", subt
                 <CloudSun size={18} />
                 <span>Regional Weather Radar</span>
               </div>
-              <span className="text-[10px] text-brand-cream-dark/50 font-mono">
+              <span className="text-xs text-brand-cream-dark/70 font-mono">
                 Live Satellite Forecast
               </span>
             </div>
@@ -79,7 +79,7 @@ export const LiveWeatherWidget = ({ title = "Traveler's Live Intelligence", subt
                   className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer whitespace-nowrap ${
                     selectedCity === city
                       ? "bg-brand-gold text-brand-dark font-bold shadow-md shadow-brand-gold/20 scale-105"
-                      : "bg-white/5 text-brand-cream-dark/70 hover:text-brand-cream hover:bg-white/10"
+                      : "bg-white/5 text-brand-cream-dark/80 hover:text-brand-cream hover:bg-white/10"
                   }`}
                 >
                   {city}
@@ -108,19 +108,19 @@ export const LiveWeatherWidget = ({ title = "Traveler's Live Intelligence", subt
                 </div>
               </div>
 
-              <div className="sm:col-span-7 space-y-1.5 border-t sm:border-t-0 sm:border-l border-brand-gold/20 pt-3 sm:pt-0 sm:pl-5 text-xs text-brand-cream-dark/80 font-light">
+              <div className="sm:col-span-7 space-y-1.5 border-t sm:border-t-0 sm:border-l border-brand-gold/20 pt-3 sm:pt-0 sm:pl-5 text-xs text-brand-cream-dark/80 font-normal">
                 <div className="flex justify-between">
-                  <span className="text-brand-cream-dark/50 uppercase text-[10px]">Location:</span>
+                  <span className="text-brand-cream-dark/70 uppercase text-xs">Location:</span>
                   <span className="font-semibold text-brand-gold">{weather.city}, Cambodia</span>
                 </div>
                 {weather.wind_speed && (
                   <div className="flex justify-between">
-                    <span className="text-brand-cream-dark/50 uppercase text-[10px]">Wind Velocity:</span>
+                    <span className="text-brand-cream-dark/70 uppercase text-xs">Wind:</span>
                     <span>{weather.wind_speed} km/h</span>
                   </div>
                 )}
                 <div className="flex justify-between">
-                  <span className="text-brand-cream-dark/50 uppercase text-[10px]">Visiting Advice:</span>
+                  <span className="text-brand-cream-dark/70 uppercase text-xs">Advice:</span>
                   <span className="text-green-300 font-medium">Ideal for Sightseeing</span>
                 </div>
               </div>
@@ -136,18 +136,18 @@ export const LiveWeatherWidget = ({ title = "Traveler's Live Intelligence", subt
                 <DollarSign size={18} />
                 <span>USD to Khmer Riel (KHR)</span>
               </div>
-              <span className="text-[10px] text-brand-cream-dark/50 font-mono">
-                Official Daily Exchange
+              <span className="text-xs text-brand-cream-dark/70 font-mono">
+                Official Daily Rate
               </span>
             </div>
 
             {/* Interactive Calculator Input Box */}
             <div className="bg-brand-dark/60 border border-brand-gold/30 rounded-xl p-4 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] text-brand-cream-dark/50 uppercase font-bold tracking-wider">
+                <span className="text-xs text-brand-cream-dark/70 uppercase font-bold tracking-wider">
                   Amount in USD ($)
                 </span>
-                <span className="text-[10px] text-brand-gold font-mono">
+                <span className="text-xs text-brand-gold font-mono">
                   1 USD = {exchange ? exchange.rate.toLocaleString() : "4,120"} KHR
                 </span>
               </div>
@@ -163,17 +163,17 @@ export const LiveWeatherWidget = ({ title = "Traveler's Live Intelligence", subt
                   className="w-full bg-transparent text-white font-mono text-xl font-bold focus:outline-none"
                   placeholder="Enter USD..."
                 />
-                <span className="text-xs text-brand-cream-dark/60 font-sans font-bold">USD</span>
+                <span className="text-xs text-brand-cream-dark/70 font-sans font-bold">USD</span>
               </div>
 
               <div className="flex items-center justify-center space-x-2 pt-1 text-brand-gold/70 text-xs">
                 <ArrowRightLeft size={14} />
-                <span className="text-[11px] font-light">Converts to Official Riel Currency</span>
+                <span className="text-xs font-normal">Converts to Official Riel Currency</span>
               </div>
 
               {/* Conversion Result Box */}
               <div className="bg-brand-gold/15 border border-brand-gold/40 p-3 rounded-lg text-center">
-                <span className="block text-[10px] text-brand-cream-dark/60 uppercase font-bold tracking-wider">
+                <span className="block text-xs text-brand-cream-dark/70 uppercase font-bold tracking-wider">
                   Equivalent Value in Riel
                 </span>
                 <span className="font-mono text-2xl sm:text-3xl font-bold text-brand-gold block mt-0.5">

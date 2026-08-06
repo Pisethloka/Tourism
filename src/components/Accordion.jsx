@@ -22,8 +22,10 @@ export const Accordion = ({ items }) => {
             }`}
           >
             <button
+              type="button"
               onClick={() => toggleIndex(index)}
-              className="w-full flex justify-between items-center px-6 py-5 text-left transition-colors duration-300"
+              className="w-full flex justify-between items-center px-6 py-5 text-left transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-brand-gold rounded-xl"
+              aria-expanded={isOpen}
             >
               <span className="font-serif text-base md:text-lg font-semibold text-brand-dark pr-4">
                 {item.title}
@@ -39,7 +41,7 @@ export const Accordion = ({ items }) => {
                 isOpen ? 'max-h-[500px] opacity-100 border-t border-brand-gold/10' : 'max-h-0 opacity-0'
               }`}
             >
-              <div className="px-6 py-5 text-sm md:text-base leading-relaxed font-light text-brand-dark/85">
+              <div className="px-6 py-5 text-sm md:text-base leading-relaxed font-normal text-brand-dark/95">
                 {item.content}
               </div>
             </div>
