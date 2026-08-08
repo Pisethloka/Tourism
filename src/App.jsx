@@ -4,35 +4,46 @@
  * smooth section scrolling, and global layout component rendering (Navbar, Footer, CTA).
  */
 
-import { useState, useEffect, useCallback } from 'react';
-import { Navbar } from './components/Navbar';
-import { Footer } from './components/Footer';
-import { Home } from './pages/Home';
-import { Destinations } from './pages/Destinations';
-import { Gallery } from './pages/Gallery';
-import { Guestbook } from './pages/Guestbook';
-import { Map } from './pages/Map';
-import { PlanTrip } from './pages/PlanTrip';
-import { GlobalCTA } from './components/GlobalCTA';
+import { useState, useEffect, useCallback } from "react";
+import { Navbar } from "./components/Navbar";
+import { Footer } from "./components/Footer";
+import { Home } from "./pages/Home";
+import { Destinations } from "./pages/Destinations";
+import { Gallery } from "./pages/Gallery";
+import { Guestbook } from "./pages/Guestbook";
+import { Map } from "./pages/Map";
+import { PlanTrip } from "./pages/PlanTrip";
+import { GlobalCTA } from "./components/GlobalCTA";
 
 function App() {
-  const [activeTab, setActiveTab] = useState('home');
+  // Store the current active tab
+  const [activeTab, setActiveTab] = useState("home");
   const [activeSection, setActiveSection] = useState(null);
 
   // Handle browser hash changes
   useEffect(() => {
     const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '');
-      if (hash && ['home', 'destinations', 'gallery', 'guestbook', 'map', 'plan-trip'].includes(hash)) {
+      const hash = window.location.hash.replace("#", "");
+      if (
+        hash &&
+        [
+          "home",
+          "destinations",
+          "gallery",
+          "guestbook",
+          "map",
+          "plan-trip",
+        ].includes(hash)
+      ) {
         setActiveTab(hash);
       }
     };
 
-    window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener("hashchange", handleHashChange);
     handleHashChange();
 
     return () => {
-      window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener("hashchange", handleHashChange);
     };
   }, []);
 
@@ -44,27 +55,33 @@ function App() {
       setTimeout(() => {
         const element = document.getElementById(sectionId);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
         }
       }, 100);
     } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, []);
 
   const renderContent = () => {
     switch (activeTab) {
-      case 'home':
+      case "home":
         return <Home setActiveTab={handleTabChange} />;
-      case 'destinations':
-        return <Destinations activeSection={activeSection} setActiveSection={setActiveSection} setActiveTab={handleTabChange} />;
-      case 'gallery':
+      case "destinations":
+        return (
+          <Destinations
+            activeSection={activeSection}
+            setActiveSection={setActiveSection}
+            setActiveTab={handleTabChange}
+          />
+        );
+      case "gallery":
         return <Gallery />;
-      case 'guestbook':
+      case "guestbook":
         return <Guestbook />;
-      case 'map':
+      case "map":
         return <Map setActiveTab={handleTabChange} />;
-      case 'plan-trip':
+      case "plan-trip":
         return <PlanTrip />;
       default:
         return <Home setActiveTab={handleTabChange} />;
@@ -77,12 +94,10 @@ function App() {
       <Navbar activeTab={activeTab} setActiveTab={handleTabChange} />
 
       {/* Pages Content */}
-      <main className="flex-grow">
-        {renderContent()}
-      </main>
+      <main className="flex-grow">{renderContent()}</main>
 
       {/* Global Call to Action */}
-      {activeTab !== 'plan-trip' && (
+      {activeTab !== "plan-trip" && (
         <GlobalCTA setActiveTab={handleTabChange} />
       )}
 

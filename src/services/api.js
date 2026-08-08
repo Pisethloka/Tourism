@@ -7,23 +7,17 @@
 // Image asset mappings for destination images
 import heroAngkor from "../assets/hero_angkor.png";
 import phnomPenhPalace from "../assets/phnom_penh_palace.png";
-import tuolSleng from "../assets/tuol_sleng.png";
-import tuolSlengPhoto from "../assets/tuol_sleng_photo.jpg";
 import killingFields from "../assets/killing_fields.png";
-import bokorHill from "../assets/bokor_hill.png";
-import bokorHillPhoto from "../assets/bokor_hill_photo.jpg";
-import cardamomMountains from "../assets/cardamom_mountains.png";
-import cardamomMountainsPhoto from "../assets/cardamom_mountains_photo.jpg";
 import tonleSap from "../assets/tonle_sap.png";
-import preahVihear from "../assets/preah_vihear.png";
-import preahVihearPhoto from "../assets/preah_vihear_photo.jpg";
 import yeakLaom from "../assets/yeak_laom.png";
-import kohRongBeach from "../assets/koh_rong_beach.png";
-import kohRongSanloemPhoto from "../assets/koh_rong_sanloem_photo.jpg";
 import banteaySrei from "../assets/banteay_srei.png";
 import watThmey from "../assets/wat_thmey.png";
-import bayonBuddha from "../assets/bayon_buddha_close.jpg";
 import bayonTemplePhoto from "../assets/bayon_temple_photo.jpg";
+import tuolSlengPhoto from "../assets/tuol_sleng_photo.jpg";
+import bokorHillPhoto from "../assets/bokor_hill_photo.jpg";
+import cardamomMountainsPhoto from "../assets/cardamom_mountains_photo.jpg";
+import preahVihearPhoto from "../assets/preah_vihear_photo.jpg";
+import kohRongSanloemPhoto from "../assets/koh_rong_sanloem_photo.jpg";
 
 import { supabase, isSupabaseConfigured } from "./supabase";
 
@@ -33,33 +27,32 @@ import fallbackWeather from "../../public/api/weather.json";
 
 const IMAGE_MAP = {
   heroAngkor,
-  phnomPenhPalace,
-  tuolSleng: tuolSlengPhoto,
-  tuolSlengPhoto,
-  "tuol-sleng": tuolSlengPhoto,
-  killingFields,
-  bokorHill: bokorHillPhoto,
+  bayonTemplePhoto,
+  bayon: bayonTemplePhoto,
+  "bayon-temple": bayonTemplePhoto,
+  kohRongSanloemPhoto,
+  "koh-rong": kohRongSanloemPhoto,
+  preahVihearPhoto,
+  "preah-vihear": preahVihearPhoto,
+  tonleSap,
+  "tonle-sap": tonleSap,
   bokorHillPhoto,
   "bokor-hill": bokorHillPhoto,
-  cardamomMountains: cardamomMountainsPhoto,
+  tuolSlengPhoto,
+  "tuol-sleng": tuolSlengPhoto,
   cardamomMountainsPhoto,
   "cardamom-mountains": cardamomMountainsPhoto,
   cardamoms: cardamomMountainsPhoto,
-  tonleSap,
-  preahVihear: preahVihearPhoto,
-  preahVihearPhoto,
-  "preah-vihear": preahVihearPhoto,
-  yeakLaom,
-  kohRongBeach: kohRongSanloemPhoto,
-  kohRongSanloemPhoto,
-  "koh-rong": kohRongSanloemPhoto,
-  banteaySrei,
+  phnomPenhPalace,
+  "royal-palace": phnomPenhPalace,
+  killingFields,
+  "killing-fields": killingFields,
   watThmey,
-  bayonBuddha: bayonTemplePhoto,
-  bayonTemplePhoto,
-  bayon: bayonTemplePhoto,
-  bayonTemple: bayonTemplePhoto,
-  "bayon-temple": bayonTemplePhoto,
+  "wat-thmey": watThmey,
+  banteaySrei,
+  "banteay-srei": banteaySrei,
+  yeakLaom,
+  "yeak-laom": yeakLaom,
 };
 
 // Coordinates for Cambodian cities (for Open-Meteo Live Weather API)
@@ -111,47 +104,11 @@ export async function fetchDestinations() {
     data = fallbackDestinations;
   }
 
-  // Map image keys to actual imported image assets
-  return data.map((dest) => {
-    let img = IMAGE_MAP[dest.imageKey];
-    if (
-      dest.id === "cardamom-mountains" ||
-      dest.title?.toLowerCase().includes("cardamom")
-    ) {
-      img = cardamomMountainsPhoto;
-    } else if (
-      dest.id === "tuol-sleng" ||
-      dest.title?.toLowerCase().includes("tuol sleng")
-    ) {
-      img = tuolSlengPhoto;
-    } else if (
-      dest.id === "bokor-hill" ||
-      dest.title?.toLowerCase().includes("bokor")
-    ) {
-      img = bokorHillPhoto;
-    } else if (
-      dest.id === "preah-vihear" ||
-      dest.title?.toLowerCase().includes("preah vihear")
-    ) {
-      img = preahVihearPhoto;
-    } else if (
-      dest.id === "koh-rong" ||
-      dest.title?.toLowerCase().includes("koh rong")
-    ) {
-      img = kohRongSanloemPhoto;
-    } else if (
-      dest.id === "bayon-temple" ||
-      dest.title?.toLowerCase().includes("bayon")
-    ) {
-      img = bayonTemplePhoto;
-    } else if (!img) {
-      img = heroAngkor;
-    }
-    return {
-      ...dest,
-      image: img,
-    };
-  });
+  // Map image keys directly to authentic imported assets
+  return data.map((dest) => ({
+    ...dest,
+    image: IMAGE_MAP[dest.imageKey] || IMAGE_MAP[dest.id] || heroAngkor,
+  }));
 }
 
 /**
