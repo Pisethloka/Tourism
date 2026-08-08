@@ -16,6 +16,7 @@ import {
   ChevronUp,
   ArrowRight,
   Check,
+  Clock,
 } from "lucide-react";
 
 // Image asset paths (public)
@@ -482,14 +483,17 @@ export default function MapPage() {
                       {card.description}
                     </p>
                   </div>
-                  <div className="pt-3 border-t border-brand-gold/15 flex justify-center items-center space-x-4 text-xs sm:text-sm font-semibold tracking-widest uppercase text-brand-dark/75 font-mono">
-                    <div className="flex items-center justify-center space-x-1">
-                      <MapPin size={14} className="text-brand-gold" />
+                  <div className="pt-3.5 border-t border-stone-200/80 flex justify-center items-center gap-3 text-xs tracking-[0.14em] uppercase font-sans">
+                    <span className="inline-flex items-center space-x-1.5 text-stone-700 font-medium">
+                      <MapPin size={13} className="text-[#C59E3F] shrink-0" />
                       <span>{card.region}</span>
-                    </div>
-                    <span className="text-brand-gold/40">•</span>
-                    <span className="bg-brand-gold/10 px-2.5 py-0.5 rounded border border-brand-gold/20 text-brand-gold-dark font-sans font-bold text-xs">
-                      {card.duration}
+                    </span>
+
+                    <span className="w-1 h-1 rounded-full bg-[#C59E3F]/60" />
+
+                    <span className="inline-flex items-center space-x-1.5 text-[#8C6B1F] font-semibold bg-[#FAF7F0] px-3 py-0.5 rounded-full border border-[#E8DFC8] text-[11px]">
+                      <Clock size={11} className="text-[#8C6B1F] shrink-0" />
+                      <span>{card.duration}</span>
                     </span>
                   </div>
                 </div>
@@ -559,8 +563,8 @@ export default function MapPage() {
                 <h3 className="font-cormorant text-2xl md:text-3xl text-white tracking-wide uppercase text-center">
                   {activeMapSite.name}
                 </h3>
-                <div className="flex items-center justify-center space-x-1.5 text-xs sm:text-sm text-brand-gold-light/90 tracking-wider uppercase font-mono mt-1.5">
-                  <MapPin size={14} className="text-brand-gold" />
+                <div className="flex items-center justify-center space-x-1.5 text-xs sm:text-sm text-brand-gold-light/90 tracking-[0.14em] uppercase font-sans mt-2 font-medium">
+                  <MapPin size={13} className="text-brand-gold shrink-0" />
                   <span>{activeMapSite.region}</span>
                 </div>
               </div>
