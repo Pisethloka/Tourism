@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Kantumruy+Pro:ital,wght@0,300..700;1,300..700&family=Marcellus&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Kantumruy+Pro:ital,wght@0,300..700;1,300..700&family=Marcellus&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -12,12 +12,13 @@
   --color-brand-forest: #1e3322;
   --color-brand-forest-light: #3d5a42;
   
-  --font-serif: "Plus Jakarta Sans", Georgia, serif;
+  --font-serif: "Playfair Display", "Cinzel", Georgia, serif;
   --font-sans: "Plus Jakarta Sans", "Outfit", "Kantumruy Pro", system-ui, sans-serif;
   --font-khmer: "Kantumruy Pro", "Plus Jakarta Sans", "Outfit", sans-serif;
-  --font-cormorant: "Plus Jakarta Sans", "Outfit", sans-serif;
+  --font-cormorant: "Cormorant Garamond", "Cinzel", "Playfair Display", serif;
+  --font-cinzel: "Cinzel", serif;
   --font-inter: "Plus Jakarta Sans", "Outfit", sans-serif;
-  --font-handwritten: "Plus Jakarta Sans", "Outfit", sans-serif;
+  --font-handwritten: "Great Vibes", cursive, "Cormorant Garamond", serif;
 }
 
 /* Base resets & typography */
