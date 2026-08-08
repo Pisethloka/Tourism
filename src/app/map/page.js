@@ -301,10 +301,17 @@ export default function MapPage() {
   return (
     <div className="pb-24 bg-brand-cream font-sans animate-fade-in">
       {/* 1. Page Title */}
-      <div className="pt-28 text-center space-y-4 mb-8">
-        <h1 className="font-serif text-4xl md:text-5xl text-brand-dark font-normal italic tracking-wide">
+      <div className="pt-28 text-center space-y-4 mb-10">
+        <div className="inline-flex items-center space-x-2.5 bg-brand-gold/15 border border-brand-gold/30 px-4 py-1.5 rounded-full text-brand-gold-dark text-xs font-mono font-bold tracking-widest uppercase">
+          <span>GEOGRAPHICAL EXPLORER</span>
+        </div>
+        <h1 className="font-cormorant text-4xl sm:text-5xl md:text-6xl text-brand-dark font-bold tracking-wide uppercase">
           Begin Your Exploration
         </h1>
+        <div className="w-20 h-[1px] bg-brand-gold mx-auto" />
+        <p className="font-sans text-base sm:text-lg md:text-xl text-stone-700 font-normal max-w-2xl mx-auto leading-relaxed">
+          Search, filter, and navigate across Cambodia's most iconic provinces, sacred temples, and natural sanctuaries.
+        </p>
       </div>
 
       {/* 2. Top Search Bar */}
@@ -473,20 +480,20 @@ export default function MapPage() {
                 </div>
                 <div className="p-5 flex-grow flex flex-col justify-between space-y-4 text-center">
                   <div className="space-y-1.5">
-                    <h3 className="font-cormorant text-xl sm:text-2xl font-bold tracking-wider text-brand-dark uppercase group-hover:text-brand-gold transition-colors text-center whitespace-pre-line">
+                    <h3 className="font-cormorant text-2xl sm:text-3xl font-bold tracking-wider text-brand-dark uppercase group-hover:text-brand-gold transition-colors text-center whitespace-pre-line">
                       {card.name}
                     </h3>
-                    <p className="text-xs sm:text-sm font-light text-brand-dark/85 line-clamp-2 leading-relaxed text-center">
+                    <p className="text-sm sm:text-base font-normal text-stone-700 line-clamp-2 leading-relaxed text-center">
                       {card.description}
                     </p>
                   </div>
-                  <div className="pt-3 border-t border-brand-gold/15 flex justify-center items-center space-x-4 text-xs font-semibold tracking-widest uppercase text-brand-dark/75 font-mono">
+                  <div className="pt-3 border-t border-brand-gold/15 flex justify-center items-center space-x-4 text-xs sm:text-sm font-semibold tracking-widest uppercase text-brand-dark/75 font-mono">
                     <div className="flex items-center justify-center space-x-1">
-                      <MapPin size={12} className="text-brand-gold" />
+                      <MapPin size={14} className="text-brand-gold" />
                       <span>{card.region}</span>
                     </div>
                     <span className="text-brand-gold/40">•</span>
-                    <span className="bg-brand-gold/10 px-2.5 py-0.5 rounded border border-brand-gold/20 text-brand-gold-dark font-sans font-bold">
+                    <span className="bg-brand-gold/10 px-2.5 py-0.5 rounded border border-brand-gold/20 text-brand-gold-dark font-sans font-bold text-xs">
                       {card.duration}
                     </span>
                   </div>
@@ -495,12 +502,11 @@ export default function MapPage() {
             ))
           ) : (
             <div className="col-span-3 py-20 text-center bg-white border border-brand-gold/20 rounded-2xl p-8 space-y-2">
-              <p className="font-cormorant text-xl text-brand-dark uppercase">
+              <p className="font-cormorant text-2xl text-brand-dark uppercase">
                 No Destinations Found
               </p>
-              <p className="text-xs font-light text-brand-dark/60">
-                Try adjusting your search query or filters to discover more
-                sites.
+              <p className="text-sm text-stone-600">
+                Try adjusting your search query or filters to discover more sites.
               </p>
             </div>
           )}
@@ -533,11 +539,11 @@ export default function MapPage() {
           <span className="text-brand-gold-dark text-xs sm:text-sm tracking-[0.3em] uppercase block font-semibold">
             — INTERACTIVE EXPLORATION —
           </span>
-          <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl text-brand-dark tracking-wide uppercase">
+          <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl text-brand-dark font-bold tracking-wide uppercase">
             Locate Your Next Journey
           </h2>
           <div className="w-20 h-[1px] bg-brand-gold mx-auto" />
-          <p className="font-sans text-base sm:text-lg text-brand-dark/90 max-w-lg mx-auto leading-relaxed font-light">
+          <p className="font-sans text-base sm:text-lg md:text-xl text-stone-700 max-w-2xl mx-auto leading-relaxed font-normal">
             Interactive geographical survey of Cambodia's premier heritage,
             ecological, and coastal landmarks.
           </p>
@@ -557,12 +563,12 @@ export default function MapPage() {
                 <h3 className="font-cormorant text-2xl md:text-3xl text-white tracking-wide uppercase text-center">
                   {activeMapSite.name}
                 </h3>
-                <div className="flex items-center justify-center space-x-1.5 text-xs text-brand-gold-light/80 tracking-wider uppercase font-mono mt-1.5">
-                  <MapPin size={12} className="text-brand-gold" />
+                <div className="flex items-center justify-center space-x-1.5 text-xs sm:text-sm text-brand-gold-light/90 tracking-wider uppercase font-mono mt-1.5">
+                  <MapPin size={14} className="text-brand-gold" />
                   <span>{activeMapSite.region}</span>
                 </div>
               </div>
-              <p className="text-xs font-light text-brand-cream-dark/85 leading-relaxed text-center">
+              <p className="text-sm sm:text-base font-normal text-brand-cream-dark/95 leading-relaxed text-center">
                 {activeMapSite.description}
               </p>
             </div>

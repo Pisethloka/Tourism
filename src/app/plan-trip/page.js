@@ -472,7 +472,7 @@ export default function PlanTripPage() {
                 <div className="w-16 h-[2px] bg-brand-gold/60" />
               </div>
 
-              <p className="font-sans text-sm sm:text-base text-brand-dark/80 leading-relaxed max-w-lg font-light">
+              <p className="font-sans text-base sm:text-lg text-stone-700 leading-relaxed max-w-xl font-normal">
                 Choose your destination, accommodation, transportation, and
                 activities to receive an estimated trip cost.
               </p>

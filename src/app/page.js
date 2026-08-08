@@ -155,7 +155,7 @@ export default function HomePage() {
               Experience the Magic of Cambodia
             </h2>
             <div className="w-20 h-[1px] bg-brand-gold mx-auto" />
-            <p className="font-sans text-base sm:text-lg md:text-xl text-brand-dark/90 max-w-2xl mx-auto leading-relaxed font-light">
+            <p className="font-sans text-base sm:text-lg md:text-xl text-stone-700 max-w-2xl mx-auto leading-relaxed font-normal">
               A brief video showcase highlighting the ancient heritage, vibrant
               cultures, and natural beauty awaiting your journey.
             </p>
@@ -184,7 +184,7 @@ export default function HomePage() {
             DISCOVER CAMBODIA
           </h2>
           <div className="w-20 h-[1px] bg-brand-gold mx-auto" />
-          <p className="font-sans text-base sm:text-lg text-brand-dark/85 max-w-lg mx-auto leading-relaxed font-light">
+          <p className="font-sans text-base sm:text-lg md:text-xl text-stone-700 max-w-2xl mx-auto leading-relaxed font-normal">
             Explore Cambodia's rich history, breathtaking temples, vibrant
             culture, and beautiful natural landscapes.
           </p>
@@ -209,7 +209,7 @@ export default function HomePage() {
               <h3 className="font-cormorant text-2xl md:text-3xl text-white uppercase tracking-wider">
                 Cultural Tourism
               </h3>
-              <p className="text-sm font-normal text-brand-cream-dark/95 leading-relaxed">
+              <p className="text-sm sm:text-base font-normal text-brand-cream-dark/95 leading-relaxed">
                 Discover ancient temples, traditional Apsara dances, and rich
                 local crafts.
               </p>
@@ -238,7 +238,7 @@ export default function HomePage() {
               <h3 className="font-cormorant text-2xl md:text-3xl text-white uppercase tracking-wider">
                 Dark Tourism
               </h3>
-              <p className="text-sm font-normal text-brand-cream-dark/95 leading-relaxed">
+              <p className="text-sm sm:text-base font-normal text-brand-cream-dark/95 leading-relaxed">
                 Meaningful historic sites, inspiring stories of strength, and
                 peaceful places to remember.
               </p>
@@ -267,7 +267,7 @@ export default function HomePage() {
               <h3 className="font-cormorant text-2xl md:text-3xl text-white uppercase tracking-wider">
                 Eco Tourism
               </h3>
-              <p className="text-sm font-normal text-brand-cream-dark/95 leading-relaxed">
+              <p className="text-sm sm:text-base font-normal text-brand-cream-dark/95 leading-relaxed">
                 Beautiful crater lakes, lush rainforests, and protected tropical
                 islands.
               </p>
@@ -290,7 +290,7 @@ export default function HomePage() {
             Wonders Captured
           </h2>
           <div className="w-16 h-[1px] bg-brand-gold mx-auto" />
-          <p className="font-sans text-base text-brand-dark/85 max-w-md mx-auto mt-2 leading-relaxed">
+          <p className="font-sans text-base sm:text-lg md:text-xl text-stone-700 max-w-2xl mx-auto mt-2 leading-relaxed font-normal">
             A glimpse into the stunning scenery, rich culture, and authentic
             flavors of Cambodia.
           </p>

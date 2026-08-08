@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Kantumruy+Pro:ital,wght@0,300..700;1,300..700&family=Marcellus&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Inter:wght@300;400;500;600;700;800&family=Kantumruy+Pro:ital,wght@0,300..700;1,300..700&family=Marcellus&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -13,11 +13,11 @@
   --color-brand-forest-light: #3d5a42;
   
   --font-serif: "Playfair Display", "Cinzel", Georgia, serif;
-  --font-sans: "Plus Jakarta Sans", "Outfit", "Kantumruy Pro", system-ui, sans-serif;
-  --font-khmer: "Kantumruy Pro", "Plus Jakarta Sans", "Outfit", sans-serif;
-  --font-cormorant: "Cormorant Garamond", "Cinzel", "Playfair Display", serif;
-  --font-cinzel: "Cinzel", serif;
-  --font-inter: "Plus Jakarta Sans", "Outfit", sans-serif;
+  --font-sans: "Inter", "Plus Jakarta Sans", "Outfit", system-ui, -apple-system, sans-serif;
+  --font-khmer: "Kantumruy Pro", "Inter", sans-serif;
+  --font-cormorant: "Cormorant Garamond", "Cinzel", "Playfair Display", Georgia, serif;
+  --font-cinzel: "Cinzel", "Cormorant Garamond", Georgia, serif;
+  --font-inter: "Inter", "Plus Jakarta Sans", sans-serif;
   --font-handwritten: "Great Vibes", cursive, "Cormorant Garamond", serif;
 }
 
@@ -25,17 +25,20 @@
 html {
   font-size: 16px;
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* High-performance GPU-accelerated background pattern (zero scroll repaint overhead) */
 body {
   font-family: var(--font-sans);
   background-color: var(--color-brand-cream);
-  color: var(--color-brand-dark);
+  color: #1a1612;
   overflow-x: hidden;
-  line-height: 1.6;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   position: relative;
 }
 
@@ -82,14 +85,17 @@ main {
 
 .font-cormorant {
   font-family: "Cormorant Garamond", "Cinzel", "Playfair Display", Georgia, serif !important;
+  text-rendering: optimizeLegibility;
 }
 
 .font-cinzel {
   font-family: "Cinzel", "Cormorant Garamond", Georgia, serif !important;
+  text-rendering: optimizeLegibility;
 }
 
 .font-serif {
   font-family: "Playfair Display", "Cinzel", Georgia, serif !important;
+  text-rendering: optimizeLegibility;
 }
 
 h1,
@@ -100,6 +106,7 @@ h5,
 h6 {
   font-family: "Cormorant Garamond", "Cinzel", "Playfair Display", Georgia, serif;
   line-height: 1.25;
+  text-rendering: optimizeLegibility;
 }
 
 /* GPU-accelerated Glassmorphism utilities */
