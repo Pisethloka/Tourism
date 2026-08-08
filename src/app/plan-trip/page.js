@@ -789,7 +789,7 @@ export default function PlanTripPage() {
                 4
               </div>
               <h3 className="font-cormorant text-2xl md:text-3xl font-normal uppercase tracking-wider text-brand-dark">
-                CURATED EXCURSIONS
+                Featured Experiences
               </h3>
             </div>
 
@@ -907,7 +907,7 @@ export default function PlanTripPage() {
               }}
               className="bg-brand-gold hover:bg-brand-gold-light text-brand-dark px-12 py-4 text-xs sm:text-sm font-bold tracking-[0.25em] uppercase rounded-full shadow-2xl shadow-brand-gold/30 hover:scale-[1.03] active:scale-[0.97] transition-all duration-300 cursor-pointer flex items-center space-x-3 group"
             >
-              <span>Calculate Trip Estimate</span>
+              <span>Trip Estimation</span>
               <span className="text-lg transition-transform duration-300 group-hover:translate-x-1">
                 ➔
               </span>

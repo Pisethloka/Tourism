@@ -23,6 +23,7 @@ import {
   LayoutGrid,
   SlidersHorizontal,
   Search,
+  PenLine,
 } from "lucide-react";
 import {
   fetchGuestbookNotes,
@@ -246,7 +247,8 @@ export default function GuestbookPage() {
                 ))}
               </div>
               <p className="text-xs sm:text-sm font-sans font-medium text-brand-dark/75 text-center leading-normal">
-                Out of 5.0 Rating Score ({ratingStats.total} {ratingStats.total === 1 ? "Note" : "Notes"})
+                Out of 5.0 Rating Score ({ratingStats.total}{" "}
+                {ratingStats.total === 1 ? "Note" : "Notes"})
               </p>
             </div>
 
@@ -623,52 +625,41 @@ export default function GuestbookPage() {
           </div>
         )}
 
-        <section id="write-note-form" className="pt-8 pb-12 animate-fade-in font-sans">
-          <div className="w-full bg-[#FAF8F5] text-brand-dark rounded-[2.5rem] border border-brand-gold/35 shadow-xl overflow-hidden">
-            <div className="bg-[#2D2B28] text-white p-8 sm:p-10 text-center space-y-3 relative overflow-hidden">
-              <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-brand-gold/15 blur-3xl pointer-events-none" />
+        <section
+          id="write-note-form"
+          className="pt-8 pb-12 animate-fade-in font-sans"
+        >
+          <div className="w-full bg-[#FAF8F5] text-brand-dark rounded-[2rem] border border-brand-gold/40 shadow-2xl overflow-hidden">
+            {/* Elegant Royal Editorial Header */}
+            <div className="bg-gradient-to-b from-[#1c1813] via-[#241f19] to-[#1a1612] text-white p-8 sm:p-12 text-center space-y-4 relative overflow-hidden border-b border-brand-gold/30">
+              <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-96 h-72 rounded-full bg-brand-gold/15 blur-3xl pointer-events-none" />
 
-              <div className="flex items-center justify-center space-x-3 text-brand-gold relative z-10 mb-2">
-                <div className="h-px w-16 bg-gradient-to-r from-transparent to-brand-gold/70" />
-                <svg
-                  width="48"
-                  height="24"
-                  viewBox="0 0 48 24"
-                  fill="none"
-                  className="text-brand-gold shrink-0"
-                >
-                  <path
-                    d="M24 1 C26 5, 29 7, 33 5 C31 9, 36 10, 42 7 C38 12, 44 14, 48 13 C42 16, 45 20, 47 23 C40 21, 37 23, 33 21 C29 23, 26 21, 24 23 C22 21, 19 23, 15 21 C11 23, 8 21, 1 23 C3 20, 6 16, 0 13 C4 14, 10 12, 6 7 C12 10, 17 9, 15 5 C19 7, 22 5, 24 1 Z"
-                    fill="currentColor"
-                    opacity="0.85"
-                  />
-                  <circle
-                    cx="24"
-                    cy="12"
-                    r="3"
-                    fill="#2D2B28"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                  />
-                  <circle cx="24" cy="12" r="1.2" fill="currentColor" />
-                </svg>
-                <div className="h-px w-16 bg-gradient-to-l from-transparent to-brand-gold/70" />
+              {/* Royal Emblem Crest Divider */}
+              <div className="flex items-center justify-center space-x-3 sm:space-x-4 text-brand-gold relative z-10">
+                <span className="h-px w-12 sm:w-24 bg-gradient-to-r from-transparent to-brand-gold/80" />
+                <div className="w-9 h-9 rounded-full bg-brand-gold/15 border border-brand-gold/50 flex items-center justify-center text-brand-gold shadow-md shadow-brand-gold/20">
+                  <PenLine size={16} />
+                </div>
+                <span className="h-px w-12 sm:w-24 bg-gradient-to-l from-transparent to-brand-gold/80" />
               </div>
 
-              <h3 className="font-cormorant text-3xl sm:text-4xl font-bold tracking-wider text-brand-gold uppercase leading-snug relative z-10">
-                WRITE YOUR GUESTBOOK
-                <br />
-                NOTE
-              </h3>
-              <p className="text-xs sm:text-sm text-brand-cream-dark/80 font-light max-w-md mx-auto leading-relaxed relative z-10">
-                Pen your memories, recommendations, or reflections for honored
-                guests exploring the Kingdom of Cambodia.
+              <div className="space-y-2 relative z-10">
+                <span className="text-brand-gold text-[11px] sm:text-xs font-bold tracking-[0.3em] uppercase block font-mono">
+                  — KHMER MEMORIES & EXPERIENCES —
+                </span>
+                <h3 className="font-cormorant text-3xl sm:text-4xl md:text-5xl font-normal tracking-wide text-brand-gold-light uppercase leading-tight">
+                  Pen Your Reflection
+                </h3>
+              </div>
+
+              <p className="font-sans text-xs sm:text-sm text-brand-cream-dark/85 font-light max-w-lg mx-auto leading-relaxed relative z-10">
+                Share your memories, travel recommendations, and heartfelt reflections for fellow travelers exploring the Kingdom of Wonder.
               </p>
             </div>
 
             <form
               onSubmit={handleReviewSubmit}
-              className="p-8 sm:p-10 space-y-6"
+              className="p-8 sm:p-12 space-y-6"
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
@@ -683,7 +674,7 @@ export default function GuestbookPage() {
                     onChange={(e) =>
                       setNewReview({ ...newReview, name: e.target.value })
                     }
-                    className="w-full p-4 bg-white/90 border border-amber-300/80 rounded-xl text-sm sm:text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-500/20 transition-all font-sans shadow-sm"
+                    className="w-full p-4 bg-white/90 border border-amber-1000/80 rounded-xl text-sm sm:text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-500/20 transition-all font-sans shadow-sm"
                   />
                 </div>
 
@@ -693,12 +684,12 @@ export default function GuestbookPage() {
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Paris, France or Siem Reap"
+                    placeholder="e.g. Siem Reap"
                     value={newReview.location}
                     onChange={(e) =>
                       setNewReview({ ...newReview, location: e.target.value })
                     }
-                    className="w-full p-4 bg-white/90 border border-amber-300/80 rounded-xl text-sm sm:text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-500/20 transition-all font-sans shadow-sm"
+                    className="w-full p-4 bg-white/90 border border-amber-1000/80 rounded-xl text-sm sm:text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-500/20 transition-all font-sans shadow-sm"
                   />
                 </div>
               </div>
@@ -707,7 +698,7 @@ export default function GuestbookPage() {
                 <label className="text-sm sm:text-base font-sans font-semibold text-amber-950 block mb-2">
                   Your Rating & Experience
                 </label>
-                <div className="flex items-center space-x-4 bg-white/70 p-3.5 rounded-xl border border-amber-200/80 w-fit">
+                <div className="flex items-center space-x-2 bg-white/70 p-3.5 rounded-xl border border-amber-1000/80 w-fit">
                   <div className="flex items-center space-x-1.5 shrink-0">
                     {[1, 2, 3, 4, 5].map((starValue) => {
                       const activeStars =
@@ -736,15 +727,15 @@ export default function GuestbookPage() {
 
                   <div className="h-5 w-px bg-amber-300/60" />
 
-                  <span className="text-sm sm:text-base text-slate-800 font-sans font-medium">
+                  <span className="text-sm sm:text-base text-slate-600 font-sans font-medium">
                     {(() => {
                       const s =
                         hoverStars !== null ? hoverStars : newReview.stars;
-                      if (s === 5) return "Exceptional (5.0 / 5.0)";
-                      if (s === 4) return "Wonderful (4.0 / 5.0)";
-                      if (s === 3) return "Memorable (3.0 / 5.0)";
-                      if (s === 2) return "Good (2.0 / 5.0)";
-                      return "Fair (1.0 / 5.0)";
+                      if (s === 5) return "5.0";
+                      if (s === 4) return "4.0";
+                      if (s === 3) return "3.0";
+                      if (s === 2) return "2.0";
+                      return "1.0";
                     })()}
                   </span>
                 </div>
@@ -762,7 +753,7 @@ export default function GuestbookPage() {
                   onChange={(e) =>
                     setNewReview({ ...newReview, comment: e.target.value })
                   }
-                  className="w-full p-4 bg-white/90 border border-amber-300/80 rounded-xl text-sm sm:text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-500/20 resize-none leading-relaxed font-sans transition-all shadow-sm"
+                  className="w-full p-4 bg-white/90 border border-amber-1000/80 rounded-xl text-sm sm:text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-500/20 resize-none leading-relaxed font-sans transition-all shadow-sm"
                 />
               </div>
 
@@ -782,8 +773,8 @@ export default function GuestbookPage() {
                     </>
                   ) : (
                     <>
-                      <span>Post Note to Guestbook</span>
-                      <Send size={18} className="text-brand-dark" />
+                      <span>Post Note</span>
+                      <Send size={18} className="text-brand-dark " />
                     </>
                   )}
                 </button>

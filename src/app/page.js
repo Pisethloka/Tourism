@@ -129,12 +129,11 @@ export default function HomePage() {
             {/* Right Column */}
             <div className="md:col-span-7 border-l-2 border-brand-gold/30 pl-8 md:pl-12 py-3 space-y-5">
               <p className="font-sans text-base sm:text-lg md:text-xl text-brand-cream-dark/95 leading-relaxed font-light">
-                Cambodia is a country filled with rich history, warm people, and
-                unforgettable places to explore. Hundreds of years ago, it was
-                the heart of the powerful Khmer Empire, who built world-famous
-                stone temples like Angkor Wat. Today, you can walk through
-                centuries of history, enjoy authentic local food, relax on
-                white-sand beaches, and explore lush green rainforests.
+                Cambodia is a country full of history, friendly people, and
+                beautiful places to explore. Long ago, it was the center of the
+                powerful Khmer Empire, which built famous temples like Angkor
+                Wat. Today, you can explore ancient temples, enjoy local food,
+                relax on beautiful beaches, and discover green forests.
               </p>
               <p className="font-handwritten text-brand-gold text-xl sm:text-2xl md:text-3xl">
                 Rich history, beautiful nature, and warm Khmer smiles everywhere

@@ -29,7 +29,7 @@ export const GlobalCTA = () => {
             href="/plan-trip"
             className="inline-flex items-center space-x-3 bg-brand-gold hover:bg-brand-gold-light text-brand-dark px-8 md:px-10 py-4 rounded-full text-xs md:text-sm font-bold tracking-[0.2em] uppercase transition-all duration-300 hover:scale-105 shadow-xl shadow-brand-gold/20 hover:shadow-brand-gold/40 cursor-pointer focus-visible:ring-2 focus-visible:ring-brand-gold"
           >
-            <span>START PLANNING NOW</span>
+            <span>PLANNING NOW</span>
             <ArrowRight size={16} />
           </Link>
         </div>
