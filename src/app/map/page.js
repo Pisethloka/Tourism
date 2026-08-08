@@ -255,15 +255,12 @@ export default function MapPage() {
     [mapSearchQuery],
   );
 
-  const handleFilterToggle = useCallback(
-    (key) => {
-      setTourismFilters((prev) => ({
-        ...prev,
-        [key]: !prev[key],
-      }));
-    },
-    [],
-  );
+  const handleFilterToggle = useCallback((key) => {
+    setTourismFilters((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  }, []);
 
   const filteredCards = useMemo(() => {
     return SITES.filter((site) => {
@@ -302,15 +299,13 @@ export default function MapPage() {
     <div className="pb-24 bg-brand-cream font-sans animate-fade-in">
       {/* 1. Page Title */}
       <div className="pt-28 text-center space-y-4 mb-10">
-        <div className="inline-flex items-center space-x-2.5 bg-brand-gold/15 border border-brand-gold/30 px-4 py-1.5 rounded-full text-brand-gold-dark text-xs font-mono font-bold tracking-widest uppercase">
-          <span>GEOGRAPHICAL EXPLORER</span>
-        </div>
         <h1 className="font-cormorant text-4xl sm:text-5xl md:text-6xl text-brand-dark font-normal tracking-wide uppercase">
           Begin Your Exploration
         </h1>
         <div className="w-20 h-[1px] bg-brand-gold mx-auto" />
         <p className="font-sans text-base sm:text-lg md:text-xl text-stone-700 font-normal max-w-2xl mx-auto leading-relaxed">
-          Search, filter, and navigate across Cambodia's most iconic provinces, sacred temples, and natural sanctuaries.
+          Search, filter, and navigate across Cambodia's most iconic provinces,
+          sacred temples, and natural sanctuaries.
         </p>
       </div>
 
@@ -506,7 +501,8 @@ export default function MapPage() {
                 No Destinations Found
               </p>
               <p className="text-sm text-stone-600">
-                Try adjusting your search query or filters to discover more sites.
+                Try adjusting your search query or filters to discover more
+                sites.
               </p>
             </div>
           )}

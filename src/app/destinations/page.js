@@ -501,124 +501,125 @@ const DestinationCard = memo(({ item, isExpanded, onToggle, onClose }) => {
         )}
       </div>
 
-      {/* Card Content Body */}
-      <div className="p-6 sm:p-8 space-y-5 flex-grow flex flex-col justify-between font-sans">
-        {!isExpanded ? (
-          // Collapsed Standard Card View
-          <div className="space-y-2 cursor-pointer" onClick={onToggle}>
-            <p className="font-sans font-semibold text-amber-700 text-base sm:text-lg tracking-wide leading-snug">
-              {item.subtitle}
-            </p>
-            <p className="text-sm sm:text-base font-normal text-slate-700 leading-relaxed">
-              {item.shortDescription}
-            </p>
-          </div>
-        ) : (
-          // Expanded Detailed Inline Card View Right Where Clicked!
-          <div className="space-y-6 animate-fade-in text-slate-900 font-sans">
-            <p className="font-sans font-semibold text-amber-800 text-lg sm:text-xl tracking-wide leading-snug">
-              {item.subtitle}
-            </p>
-
-            {/* Quick Details Badges */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 bg-amber-50/80 border border-amber-200/70 rounded-xl text-xs sm:text-sm shadow-sm font-sans">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-amber-100/90 rounded-lg text-amber-700 shrink-0">
-                  <Calendar size={18} />
-                </div>
-                <div>
-                  <span className="block text-[11px] text-slate-500 font-bold uppercase tracking-wider">
-                    Best Season
-                  </span>
-                  <span className="font-semibold text-slate-900 text-xs sm:text-sm">
-                    {item.bestTime}
-                  </span>
-                </div>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-amber-100/90 rounded-lg text-amber-700 shrink-0">
-                  <Clock size={18} />
-                </div>
-                <div>
-                  <span className="block text-[11px] text-slate-500 font-bold uppercase tracking-wider">
-                    Duration
-                  </span>
-                  <span className="font-semibold text-slate-900 text-xs sm:text-sm">
-                    {item.duration}
-                  </span>
-                </div>
-              </div>
-              <div className="col-span-2 sm:col-span-1 flex items-center space-x-3">
-                <div className="p-2 bg-amber-100/90 rounded-lg text-amber-700 shrink-0">
-                  <Compass size={18} />
-                </div>
-                <div>
-                  <span className="block text-[11px] text-slate-500 font-bold uppercase tracking-wider">
-                    Location
-                  </span>
-                  <span className="font-semibold text-slate-900 text-xs sm:text-sm">
-                    {item.location}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Destination Overview */}
-            <div className="space-y-2.5 font-sans">
-              <h4 className="text-xs sm:text-sm font-bold tracking-wider text-amber-900 uppercase border-b border-amber-200/80 pb-1.5 flex items-center gap-2">
-                <span>Destination Overview</span>
-              </h4>
-              <p className="text-sm sm:text-base font-normal text-slate-800 leading-relaxed">
-                {item.overview}
+        {/* Card Content Body */}
+        <div className="p-6 sm:p-8 space-y-5 flex-grow flex flex-col justify-between font-sans">
+          {!isExpanded ? (
+            // Collapsed Standard Card View
+            <div className="space-y-2 cursor-pointer" onClick={onToggle}>
+              <p className="font-sans font-medium text-[#8C6B1F] text-base sm:text-lg tracking-wide leading-snug">
+                {item.subtitle}
+              </p>
+              <p className="text-sm sm:text-base font-normal text-stone-700 leading-relaxed">
+                {item.shortDescription}
               </p>
             </div>
+          ) : (
+            // Expanded Detailed Inline Card View Right Where Clicked!
+            <div className="space-y-6 animate-fade-in text-stone-900 font-sans">
+              <p className="font-sans font-medium text-[#8C6B1F] text-lg sm:text-xl tracking-wide leading-snug">
+                {item.subtitle}
+              </p>
 
-            {/* Highlights */}
-            <div className="space-y-3 font-sans">
-              <h4 className="text-xs sm:text-sm font-bold tracking-wider text-amber-900 uppercase border-b border-amber-200/80 pb-1.5 flex items-center gap-2">
-                <span>Key Highlights & Experiences</span>
-              </h4>
-              <ul className="space-y-2.5">
-                {item.highlights.map((h, idx) => (
-                  <li
-                    key={idx}
-                    className="flex items-start space-x-3 text-sm sm:text-base font-normal text-slate-800 leading-relaxed"
-                  >
-                    <span className="p-1 bg-amber-100 rounded-full text-amber-700 shrink-0 mt-0.5">
-                      <Check size={14} strokeWidth={2.5} />
+              {/* Quick Details Badges */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 bg-[#FAF7F0] border border-[#E8DFC8] rounded-xl text-xs sm:text-sm shadow-xs font-sans">
+                <div className="flex items-center space-x-3">
+                  <div className="p-2 bg-[#F3ECE0] rounded-lg text-[#8C6B1F] shrink-0">
+                    <Calendar size={18} />
+                  </div>
+                  <div>
+                    <span className="block text-[11px] text-stone-500 font-semibold uppercase tracking-wider">
+                      Best Season
                     </span>
-                    <span>{h}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Visitor Tips & Advice */}
-            <div className="bg-amber-500/10 border border-amber-500/25 p-4 sm:p-5 rounded-xl space-y-2 font-sans">
-              <div className="flex items-center space-x-2 text-amber-900 font-bold text-xs sm:text-sm uppercase tracking-wider">
-                <Info size={18} className="text-amber-700 shrink-0" />
-                <span>Visitor Tips & Advice</span>
+                    <span className="font-semibold text-stone-900 text-xs sm:text-sm">
+                      {item.bestTime}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="p-2 bg-[#F3ECE0] rounded-lg text-[#8C6B1F] shrink-0">
+                    <Clock size={18} />
+                  </div>
+                  <div>
+                    <span className="block text-[11px] text-stone-500 font-semibold uppercase tracking-wider">
+                      Duration
+                    </span>
+                    <span className="font-semibold text-stone-900 text-xs sm:text-sm">
+                      {item.duration}
+                    </span>
+                  </div>
+                </div>
+                <div className="col-span-2 sm:col-span-1 flex items-center space-x-3">
+                  <div className="p-2 bg-[#F3ECE0] rounded-lg text-[#8C6B1F] shrink-0">
+                    <Compass size={18} />
+                  </div>
+                  <div>
+                    <span className="block text-[11px] text-stone-500 font-semibold uppercase tracking-wider">
+                      Location
+                    </span>
+                    <span className="font-semibold text-stone-900 text-xs sm:text-sm">
+                      {item.location}
+                    </span>
+                  </div>
+                </div>
               </div>
-              <p className="text-xs sm:text-sm font-normal text-slate-800 leading-relaxed">
-                {item.practicalInfo}
-              </p>
-            </div>
 
-            {/* Footer Action Buttons */}
-            <div className="pt-4 border-t border-amber-200/60 flex items-center justify-end gap-4 flex-wrap font-sans">
-              <Link
-                href="/plan-trip"
-                className="px-6 py-2.5 bg-brand-gold hover:bg-brand-gold-light text-brand-dark text-xs sm:text-sm font-bold tracking-widest uppercase rounded-lg cursor-pointer transition-all hover:scale-105 shadow flex items-center space-x-2 focus-visible:ring-2 focus-visible:ring-brand-gold"
-              >
-                <span>Plan Trip Here</span>
-                <ArrowRight size={16} />
-              </Link>
+              {/* Destination Overview */}
+              <div className="space-y-2.5 font-sans">
+                <h4 className="text-xs sm:text-sm font-semibold tracking-wider text-[#241C14] uppercase border-b border-[#E8DFC8] pb-1.5 flex items-center gap-2">
+                  <span>Destination Overview</span>
+                </h4>
+                <p className="text-sm sm:text-base font-normal text-stone-800 leading-relaxed">
+                  {item.overview}
+                </p>
+              </div>
+
+              {/* Highlights */}
+              <div className="space-y-3 font-sans">
+                <h4 className="text-xs sm:text-sm font-semibold tracking-wider text-[#241C14] uppercase border-b border-[#E8DFC8] pb-1.5 flex items-center gap-2">
+                  <span>Key Highlights & Experiences</span>
+                </h4>
+                <ul className="space-y-2.5">
+                  {item.highlights.map((h, idx) => (
+                    <li
+                      key={idx}
+                      className="flex items-start space-x-3 text-sm sm:text-base font-normal text-stone-800 leading-relaxed"
+                    >
+                      <span className="p-1 bg-[#F3ECE0] rounded-full text-[#8C6B1F] shrink-0 mt-0.5">
+                        <Check size={14} strokeWidth={2.5} />
+                      </span>
+                      <span>{h}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Visitor Tips & Advice */}
+              <div className="bg-[#FAF7F0] border border-[#E8DFC8] p-4 sm:p-5 rounded-xl space-y-2 font-sans">
+                <div className="flex items-center space-x-2 text-[#241C14] font-semibold text-xs sm:text-sm uppercase tracking-wider">
+                  <Info size={18} className="text-[#8C6B1F] shrink-0" />
+                  <span>Visitor Tips & Advice</span>
+                </div>
+                <p className="text-xs sm:text-sm font-normal text-stone-800 leading-relaxed">
+                  {item.practicalInfo}
+                </p>
+              </div>
+
+              {/* Footer Action Buttons */}
+              <div className="pt-4 border-t border-[#E8DFC8] flex items-center justify-end gap-4 flex-wrap font-sans">
+                <Link
+                  href="/plan-trip"
+                  className="px-6 py-2.5 bg-brand-gold hover:bg-brand-gold-light text-brand-dark text-xs sm:text-sm font-bold tracking-widest uppercase rounded-lg cursor-pointer transition-all hover:scale-105 shadow flex items-center space-x-2 focus-visible:ring-2 focus-visible:ring-brand-gold"
+                >
+                  <span>Plan Trip Here</span>
+                  <ArrowRight size={16} />
+                </Link>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  },
+);
 
 DestinationCard.displayName = "DestinationCard";
