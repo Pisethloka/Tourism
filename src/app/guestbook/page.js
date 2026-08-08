@@ -221,9 +221,12 @@ export default function GuestbookPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center relative z-10 pt-2">
-            {/* Left Overall Rating Box - Perfectly Centered */}
+            {/* Left Overall Rating Box - Perfectly Centered & Aligned Baseline Numbers */}
             <div className="md:col-span-5 flex flex-col items-center justify-center p-6 sm:p-8 bg-white/95 rounded-2xl border border-brand-gold/30 text-center shadow-xs w-full">
-              <span className="font-cormorant text-6xl sm:text-7xl font-bold text-brand-gold-dark leading-none block text-center tracking-tight">
+              <span
+                className="font-sans text-6xl sm:text-7xl font-extrabold text-brand-gold-dark leading-none block text-center tracking-tight lining-nums tabular-nums"
+                style={{ fontVariantNumeric: "lining-nums tabular-nums", fontFeatureSettings: '"lnum" 1, "tnum" 1' }}
+              >
                 {ratingStats.avg}
               </span>
               <div className="flex items-center justify-center text-brand-gold-dark space-x-1.5 my-3">
@@ -619,7 +622,7 @@ export default function GuestbookPage() {
               <h3 className="font-cinzel text-2xl sm:text-3xl md:text-[2.15rem] font-medium tracking-[0.14em] text-[#1A140E] uppercase leading-tight antialiased">
                 WRITE YOUR GUESTBOOK
               </h3>
-              <p className="font-sans text-xs sm:text-sm text-stone-500 font-light max-w-md mx-auto leading-relaxed antialiased">
+              <p className="font-sans text-xs sm:text-sm text-stone-500 font-normal max-w-md mx-auto leading-relaxed antialiased">
                 Pen your memories, recommendations, or reflections for honored
                 guests exploring the Kingdom of Cambodia.
               </p>
@@ -640,7 +643,7 @@ export default function GuestbookPage() {
                     onChange={(e) =>
                       setNewReview({ ...newReview, name: e.target.value })
                     }
-                    className="w-full px-3 py-2 bg-transparent border-b border-stone-300 focus:border-[#C59E3F] focus:outline-none text-stone-900 text-sm placeholder:text-stone-400 font-sans transition-colors"
+                    className="w-full px-3 py-2 bg-transparent border-b border-stone-300 rounded-sm focus:border-[#C59E3F] focus:outline-none text-stone-900 text-sm placeholder:text-stone-400 font-sans transition-colors"
                   />
                 </div>
 
@@ -655,7 +658,7 @@ export default function GuestbookPage() {
                     onChange={(e) =>
                       setNewReview({ ...newReview, location: e.target.value })
                     }
-                    className="w-full px-3 py-2 bg-transparent border-b border-stone-300 focus:border-[#C59E3F] focus:outline-none text-stone-900 text-sm placeholder:text-stone-400 font-sans transition-colors"
+                    className="w-full px-3 py-2 bg-transparent border-b border-stone-300 rounded-sm focus:border-[#C59E3F] focus:outline-none text-stone-900 text-sm placeholder:text-stone-400 font-sans transition-colors"
                   />
                 </div>
               </div>
@@ -695,7 +698,7 @@ export default function GuestbookPage() {
                     })}
                   </div>
 
-                  <span className="text-sm font-semibold text-stone-700 ml-1.5">
+                  <span className="text-sm font-bold text-stone-800 ml-2 font-sans lining-nums tabular-nums">
                     {(() => {
                       const s =
                         hoverStars !== null ? hoverStars : newReview.stars;
@@ -721,7 +724,7 @@ export default function GuestbookPage() {
                   onChange={(e) =>
                     setNewReview({ ...newReview, comment: e.target.value })
                   }
-                  className="w-full px-3 py-2.5 bg-transparent border-b border-stone-300 focus:border-[#C59E3F] focus:outline-none text-stone-900 text-sm placeholder:text-stone-400 font-sans resize-none leading-relaxed transition-colors"
+                  className="w-full px-3 py-2.5 bg-transparent border-b border-stone-300 rounded-sm focus:border-[#C59E3F] focus:outline-none text-stone-900 text-sm placeholder:text-stone-400 font-sans resize-none leading-relaxed transition-colors"
                 />
               </div>
 
