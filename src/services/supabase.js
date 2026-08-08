@@ -6,19 +6,24 @@
 
 import { createClient } from '@supabase/supabase-js';
 
-// Read Supabase environment variables
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+// Read Supabase environment variables (with fallback to live project credentials)
+const supabaseUrl =
+  import.meta.env.VITE_SUPABASE_URL ||
+  "https://gofmheqssoznwbsizkzg.supabase.co";
+
+const supabaseAnonKey =
+  import.meta.env.VITE_SUPABASE_ANON_KEY ||
+  "sb_publishable_-vUixETDKXXvEs5Z0m969w_Jzz5bc4X";
 
 // Check if credentials are properly configured
 export const isSupabaseConfigured = Boolean(
-  supabaseUrl && 
-  supabaseAnonKey && 
-  supabaseUrl !== 'YOUR_SUPABASE_URL' && 
-  supabaseAnonKey !== 'YOUR_SUPABASE_ANON_KEY'
+  supabaseUrl &&
+  supabaseAnonKey &&
+  supabaseUrl !== "YOUR_SUPABASE_URL" &&
+  supabaseAnonKey !== "YOUR_SUPABASE_ANON_KEY",
 );
 
-// Initialize Supabase client (or null if not configured yet)
+// Initialize Supabase client
 export const supabase = isSupabaseConfigured
   ? createClient(supabaseUrl, supabaseAnonKey)
   : null;
