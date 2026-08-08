@@ -359,139 +359,136 @@ export default function GuestbookPage() {
                       .substring(0, 2)
                       .toUpperCase()}
                   </div>
-                  <div>
-                    <div className="flex items-center space-x-2.5">
-                      <h4 className="font-cormorant text-2xl sm:text-3xl font-bold text-brand-dark tracking-wide uppercase">
-                        {activeCarouselItem.name}
-                      </h4>
-                      {activeCarouselItem.isMyNote && (
-                        <span className="text-[10px] font-mono font-bold bg-brand-gold/20 text-brand-dark border border-brand-gold/35 px-2.5 py-0.5 rounded-full">
-                          You
-                        </span>
-                      )}
+                    <div>
+                      <div className="flex items-center space-x-2.5">
+                        <h4 className="font-cormorant text-2xl sm:text-3xl font-medium text-brand-dark tracking-wide uppercase">
+                          {activeCarouselItem.name}
+                        </h4>
+                        {activeCarouselItem.isMyNote && (
+                          <span className="text-[10px] font-mono font-bold bg-brand-gold/20 text-brand-dark border border-brand-gold/35 px-2.5 py-0.5 rounded-full">
+                            You
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex items-center space-x-2 text-xs text-brand-dark/65 font-medium mt-1">
+                        <MapPin size={13} className="text-brand-gold-dark" />
+                        <span>{activeCarouselItem.location}</span>
+                        <span className="text-brand-dark/30">•</span>
+                        <Calendar size={13} className="text-brand-gold-dark" />
+                        <span>{activeCarouselItem.date}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center space-x-2 text-xs text-brand-dark/65 font-medium mt-1">
-                      <MapPin size={13} className="text-brand-gold-dark" />
-                      <span>{activeCarouselItem.location}</span>
-                      <span className="text-brand-dark/30">•</span>
-                      <Calendar size={13} className="text-brand-gold-dark" />
-                      <span>{activeCarouselItem.date}</span>
+                  </div>
+
+                  <div className="flex flex-col items-start sm:items-end space-y-1">
+                    <div className="flex text-brand-gold-dark space-x-1">
+                      {[...Array(activeCarouselItem.stars)].map((_, i) => (
+                        <Star key={i} size={18} fill="currentColor" />
+                      ))}
                     </div>
                   </div>
                 </div>
 
-                <div className="flex flex-col items-start sm:items-end space-y-1">
-                  <div className="flex text-brand-gold-dark space-x-1">
-                    {[...Array(activeCarouselItem.stars)].map((_, i) => (
-                      <Star key={i} size={18} fill="currentColor" />
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className="relative py-2 px-2 sm:px-6">
-                <Quote
-                  size={48}
-                  className="text-brand-gold-dark/15 absolute -top-4 -left-2 select-none pointer-events-none"
-                />
-                <p className="font-serif text-lg sm:text-2xl italic font-normal text-brand-dark/95 leading-relaxed relative z-10">
-                  “{activeCarouselItem.comment}”
-                </p>
-              </div>
-
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 mt-6 border-t border-brand-gold/20 relative z-10">
-                <button
-                  type="button"
-                  onClick={() => handleLikeReview(activeCarouselItem.id)}
-                  className={`px-5 py-2 rounded-full transition-all flex items-center space-x-2 cursor-pointer font-sans text-s ${
-                    activeCarouselItem.isLiked
-                      ? "bg-brand-gold text-brand-dark font-bold shadow-md scale-105"
-                      : "bg-white border border-brand-gold/30 hover:bg-brand-gold/15 text-brand-dark"
-                  }`}
-                >
-                  <ThumbsUp
-                    size={14}
-                    className={
-                      activeCarouselItem.isLiked ? "fill-brand-dark" : ""
-                    }
+                <div className="relative py-2 px-2 sm:px-6">
+                  <Quote
+                    size={48}
+                    className="text-brand-gold-dark/15 absolute -top-4 -left-2 select-none pointer-events-none"
                   />
-                  <span>Helpful ({activeCarouselItem.likes || 0})</span>
-                </button>
+                  <p className="font-serif text-lg sm:text-2xl italic font-normal text-brand-dark/95 leading-relaxed relative z-10">
+                    “{activeCarouselItem.comment}”
+                  </p>
+                </div>
 
-                <div className="flex items-center space-x-4">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 mt-6 border-t border-brand-gold/20 relative z-10">
                   <button
                     type="button"
-                    onClick={handlePrevCarousel}
-                    className="w-10 h-10 rounded-full bg-white border border-brand-gold/35 flex items-center justify-center text-brand-dark hover:bg-brand-gold hover:text-brand-dark transition-all duration-300 shadow-xs cursor-pointer"
-                    aria-label="Previous reflection"
+                    onClick={() => handleLikeReview(activeCarouselItem.id)}
+                    className={`px-5 py-2 rounded-full transition-all flex items-center space-x-2 cursor-pointer font-sans text-s ${
+                      activeCarouselItem.isLiked
+                        ? "bg-brand-gold text-brand-dark font-bold shadow-md scale-105"
+                        : "bg-white border border-brand-gold/30 hover:bg-brand-gold/15 text-brand-dark"
+                    }`}
                   >
-                    <ChevronLeft size={20} />
+                    <ThumbsUp
+                      size={14}
+                      className={
+                        activeCarouselItem.isLiked ? "fill-brand-dark" : ""
+                      }
+                    />
+                    <span>Helpful ({activeCarouselItem.likes || 0})</span>
                   </button>
 
-                  <span className="text-xs font-mono text-brand-dark/65 font-bold tracking-widest">
-                    {(((carouselIndex % filteredReviews.length) +
-                      filteredReviews.length) %
-                      filteredReviews.length) +
-                      1}{" "}
-                    / {filteredReviews.length}
-                  </span>
+                  <div className="flex items-center space-x-4">
+                    <button
+                      type="button"
+                      onClick={handlePrevCarousel}
+                      className="w-10 h-10 rounded-full bg-white border border-brand-gold/35 flex items-center justify-center text-brand-dark hover:bg-brand-gold hover:text-brand-dark transition-all duration-300 shadow-xs cursor-pointer"
+                      aria-label="Previous reflection"
+                    >
+                      <ChevronLeft size={20} />
+                    </button>
 
-                  <button
-                    type="button"
-                    onClick={handleNextCarousel}
-                    className="w-10 h-10 rounded-full bg-white border border-brand-gold/35 flex items-center justify-center text-brand-dark hover:bg-brand-gold hover:text-brand-dark transition-all duration-300 shadow-xs cursor-pointer"
-                    aria-label="Next reflection"
-                  >
-                    <ChevronRight size={20} />
-                  </button>
+                    <span className="text-xs font-mono text-brand-dark/65 font-bold tracking-widest">
+                      {(((carouselIndex % filteredReviews.length) +
+                        filteredReviews.length) %
+                        filteredReviews.length) +
+                        1}{" "}
+                      / {filteredReviews.length}
+                    </span>
+
+                    <button
+                      type="button"
+                      onClick={handleNextCarousel}
+                      className="w-10 h-10 rounded-full bg-white border border-brand-gold/35 flex items-center justify-center text-brand-dark hover:bg-brand-gold hover:text-brand-dark transition-all duration-300 shadow-xs cursor-pointer"
+                      aria-label="Next reflection"
+                    >
+                      <ChevronRight size={20} />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <div className="space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-              {paginatedReviews.map((rev) => {
-                const initials = rev.name
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")
-                  .substring(0, 2)
-                  .toUpperCase();
+          ) : (
+            <div className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                {paginatedReviews.map((rev) => {
+                  const initials = rev.name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")
+                    .substring(0, 2)
+                    .toUpperCase();
 
-                return (
-                  <div
-                    key={rev.id}
-                    className="bg-[#FAF8F5] text-brand-dark border border-brand-gold/35 p-7 sm:p-8 rounded-3xl flex flex-col justify-between space-y-5 shadow-xs hover:shadow-xl hover:border-brand-gold/60 hover:-translate-y-1.5 transition-all duration-300 animate-fade-in font-sans relative overflow-hidden group"
-                  >
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-brand-gold to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  return (
+                    <div
+                      key={rev.id}
+                      className="bg-[#FAF8F5] text-brand-dark border border-brand-gold/35 p-7 sm:p-8 rounded-3xl flex flex-col justify-between space-y-5 shadow-xs hover:shadow-xl hover:border-brand-gold/60 hover:-translate-y-1.5 transition-all duration-300 animate-fade-in font-sans relative overflow-hidden group"
+                    >
+                      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-brand-gold to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
-                    <div className="space-y-4 relative z-10">
-                      <div className="flex justify-between items-start flex-wrap gap-2">
-                        <div className="flex items-center space-x-3.5">
-                          <div className="w-11 h-11 rounded-full bg-brand-gold/20 border border-brand-gold/40 flex items-center justify-center font-bold text-brand-gold-dark font-sans text-sm shrink-0 shadow-xs">
-                            {initials}
-                          </div>
-                          <div>
-                            <div className="flex items-center space-x-2">
-                              <h4 className="font-cormorant text-2xl font-bold text-brand-dark tracking-wide uppercase">
-                                {rev.name}
-                              </h4>
-                              {rev.isMyNote && (
-                                <span className="text-[10px] font-mono font-bold bg-brand-gold/20 text-brand-dark border border-brand-gold/35 px-2 py-0.5 rounded-full">
-                                  You
-                                </span>
-                              )}
+                      <div className="space-y-4 relative z-10">
+                        <div className="flex justify-between items-start flex-wrap gap-2">
+                          <div className="flex items-center space-x-3.5">
+                            <div className="w-11 h-11 rounded-full bg-brand-gold/20 border border-brand-gold/40 flex items-center justify-center font-bold text-brand-gold-dark font-sans text-sm shrink-0 shadow-xs">
+                              {initials}
                             </div>
-                            <div className="flex items-center space-x-1.5 text-xs text-brand-dark/60 font-medium mt-0.5">
-                              <MapPin
-                                size={11}
-                                className="text-brand-gold-dark"
-                              />
-                              <span>{rev.location}</span>
+                            <div>
+                              <div className="flex items-center space-x-2">
+                                <h4 className="font-cormorant text-2xl font-medium text-brand-dark tracking-wide uppercase">
+                                  {rev.name}
+                                </h4>
+                                {rev.isMyNote && (
+                                  <span className="text-[10px] font-mono font-bold bg-brand-gold/20 text-brand-dark border border-brand-gold/35 px-2 py-0.5 rounded-full">
+                                    You
+                                  </span>
+                                )}
+                              </div>
+                              <div className="flex items-center space-x-1.5 text-xs text-brand-dark/60 font-medium mt-0.5">
+                                <MapPin size={11} className="text-brand-gold-dark" />
+                                <span>{rev.location}</span>
+                              </div>
                             </div>
                           </div>
-                        </div>
 
                         <div className="flex text-brand-gold-dark space-x-1">
                           {[...Array(rev.stars)].map((_, i) => (

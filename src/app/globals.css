@@ -112,6 +112,7 @@ h5,
 h6 {
   font-family: "Cormorant Garamond", "Cinzel", "Playfair Display", Georgia, serif;
   line-height: 1.25;
+  font-weight: 500;
   text-rendering: optimizeLegibility;
   font-variant-numeric: lining-nums;
   font-feature-settings: "lnum" 1;

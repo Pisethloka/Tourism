@@ -305,7 +305,7 @@ export default function MapPage() {
         <div className="inline-flex items-center space-x-2.5 bg-brand-gold/15 border border-brand-gold/30 px-4 py-1.5 rounded-full text-brand-gold-dark text-xs font-mono font-bold tracking-widest uppercase">
           <span>GEOGRAPHICAL EXPLORER</span>
         </div>
-        <h1 className="font-cormorant text-4xl sm:text-5xl md:text-6xl text-brand-dark font-bold tracking-wide uppercase">
+        <h1 className="font-cormorant text-4xl sm:text-5xl md:text-6xl text-brand-dark font-normal tracking-wide uppercase">
           Begin Your Exploration
         </h1>
         <div className="w-20 h-[1px] bg-brand-gold mx-auto" />
@@ -480,7 +480,7 @@ export default function MapPage() {
                 </div>
                 <div className="p-5 flex-grow flex flex-col justify-between space-y-4 text-center">
                   <div className="space-y-1.5">
-                    <h3 className="font-cormorant text-2xl sm:text-3xl font-bold tracking-wider text-brand-dark uppercase group-hover:text-brand-gold transition-colors text-center whitespace-pre-line">
+                    <h3 className="font-cormorant text-2xl sm:text-3xl font-medium tracking-wider text-brand-dark uppercase group-hover:text-brand-gold transition-colors text-center whitespace-pre-line">
                       {card.name}
                     </h3>
                     <p className="text-sm sm:text-base font-normal text-stone-700 line-clamp-2 leading-relaxed text-center">
@@ -502,7 +502,7 @@ export default function MapPage() {
             ))
           ) : (
             <div className="col-span-3 py-20 text-center bg-white border border-brand-gold/20 rounded-2xl p-8 space-y-2">
-              <p className="font-cormorant text-2xl text-brand-dark uppercase">
+              <p className="font-cormorant text-2xl text-brand-dark uppercase font-medium">
                 No Destinations Found
               </p>
               <p className="text-sm text-stone-600">
@@ -539,7 +539,7 @@ export default function MapPage() {
           <span className="text-brand-gold-dark text-xs sm:text-sm tracking-[0.3em] uppercase block font-semibold">
             — INTERACTIVE EXPLORATION —
           </span>
-          <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl text-brand-dark font-bold tracking-wide uppercase">
+          <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl text-brand-dark font-medium tracking-wide uppercase">
             Locate Your Next Journey
           </h2>
           <div className="w-20 h-[1px] bg-brand-gold mx-auto" />
