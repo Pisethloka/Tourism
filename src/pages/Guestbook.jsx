@@ -705,7 +705,7 @@ export const Guestbook = () => {
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Jean-Pierre Laurent"
+                    placeholder="e.g. Mai sokun"
                     value={newReview.name}
                     onChange={(e) =>
                       setNewReview({ ...newReview, name: e.target.value })
