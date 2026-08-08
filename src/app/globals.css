@@ -80,13 +80,25 @@ main {
   background-color: transparent !important;
 }
 
+.font-cormorant {
+  font-family: "Cormorant Garamond", "Cinzel", "Playfair Display", Georgia, serif !important;
+}
+
+.font-cinzel {
+  font-family: "Cinzel", "Cormorant Garamond", Georgia, serif !important;
+}
+
+.font-serif {
+  font-family: "Playfair Display", "Cinzel", Georgia, serif !important;
+}
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-cormorant);
+  font-family: "Cormorant Garamond", "Cinzel", "Playfair Display", Georgia, serif;
   line-height: 1.25;
 }
 

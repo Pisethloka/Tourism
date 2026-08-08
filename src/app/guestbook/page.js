@@ -197,8 +197,8 @@ export default function GuestbookPage() {
       </section>
 
       {/* Main Guestbook Container */}
-      <main className="max-w-7xl mx-auto px-6 md:px-12 space-y-8">
-        <div className="bg-[#FAF8F5] border border-brand-gold/35 p-8 sm:p-10 rounded-[2.5rem] text-left relative overflow-hidden shadow-md text-brand-dark space-y-8 animate-fade-in">
+      <main className="max-w-7xl mx-auto px-6 md:px-12 space-y-16">
+        <div className="bg-white/85 backdrop-blur-md border border-brand-gold/25 p-8 sm:p-10 rounded-[2.5rem] text-left relative overflow-hidden shadow-lg shadow-amber-950/5 text-brand-dark space-y-8 animate-fade-in">
           <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-brand-gold/10 blur-3xl pointer-events-none" />
 
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10 border-b border-brand-gold/20 pb-6">
@@ -429,7 +429,7 @@ export default function GuestbookPage() {
                 <button
                   type="button"
                   onClick={() => handleLikeReview(activeCarouselItem.id)}
-                  className={`px-5 py-2 rounded-full transition-all flex items-center space-x-2 cursor-pointer font-sans text-xs ${
+                  className={`px-5 py-2 rounded-full transition-all flex items-center space-x-2 cursor-pointer font-sans text-s ${
                     activeCarouselItem.isLiked
                       ? "bg-brand-gold text-brand-dark font-bold shadow-md scale-105"
                       : "bg-white border border-brand-gold/30 hover:bg-brand-gold/15 text-brand-dark"
@@ -680,7 +680,8 @@ export default function GuestbookPage() {
                 WRITE YOUR GUESTBOOK
               </h3>
               <p className="text-xs sm:text-sm text-stone-600 font-light max-w-md mx-auto leading-relaxed">
-                Pen your memories, recommendations, or reflections for honored guests exploring the Kingdom of Cambodia.
+                Pen your memories, recommendations, or reflections for honored
+                guests exploring the Kingdom of Cambodia.
               </p>
             </div>
 
@@ -742,9 +743,7 @@ export default function GuestbookPage() {
                         >
                           <Star
                             size={22}
-                            fill={
-                              starValue <= activeStars ? "#C59E3F" : "none"
-                            }
+                            fill={starValue <= activeStars ? "#C59E3F" : "none"}
                             className={
                               starValue <= activeStars
                                 ? "text-[#C59E3F] fill-[#C59E3F]"
