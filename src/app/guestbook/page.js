@@ -625,46 +625,71 @@ export default function GuestbookPage() {
           </div>
         )}
 
+        {/* Luxury White Guestbook Submission Card Inspired by Reference */}
         <section
           id="write-note-form"
-          className="pt-8 pb-12 animate-fade-in font-sans"
+          className="pt-10 pb-20 animate-fade-in font-sans relative overflow-hidden flex items-center justify-center"
         >
-          <div className="w-full bg-[#FAF8F5] text-brand-dark rounded-[2rem] border border-brand-gold/40 shadow-2xl overflow-hidden">
-            {/* Elegant Royal Editorial Header */}
-            <div className="bg-gradient-to-b from-[#1c1813] via-[#241f19] to-[#1a1612] text-white p-8 sm:p-12 text-center space-y-4 relative overflow-hidden border-b border-brand-gold/30">
-              <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-96 h-72 rounded-full bg-brand-gold/15 blur-3xl pointer-events-none" />
+          {/* Subtle Angkor Temple Watermark Silhouette in Background */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-[0.05] bg-center bg-no-repeat bg-contain"
+            style={{
+              backgroundImage: "url('/assets/hero_angkor.png')",
+              filter: "grayscale(100%)",
+            }}
+          />
 
-              {/* Royal Emblem Crest Divider */}
-              <div className="flex items-center justify-center space-x-3 sm:space-x-4 text-brand-gold relative z-10">
-                <span className="h-px w-12 sm:w-24 bg-gradient-to-r from-transparent to-brand-gold/80" />
-                <div className="w-9 h-9 rounded-full bg-brand-gold/15 border border-brand-gold/50 flex items-center justify-center text-brand-gold shadow-md shadow-brand-gold/20">
-                  <PenLine size={16} />
-                </div>
-                <span className="h-px w-12 sm:w-24 bg-gradient-to-l from-transparent to-brand-gold/80" />
+          <div className="max-w-2xl w-full mx-auto bg-white rounded-[2rem] p-8 sm:p-12 shadow-2xl shadow-amber-950/10 border border-[#EBDCC0]/80 relative z-10 space-y-7">
+            {/* Top Royal Lotus Crest Flourish Divider */}
+            <div className="flex items-center justify-center space-x-3 text-[#C59E3F] max-w-xs mx-auto">
+              <div className="flex-grow h-[1px] bg-gradient-to-r from-transparent via-[#C59E3F]/80 to-[#C59E3F] relative">
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rotate-45 bg-[#C59E3F]" />
               </div>
 
-              <div className="space-y-2 relative z-10">
-                <span className="text-brand-gold text-[11px] sm:text-xs font-bold tracking-[0.3em] uppercase block font-mono">
-                  — KHMER MEMORIES & EXPERIENCES —
-                </span>
-                <h3 className="font-cormorant text-3xl sm:text-4xl md:text-5xl font-normal tracking-wide text-brand-gold-light uppercase leading-tight">
-                  Pen Your Reflection
-                </h3>
-              </div>
+              {/* Bespoke Royal Khmer Lotus / Fleur-de-lis Emblem */}
+              <svg
+                width="46"
+                height="24"
+                viewBox="0 0 48 24"
+                fill="currentColor"
+                className="shrink-0 text-[#C59E3F] drop-shadow-xs"
+              >
+                <path
+                  d="M24 1 C25.5 5, 29 7, 33 5 C31 9, 36 10, 42 7 C38 12, 44 14, 48 13 C42 16, 45 20, 47 23 C40 21, 37 23, 33 21 C29 23, 26 21, 24 23 C22 21, 19 23, 15 21 C11 23, 8 21, 1 23 C3 20, 6 16, 0 13 C4 14, 10 12, 6 7 C12 10, 17 9, 15 5 C19 7, 22 5, 24 1 Z"
+                  opacity="0.95"
+                />
+                <circle
+                  cx="24"
+                  cy="12"
+                  r="2.2"
+                  fill="#FFFFFF"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                />
+                <circle cx="24" cy="12" r="1" fill="currentColor" />
+              </svg>
 
-              <p className="font-sans text-xs sm:text-sm text-brand-cream-dark/85 font-light max-w-lg mx-auto leading-relaxed relative z-10">
-                Share your memories, travel recommendations, and heartfelt reflections for fellow travelers exploring the Kingdom of Wonder.
+              <div className="flex-grow h-[1px] bg-gradient-to-l from-transparent via-[#C59E3F]/80 to-[#C59E3F] relative">
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rotate-45 bg-[#C59E3F]" />
+              </div>
+            </div>
+
+            {/* Header Title & Description */}
+            <div className="text-center space-y-2">
+              <h3 className="font-cormorant text-3xl sm:text-4xl md:text-[2.65rem] font-bold tracking-wider text-[#1C150D] uppercase leading-tight">
+                WRITE YOUR GUESTBOOK
+              </h3>
+              <p className="text-xs sm:text-sm text-stone-600 font-light max-w-md mx-auto leading-relaxed">
+                Pen your memories, recommendations, or reflections for honored guests exploring the Kingdom of Cambodia.
               </p>
             </div>
 
-            <form
-              onSubmit={handleReviewSubmit}
-              className="p-8 sm:p-12 space-y-6"
-            >
+            {/* Form */}
+            <form onSubmit={handleReviewSubmit} className="space-y-6 pt-2">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="text-sm sm:text-base font-sans font-semibold text-amber-950 block mb-2">
-                    Your Name *
+                  <label className="text-xs sm:text-sm font-semibold text-stone-800 mb-1.5 block">
+                    Your Name <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -674,12 +699,12 @@ export default function GuestbookPage() {
                     onChange={(e) =>
                       setNewReview({ ...newReview, name: e.target.value })
                     }
-                    className="w-full p-4 bg-white/90 border border-amber-1000/80 rounded-xl text-sm sm:text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-500/20 transition-all font-sans shadow-sm"
+                    className="w-full px-3 py-2 bg-transparent border-b border-stone-300 focus:border-[#C59E3F] focus:outline-none text-stone-900 text-sm placeholder:text-stone-400 font-sans transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="text-sm sm:text-base font-sans font-semibold text-amber-950 block mb-2">
+                  <label className="text-xs sm:text-sm font-semibold text-stone-800 mb-1.5 block">
                     Location (Optional)
                   </label>
                   <input
@@ -689,17 +714,17 @@ export default function GuestbookPage() {
                     onChange={(e) =>
                       setNewReview({ ...newReview, location: e.target.value })
                     }
-                    className="w-full p-4 bg-white/90 border border-amber-1000/80 rounded-xl text-sm sm:text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-500/20 transition-all font-sans shadow-sm"
+                    className="w-full px-3 py-2 bg-transparent border-b border-stone-300 focus:border-[#C59E3F] focus:outline-none text-stone-900 text-sm placeholder:text-stone-400 font-sans transition-colors"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-sm sm:text-base font-sans font-semibold text-amber-950 block mb-2">
+                <label className="text-xs sm:text-sm font-semibold text-stone-800 mb-2 block">
                   Your Rating & Experience
                 </label>
-                <div className="flex items-center space-x-2 bg-white/70 p-3.5 rounded-xl border border-amber-1000/80 w-fit">
-                  <div className="flex items-center space-x-1.5 shrink-0">
+                <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-1">
                     {[1, 2, 3, 4, 5].map((starValue) => {
                       const activeStars =
                         hoverStars !== null ? hoverStars : newReview.stars;
@@ -712,12 +737,18 @@ export default function GuestbookPage() {
                           }
                           onMouseEnter={() => setHoverStars(starValue)}
                           onMouseLeave={() => setHoverStars(null)}
-                          className="text-amber-500 hover:text-amber-600 hover:scale-125 transition-transform focus:outline-none cursor-pointer p-0.5"
+                          className="text-[#C59E3F] hover:scale-125 transition-transform focus:outline-none cursor-pointer p-0.5"
+                          aria-label={`Rate ${starValue} stars`}
                         >
                           <Star
-                            size={24}
+                            size={22}
                             fill={
-                              starValue <= activeStars ? "currentColor" : "none"
+                              starValue <= activeStars ? "#C59E3F" : "none"
+                            }
+                            className={
+                              starValue <= activeStars
+                                ? "text-[#C59E3F] fill-[#C59E3F]"
+                                : "text-stone-300"
                             }
                           />
                         </button>
@@ -725,9 +756,7 @@ export default function GuestbookPage() {
                     })}
                   </div>
 
-                  <div className="h-5 w-px bg-amber-300/60" />
-
-                  <span className="text-sm sm:text-base text-slate-600 font-sans font-medium">
+                  <span className="text-sm font-semibold text-stone-700 ml-1.5">
                     {(() => {
                       const s =
                         hoverStars !== null ? hoverStars : newReview.stars;
@@ -742,39 +771,36 @@ export default function GuestbookPage() {
               </div>
 
               <div>
-                <label className="text-sm sm:text-base font-sans font-semibold text-amber-950 block mb-2">
-                  Comment *
+                <label className="text-xs sm:text-sm font-semibold text-stone-800 mb-1.5 block">
+                  Comment <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   required
-                  rows={4}
+                  rows={3}
                   placeholder="Share your memorable moments, tips, or reflections about exploring Cambodia..."
                   value={newReview.comment}
                   onChange={(e) =>
                     setNewReview({ ...newReview, comment: e.target.value })
                   }
-                  className="w-full p-4 bg-white/90 border border-amber-1000/80 rounded-xl text-sm sm:text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-500/20 resize-none leading-relaxed font-sans transition-all shadow-sm"
+                  className="w-full px-3 py-2.5 bg-transparent border-b border-stone-300 focus:border-[#C59E3F] focus:outline-none text-stone-900 text-sm placeholder:text-stone-400 font-sans resize-none leading-relaxed transition-colors"
                 />
               </div>
 
-              <div className="pt-4 border-t border-amber-300/40">
+              <div className="pt-2">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-brand-gold hover:bg-amber-500 text-brand-dark py-4 rounded-xl text-sm sm:text-base font-sans font-bold tracking-wide transition-all duration-300 hover:scale-[1.01] active:scale-95 shadow-md shadow-brand-gold/25 flex items-center justify-center space-x-2.5 disabled:opacity-50 cursor-pointer"
+                  className="w-full py-3.5 bg-gradient-to-r from-[#B58E38] via-[#C9A44B] to-[#A8822E] hover:from-[#A8822E] hover:to-[#967224] text-white font-sans font-medium text-sm sm:text-base tracking-wide rounded-xl shadow-md shadow-amber-900/15 hover:shadow-lg transition-all duration-300 hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center space-x-2 cursor-pointer disabled:opacity-60"
                 >
                   {isSubmitting ? (
                     <>
-                      <Loader2
-                        size={18}
-                        className="animate-spin text-brand-dark"
-                      />
-                      <span>Posting Note to Guestbook...</span>
+                      <Loader2 size={18} className="animate-spin text-white" />
+                      <span>Posting Note...</span>
                     </>
                   ) : (
                     <>
+                      <Send size={16} className="text-white -rotate-12" />
                       <span>Post Note</span>
-                      <Send size={18} className="text-brand-dark " />
                     </>
                   )}
                 </button>
