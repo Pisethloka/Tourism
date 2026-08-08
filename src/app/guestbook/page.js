@@ -1,12 +1,13 @@
+"use client";
+
 /**
- * Guestbook.jsx - Traveler Testimonials & Guestbook Form Component
+ * src/app/guestbook/page.jsx - Next.js App Router Traveler Testimonials & Guestbook
  * Displays traveler reviews, star breakdown statistics, search/sort controls,
  * helpful upvoting, local state persistence, and guest note submission form.
  */
 
 import { useState, useEffect, useMemo, useCallback } from "react";
 import {
-  X,
   Star,
   MessageSquare,
   ThumbsUp,
@@ -16,25 +17,22 @@ import {
   Calendar,
   Loader2,
   Trash2,
-  Search,
-  Sparkles,
   ChevronLeft,
   ChevronRight,
   Quote,
   LayoutGrid,
   SlidersHorizontal,
-  User,
-  PenTool,
 } from "lucide-react";
 import {
   fetchGuestbookNotes,
   saveGuestbookNote,
   toggleLikeGuestbookNote,
   deleteGuestbookNote,
-} from "../services/api";
-import heroAngkor from "../assets/hero_angkor.png";
+} from "../../services/api";
 
-export const Guestbook = () => {
+const heroAngkor = "/assets/hero_angkor.png";
+
+export default function GuestbookPage() {
   const [reviews, setReviews] = useState([]);
   const [loadingNotes, setLoadingNotes] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -47,20 +45,18 @@ export const Guestbook = () => {
   });
 
   const [hoverStars, setHoverStars] = useState(null);
-  const [showForm, setShowForm] = useState(false);
   const [successToast, setSuccessToast] = useState(false);
 
-  // Senior UX Review Filtering & Search State
-  const [reviewFilter, setReviewFilter] = useState("ALL"); // "ALL" | "5_STARS" | "MY_NOTES"
+  // Filter State
+  const [reviewFilter, setReviewFilter] = useState("ALL");
   const [reviewQuery, setReviewQuery] = useState("");
 
-  // Interactive Carousel & Pagination State
-  const [viewMode, setViewMode] = useState("CAROUSEL"); // "CAROUSEL" | "GRID"
+  // View Mode
+  const [viewMode, setViewMode] = useState("CAROUSEL");
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 4;
 
-  // Load notes on component mount from API
   useEffect(() => {
     async function loadNotes() {
       setLoadingNotes(true);
@@ -73,7 +69,6 @@ export const Guestbook = () => {
 
   const handleLikeReview = useCallback(async (id) => {
     let targetNote = null;
-    // Optimistic UI update
     setReviews((prev) =>
       prev.map((r) => {
         if (r.id === id) {
@@ -96,7 +91,6 @@ export const Guestbook = () => {
     async (e) => {
       e.preventDefault();
       if (!newReview.name || !newReview.comment || isSubmitting) return;
-
       setIsSubmitting(true);
       try {
         const result = await saveGuestbookNote(newReview);
@@ -108,7 +102,6 @@ export const Guestbook = () => {
             stars: 5,
             comment: "",
           });
-          setShowForm(false);
           setSuccessToast(true);
           setTimeout(() => setSuccessToast(false), 4000);
         }
@@ -181,14 +174,12 @@ export const Guestbook = () => {
     <div className="min-h-screen bg-brand-cream text-brand-dark animate-fade-in pb-20">
       {/* Editorial Luxury Hero Section */}
       <section className="relative bg-brand-dark text-brand-cream pt-32 pb-20 px-6 md:px-12 overflow-hidden mb-16 border-b border-brand-gold/25">
-        {/* Background Image Watermark */}
         <div
           className="absolute inset-0 z-0 opacity-20 bg-cover bg-center pointer-events-none"
           style={{ backgroundImage: `url(${heroAngkor})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/80 to-transparent z-0" />
 
-        {/* Hero Content */}
         <div className="max-w-7xl mx-auto relative z-10 space-y-4 text-center md:text-left">
           <div className="inline-flex items-center space-x-2.5 bg-brand-gold/15 border border-brand-gold/30 px-4 py-1.5 rounded-full text-brand-gold text-xs font-mono font-bold tracking-widest uppercase">
             <span>TRAVELER REGISTRY & REFLECTIONS</span>
@@ -205,12 +196,9 @@ export const Guestbook = () => {
 
       {/* Main Guestbook Container */}
       <main className="max-w-7xl mx-auto px-6 md:px-12 space-y-8">
-        {/* Unified Luxury Master Overview Card (Merged Header & Rating Graph) */}
         <div className="bg-[#FAF8F5] border border-brand-gold/35 p-8 sm:p-10 rounded-[2.5rem] text-left relative overflow-hidden shadow-md text-brand-dark space-y-8 animate-fade-in">
-          {/* Subtle background ambient radial glow */}
           <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-brand-gold/10 blur-3xl pointer-events-none" />
 
-          {/* Top Row: Title & Action Button */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10 border-b border-brand-gold/20 pb-6">
             <div className="space-y-2 max-w-xl">
               <div className="inline-flex items-center space-x-2 text-brand-gold-dark text-[12px] font-bold tracking-[0.3em] uppercase">
@@ -241,9 +229,7 @@ export const Guestbook = () => {
             </div>
           </div>
 
-          {/* Bottom Row: Seamless Integrated Rating Graph */}
           <div className="grid grid-cols-1 sm:grid-cols-12 gap-8 items-center relative z-10 pt-2">
-            {/* Overall Score Box */}
             <div className="sm:col-span-5 flex flex-col items-center justify-center p-6 sm:p-8 bg-white/90 rounded-2xl border border-brand-gold/25 text-center shadow-2xs">
               <span className="font-cormorant text-6xl sm:text-7xl font-bold text-brand-gold-dark leading-none">
                 {ratingStats.avg}
@@ -258,7 +244,6 @@ export const Guestbook = () => {
               </span>
             </div>
 
-            {/* 5-Star to 1-Star Graph Bars */}
             <div className="sm:col-span-7 space-y-4">
               {[5, 4, 3, 2, 1].map((starNum) => {
                 const count = ratingStats.counts[starNum] || 0;
@@ -270,9 +255,8 @@ export const Guestbook = () => {
                 return (
                   <div
                     key={starNum}
-                    className="flex items-center space-x-3 text-s"
+                    className="flex items-center space-x-3 text-sm"
                   >
-                    {/* Star Label */}
                     <button
                       type="button"
                       onClick={() => {
@@ -288,7 +272,6 @@ export const Guestbook = () => {
                       />
                     </button>
 
-                    {/* Bar Track & Fill */}
                     <div className="flex-grow bg-brand-dark/10 h-3.5 rounded-full overflow-hidden relative shadow-inner">
                       <div
                         className="bg-gradient-to-r from-brand-gold-dark via-brand-gold to-brand-gold-dark h-full rounded-full transition-all duration-700"
@@ -296,7 +279,6 @@ export const Guestbook = () => {
                       />
                     </div>
 
-                    {/* Count & Percentage */}
                     <span className="w-20 text-right font-mono text-[14px] text-brand-dark/70 font-semibold">
                       {count} ({pct}%)
                     </span>
@@ -307,7 +289,6 @@ export const Guestbook = () => {
           </div>
         </div>
 
-        {/* Centered View Mode Toggle Bar (Spotlight vs Grid) Above User Reviews */}
         <div className="flex justify-center pt-2">
           <div className="inline-flex items-center space-x-1 bg-white border border-brand-gold/35 p-1.5 rounded-full shadow-xs">
             <button
@@ -318,7 +299,6 @@ export const Guestbook = () => {
                   ? "bg-brand-dark text-brand-gold shadow-xs"
                   : "text-brand-dark/70 hover:text-brand-dark"
               }`}
-              title="Spotlight View"
             >
               <SlidersHorizontal size={14} />
               <span>Spotlight</span>
@@ -331,7 +311,6 @@ export const Guestbook = () => {
                   ? "bg-brand-dark text-brand-gold shadow-xs"
                   : "text-brand-dark/70 hover:text-brand-dark"
               }`}
-              title="Grid View"
             >
               <LayoutGrid size={14} />
               <span>Grid</span>
@@ -339,7 +318,6 @@ export const Guestbook = () => {
           </div>
         </div>
 
-        {/* Success Toast Notification */}
         {successToast && (
           <div className="bg-emerald-900 text-emerald-100 border border-emerald-500/50 p-4 rounded-2xl text-xs flex items-center space-x-3 animate-fade-in shadow-md font-sans max-w-2xl mx-auto">
             <CheckCircle2 size={18} className="text-emerald-300 shrink-0" />
@@ -352,7 +330,6 @@ export const Guestbook = () => {
           </div>
         )}
 
-        {/* Notes Content Display */}
         {loadingNotes ? (
           <div className="py-16 text-center space-y-2 text-brand-gold-dark">
             <Loader2 size={24} className="animate-spin mx-auto" />
@@ -365,16 +342,11 @@ export const Guestbook = () => {
             No matching reflections found. Try adjusting your search or filters.
           </div>
         ) : viewMode === "CAROUSEL" && activeCarouselItem ? (
-          /* OPTION 1: Interactive Luxury Spotlight Carousel (Clutter-Free & Full Width) */
           <div className="relative w-full py-2">
             <div className="bg-[#FAF8F5] text-brand-dark border border-brand-gold/40 rounded-[2.5rem] p-8 sm:p-12 shadow-xl relative overflow-hidden transition-all duration-500 font-sans group">
-              {/* Top Luxury Gold Accent Bar */}
               <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-brand-gold/30 via-brand-gold to-brand-gold/30" />
-
-              {/* Soft Ambient Gold Radial Glow (100% Clean & Seamless, No Square Box Edges) */}
               <div className="absolute -right-24 -bottom-24 w-96 h-96 rounded-full bg-gradient-to-br from-brand-gold/20 via-brand-gold/5 to-transparent blur-3xl pointer-events-none" />
 
-              {/* Header Details */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-brand-gold/20 pb-6 mb-6 relative z-10">
                 <div className="flex items-center space-x-4">
                   <div className="w-14 h-14 rounded-full bg-brand-gold/20 border-2 border-brand-gold/40 flex items-center justify-center font-bold text-brand-gold-dark font-cormorant text-xl shrink-0 shadow-md">
@@ -406,7 +378,6 @@ export const Guestbook = () => {
                   </div>
                 </div>
 
-                {/* Rating Stars & Badge */}
                 <div className="flex flex-col items-start sm:items-end space-y-1">
                   <div className="flex text-brand-gold-dark space-x-1">
                     {[...Array(activeCarouselItem.stars)].map((_, i) => (
@@ -419,7 +390,6 @@ export const Guestbook = () => {
                 </div>
               </div>
 
-              {/* Reflection Body */}
               <div className="relative py-2 px-2 sm:px-6">
                 <Quote
                   size={48}
@@ -430,7 +400,6 @@ export const Guestbook = () => {
                 </p>
               </div>
 
-              {/* Bottom Carousel Controls Bar */}
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 mt-6 border-t border-brand-gold/20 relative z-10">
                 <button
                   type="button"
@@ -450,7 +419,6 @@ export const Guestbook = () => {
                   <span>Helpful ({activeCarouselItem.likes || 0})</span>
                 </button>
 
-                {/* Navigation Dots & Step */}
                 <div className="flex items-center space-x-4">
                   <button
                     type="button"
@@ -482,7 +450,6 @@ export const Guestbook = () => {
             </div>
           </div>
         ) : (
-          /* OPTION 2: Clean 2-Column Paginated Cards Grid (Max 4 Cards Per Page) */
           <div className="space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
               {paginatedReviews.map((rev) => {
@@ -498,11 +465,9 @@ export const Guestbook = () => {
                     key={rev.id}
                     className="bg-[#FAF8F5] text-brand-dark border border-brand-gold/35 p-7 sm:p-8 rounded-3xl flex flex-col justify-between space-y-5 shadow-xs hover:shadow-xl hover:border-brand-gold/60 hover:-translate-y-1.5 transition-all duration-300 animate-fade-in font-sans relative overflow-hidden group"
                   >
-                    {/* Top Gold Line Accent */}
                     <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-brand-gold to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
                     <div className="space-y-4 relative z-10">
-                      {/* User Header */}
                       <div className="flex justify-between items-start flex-wrap gap-2">
                         <div className="flex items-center space-x-3.5">
                           <div className="w-11 h-11 rounded-full bg-brand-gold/20 border border-brand-gold/40 flex items-center justify-center font-bold text-brand-gold-dark font-sans text-sm shrink-0 shadow-xs">
@@ -529,7 +494,6 @@ export const Guestbook = () => {
                           </div>
                         </div>
 
-                        {/* Rating Stars */}
                         <div className="flex text-brand-gold-dark space-x-1">
                           {[...Array(rev.stars)].map((_, i) => (
                             <Star key={i} size={14} fill="currentColor" />
@@ -537,7 +501,6 @@ export const Guestbook = () => {
                         </div>
                       </div>
 
-                      {/* Comment Text with Quotation Accent */}
                       <div className="relative pt-1">
                         <span className="font-cormorant text-5xl text-brand-gold-dark/20 leading-none absolute -top-4 -left-2 select-none pointer-events-none">
                           “
@@ -548,7 +511,6 @@ export const Guestbook = () => {
                       </div>
                     </div>
 
-                    {/* Card Footer */}
                     <div className="flex justify-between items-center pt-4 border-t border-brand-gold/20 text-xs text-brand-dark/60 font-sans relative z-10">
                       <div className="flex items-center space-x-1.5">
                         <Calendar size={12} className="text-brand-gold-dark" />
@@ -572,7 +534,6 @@ export const Guestbook = () => {
                           <span>Helpful ({rev.likes || 0})</span>
                         </button>
 
-                        {/* Delete Button */}
                         {rev.isMyNote && (
                           <button
                             type="button"
@@ -593,7 +554,6 @@ export const Guestbook = () => {
               })}
             </div>
 
-            {/* Pagination Controls Bar */}
             {totalPages > 1 && (
               <div className="flex items-center justify-center space-x-3 pt-6 font-sans">
                 <button
@@ -640,18 +600,11 @@ export const Guestbook = () => {
           </div>
         )}
 
-        {/* Exact Senior UX Redesigned "Write a Note" Form matching User Mockup */}
-        <section
-          id="write-note-form"
-          className="pt-8 pb-12 animate-fade-in font-sans"
-        >
+        <section id="write-note-form" className="pt-8 pb-12 animate-fade-in font-sans">
           <div className="w-full bg-[#FAF8F5] text-brand-dark rounded-[2.5rem] border border-brand-gold/35 shadow-xl overflow-hidden">
-            {/* Deep Charcoal Header with Traditional Khmer Kbach Ornament Motif */}
             <div className="bg-[#2D2B28] text-white p-8 sm:p-10 text-center space-y-3 relative overflow-hidden">
-              {/* Soft background ambient radial glow */}
               <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-brand-gold/15 blur-3xl pointer-events-none" />
 
-              {/* Traditional Khmer Kbach Lotus Ornament Filigree SVG */}
               <div className="flex items-center justify-center space-x-3 text-brand-gold relative z-10 mb-2">
                 <div className="h-px w-16 bg-gradient-to-r from-transparent to-brand-gold/70" />
                 <svg
@@ -661,7 +614,6 @@ export const Guestbook = () => {
                   fill="none"
                   className="text-brand-gold shrink-0"
                 >
-                  {/* Traditional Khmer Temple Pediment & Lotus Kbach Motif */}
                   <path
                     d="M24 1 C26 5, 29 7, 33 5 C31 9, 36 10, 42 7 C38 12, 44 14, 48 13 C42 16, 45 20, 47 23 C40 21, 37 23, 33 21 C29 23, 26 21, 24 23 C22 21, 19 23, 15 21 C11 23, 8 21, 1 23 C3 20, 6 16, 0 13 C4 14, 10 12, 6 7 C12 10, 17 9, 15 5 C19 7, 22 5, 24 1 Z"
                     fill="currentColor"
@@ -691,12 +643,10 @@ export const Guestbook = () => {
               </p>
             </div>
 
-            {/* Form Body */}
             <form
               onSubmit={handleReviewSubmit}
               className="p-8 sm:p-10 space-y-6"
             >
-              {/* Inputs Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label className="text-sm sm:text-base font-sans font-semibold text-amber-950 block mb-2">
@@ -730,7 +680,6 @@ export const Guestbook = () => {
                 </div>
               </div>
 
-              {/* Rating Star Picker */}
               <div>
                 <label className="text-sm sm:text-base font-sans font-semibold text-amber-950 block mb-2">
                   Your Rating & Experience
@@ -778,7 +727,6 @@ export const Guestbook = () => {
                 </div>
               </div>
 
-              {/* Comment Textarea */}
               <div>
                 <label className="text-sm sm:text-base font-sans font-semibold text-amber-950 block mb-2">
                   Comment *
@@ -795,7 +743,6 @@ export const Guestbook = () => {
                 />
               </div>
 
-              {/* Divider & Full Width Colored Button */}
               <div className="pt-4 border-t border-amber-300/40">
                 <button
                   type="submit"
@@ -824,4 +771,4 @@ export const Guestbook = () => {
       </main>
     </div>
   );
-};
+}

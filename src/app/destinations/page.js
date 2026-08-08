@@ -1,10 +1,14 @@
+"use client";
+
 /**
- * Destinations.jsx - Explore Destinations Page Component
+ * src/app/destinations/page.jsx - Next.js App Router Destinations Page
  * Renders categorized destination cards (Cultural Heritage, Historical Reflection, Natural Wonders),
  * interactive modal expansion for deep destination guides, and seamless filtering hooks.
  */
 
-import { useState, useEffect, useMemo, useCallback, memo } from "react";
+import { useState, useEffect, useMemo, useCallback, memo, Suspense } from "react";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   ArrowRight,
   ChevronDown,
@@ -18,18 +22,21 @@ import {
   Check,
   Loader2,
 } from "lucide-react";
-import { fetchDestinations } from "../services/api";
+import { fetchDestinations } from "../../services/api";
 
 // Hero Banner Image & Destination Images
-import heroAngkor from "../assets/hero_angkor.png";
-import bayonTemplePhoto from "../assets/bayon_temple_photo.jpg";
-import kohRongSanloemPhoto from "../assets/koh_rong_sanloem_photo.jpg";
-import preahVihearPhoto from "../assets/preah_vihear_photo.jpg";
-import bokorHillPhoto from "../assets/bokor_hill_photo.jpg";
-import tuolSlengPhoto from "../assets/tuol_sleng_photo.jpg";
-import cardamomMountainsPhoto from "../assets/cardamom_mountains_photo.jpg";
+const heroAngkor = "/assets/hero_angkor.png";
+const bayonTemplePhoto = "/assets/bayon_temple_photo.jpg";
+const kohRongSanloemPhoto = "/assets/koh_rong_sanloem_photo.jpg";
+const preahVihearPhoto = "/assets/preah_vihear_photo.jpg";
+const bokorHillPhoto = "/assets/bokor_hill_photo.jpg";
+const tuolSlengPhoto = "/assets/tuol_sleng_photo.jpg";
+const cardamomMountainsPhoto = "/assets/cardamom_mountains_photo.jpg";
 
-export const Destinations = ({ activeSection, setActiveTab }) => {
+function DestinationsContent() {
+  const searchParams = useSearchParams();
+  const activeSection = searchParams.get("category");
+
   const [destinations, setDestinations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -43,7 +50,7 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
   // Track currently expanded card ID for inline opening right where clicked
   const [expandedCardId, setExpandedCardId] = useState(null);
 
-  // Fetch data from Mock REST API on component mount
+  // Fetch data on component mount
   useEffect(() => {
     let isMounted = true;
     async function loadData() {
@@ -71,7 +78,7 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
     };
   }, []);
 
-  // Handle Hash Section Auto-Expand
+  // Handle Hash/URL Category Section Auto-Expand
   useEffect(() => {
     if (activeSection === "cultural-tourism") {
       setExpandedSections((prev) => ({ ...prev, cultural: true }));
@@ -125,6 +132,7 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
       ),
     [destinations],
   );
+
   const darkDests = useMemo(
     () =>
       destinations.filter(
@@ -136,6 +144,7 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
       ),
     [destinations],
   );
+
   const ecoDests = useMemo(
     () =>
       destinations.filter(
@@ -175,7 +184,7 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
 
       {/* Main Grid Content */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 space-y-20">
-        {/* Loading Spinner / Skeleton state */}
+        {/* Loading Spinner */}
         {loading && (
           <div className="py-20 text-center space-y-4">
             <Loader2
@@ -224,7 +233,6 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
                     isExpanded={expandedCardId === item.id}
                     onToggle={() => toggleCard(item.id)}
                     onClose={() => closeCard(item.id)}
-                    setActiveTab={setActiveTab}
                   />
                 ))}
               </div>
@@ -239,7 +247,6 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
                       isExpanded={expandedCardId === item.id}
                       onToggle={() => toggleCard(item.id)}
                       onClose={() => closeCard(item.id)}
-                      setActiveTab={setActiveTab}
                     />
                   ))}
                 </div>
@@ -289,7 +296,6 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
                     isExpanded={expandedCardId === item.id}
                     onToggle={() => toggleCard(item.id)}
                     onClose={() => closeCard(item.id)}
-                    setActiveTab={setActiveTab}
                   />
                 ))}
               </div>
@@ -327,7 +333,6 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
                     isExpanded={expandedCardId === item.id}
                     onToggle={() => toggleCard(item.id)}
                     onClose={() => closeCard(item.id)}
-                    setActiveTab={setActiveTab}
                   />
                 ))}
               </div>
@@ -342,7 +347,6 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
                       isExpanded={expandedCardId === item.id}
                       onToggle={() => toggleCard(item.id)}
                       onClose={() => closeCard(item.id)}
-                      setActiveTab={setActiveTab}
                     />
                   ))}
                 </div>
@@ -373,11 +377,26 @@ export const Destinations = ({ activeSection, setActiveTab }) => {
       </div>
     </div>
   );
-};
+}
+
+export default function DestinationsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="py-32 text-center text-brand-dark">
+          <Loader2 size={36} className="animate-spin text-brand-gold mx-auto" />
+          <p className="mt-4 font-serif text-lg">Loading Destinations...</p>
+        </div>
+      }
+    >
+      <DestinationsContent />
+    </Suspense>
+  );
+}
 
 // Sub-component for individual Destination Card with Inline Expansion
 const DestinationCard = memo(
-  ({ item, isExpanded, onToggle, onClose, setActiveTab }) => {
+  ({ item, isExpanded, onToggle, onClose }) => {
     return (
       <div
         id={`card-${item.id}`}
@@ -567,16 +586,13 @@ const DestinationCard = memo(
 
               {/* Footer Action Buttons */}
               <div className="pt-4 border-t border-amber-200/60 flex items-center justify-end gap-4 flex-wrap font-sans">
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (setActiveTab) setActiveTab("plan-trip");
-                  }}
+                <Link
+                  href="/plan-trip"
                   className="px-6 py-2.5 bg-brand-gold hover:bg-brand-gold-light text-brand-dark text-xs sm:text-sm font-bold tracking-widest uppercase rounded-lg cursor-pointer transition-all hover:scale-105 shadow flex items-center space-x-2 focus-visible:ring-2 focus-visible:ring-brand-gold"
                 >
                   <span>Plan Trip Here</span>
                   <ArrowRight size={16} />
-                </button>
+                </Link>
               </div>
             </div>
           )}

@@ -31,7 +31,7 @@ body {
   background-color: var(--color-brand-cream);
   color: var(--color-brand-dark);
   overflow-x: hidden;
-  background-image: url('./assets/khmer_pattern_v2.png');
+  background-image: url('/assets/khmer_pattern_v2.png');
   background-repeat: repeat;
   background-size: 200px 200px;
   line-height: 1.6;
@@ -45,7 +45,7 @@ body {
 }
 
 .bg-brand-cream {
-  background-image: url('./assets/khmer_pattern_v2.png') !important;
+  background-image: url('/assets/khmer_pattern_v2.png') !important;
   background-repeat: repeat !important;
   background-size: 200px 200px !important;
 }

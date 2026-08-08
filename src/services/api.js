@@ -1,29 +1,26 @@
 /**
- * api.js - Destination Data Service & Local Mock API
+ * api.js - Destination Data Service & Local Mock API (Next.js Compatible)
  * Fetches destination details from /api/destinations.json with fallback data,
- * maps image keys to local photo assets, and filters by section category.
+ * maps image keys to public photo assets, and filters by section category.
  */
 
-// Image asset mappings for destination images
-import heroAngkor from "../assets/hero_angkor.png";
-import phnomPenhPalace from "../assets/phnom_penh_palace.png";
-import killingFields from "../assets/killing_fields.png";
-import tonleSap from "../assets/tonle_sap.png";
-import yeakLaom from "../assets/yeak_laom.png";
-import banteaySrei from "../assets/banteay_srei.png";
-import watThmey from "../assets/wat_thmey.png";
-import bayonTemplePhoto from "../assets/bayon_temple_photo.jpg";
-import tuolSlengPhoto from "../assets/tuol_sleng_photo.jpg";
-import bokorHillPhoto from "../assets/bokor_hill_photo.jpg";
-import cardamomMountainsPhoto from "../assets/cardamom_mountains_photo.jpg";
-import preahVihearPhoto from "../assets/preah_vihear_photo.jpg";
-import kohRongSanloemPhoto from "../assets/koh_rong_sanloem_photo.jpg";
-
 import { supabase, isSupabaseConfigured } from "./supabase";
-
-// Imported fallback JSON data to guarantee 100% load reliability
 import fallbackDestinations from "../../public/api/destinations.json";
-import fallbackWeather from "../../public/api/weather.json";
+
+// Public asset paths for destination images
+const heroAngkor = "/assets/hero_angkor.png";
+const phnomPenhPalace = "/assets/phnom_penh_palace.png";
+const killingFields = "/assets/killing_fields.png";
+const tonleSap = "/assets/tonle_sap.png";
+const yeakLaom = "/assets/yeak_laom.png";
+const banteaySrei = "/assets/banteay_srei.png";
+const watThmey = "/assets/wat_thmey.png";
+const bayonTemplePhoto = "/assets/bayon_temple_photo.jpg";
+const tuolSlengPhoto = "/assets/tuol_sleng_photo.jpg";
+const bokorHillPhoto = "/assets/bokor_hill_photo.jpg";
+const cardamomMountainsPhoto = "/assets/cardamom_mountains_photo.jpg";
+const preahVihearPhoto = "/assets/preah_vihear_photo.jpg";
+const kohRongSanloemPhoto = "/assets/koh_rong_sanloem_photo.jpg";
 
 const IMAGE_MAP = {
   heroAngkor,
@@ -55,56 +52,31 @@ const IMAGE_MAP = {
   "yeak-laom": yeakLaom,
 };
 
-// Coordinates for Cambodian cities (for Open-Meteo Live Weather API)
-const CITIES_COORDS = {
-  "Siem Reap": { lat: 13.36, lon: 103.86 },
-  "Phnom Penh": { lat: 11.55, lon: 104.92 },
-  Kampot: { lat: 10.61, lon: 104.18 },
-  "Koh Rong": { lat: 10.62, lon: 103.52 },
-};
-
 /**
  * 1. MOCK REST API: Fetch Destinations
- * Fetches destinations from /api/destinations.json with a simulated network delay.
- * Includes automatic fallback so it NEVER fails in production or dev server.
+ * Fetches destinations with a simulated network delay and fallback JSON.
  */
 export async function fetchDestinations() {
-  // Simulate network latency (400ms) to demonstrate loading states
-  await new Promise((resolve) => setTimeout(resolve, 400));
+  await new Promise((resolve) => setTimeout(resolve, 300));
 
-  let data = null;
+  let data = fallbackDestinations;
 
-  try {
-    const baseUrl = import.meta.env.BASE_URL || "/";
-    const cleanBase = baseUrl.endsWith("/") ? baseUrl : baseUrl + "/";
-
-    // Try primary path with cache buster
-    let response = await fetch(
-      `${cleanBase}api/destinations.json?t=${Date.now()}`,
-    );
-
-    if (!response.ok) {
-      // Try relative path with cache buster
-      response = await fetch(`./api/destinations.json?t=${Date.now()}`);
-    }
-
-    if (response.ok) {
-      data = await response.json();
-    } else {
-      console.warn("HTTP fetch returned non-200, using JSON module fallback");
+  if (typeof window !== "undefined") {
+    try {
+      const response = await fetch(`/api/destinations.json?t=${Date.now()}`);
+      if (response.ok) {
+        data = await response.json();
+      }
+    } catch (error) {
+      console.warn("API fetch error, using fallback destinations:", error);
       data = fallbackDestinations;
     }
-  } catch (error) {
-    console.warn("API fetch error, using JSON module fallback:", error);
-    data = fallbackDestinations;
   }
 
-  // Ensure data is valid array
   if (!Array.isArray(data)) {
     data = fallbackDestinations;
   }
 
-  // Map image keys directly to authentic imported assets
   return data.map((dest) => ({
     ...dest,
     image: IMAGE_MAP[dest.imageKey] || IMAGE_MAP[dest.id] || heroAngkor,
@@ -112,93 +84,13 @@ export async function fetchDestinations() {
 }
 
 /**
- * 2. LIVE PUBLIC API: Open-Meteo Real-time Weather API
- * Fetches real weather data for Cambodian cities; falls back to weather.json
- */
-export async function fetchLiveWeather(cityName = "Siem Reap") {
-  const coords = CITIES_COORDS[cityName] || CITIES_COORDS["Siem Reap"];
-
-  try {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lon}&current_weather=true`;
-    const response = await fetch(url);
-
-    if (!response.ok) throw new Error("Weather API request failed");
-
-    const data = await response.json();
-    const cw = data.current_weather;
-
-    // Convert weather code to friendly label & icon
-    let condition = "Sunny";
-    let icon = "☀️";
-    if (cw.weathercode > 0 && cw.weathercode <= 3) {
-      condition = "Partly Cloudy";
-      icon = "⛅";
-    } else if (cw.weathercode >= 45 && cw.weathercode <= 48) {
-      condition = "Misty";
-      icon = "🌫️";
-    } else if (cw.weathercode >= 51) {
-      condition = "Tropical Rain";
-      icon = "🌧️";
-    }
-
-    return {
-      city: cityName,
-      temp_c: Math.round(cw.temperature * 10) / 10,
-      wind_speed: cw.windspeed,
-      condition,
-      icon,
-      isLive: true,
-    };
-  } catch (error) {
-    console.warn("Live weather API failed, using fallback endpoint:", error);
-    const cityKey = cityName.toLowerCase().replace(" ", "_");
-    return {
-      ...(fallbackWeather[cityKey] || fallbackWeather["siem_reap"]),
-      isLive: false,
-    };
-  }
-}
-
-/**
- * 3. LIVE PUBLIC API: Open Exchange Rate API (USD to KHR Khmer Riel)
- */
-export async function fetchExchangeRate() {
-  try {
-    const response = await fetch("https://open.er-api.com/v6/latest/USD");
-    if (!response.ok) throw new Error("Currency API error");
-
-    const data = await response.json();
-    const rate = data.rates?.KHR || 4100;
-
-    return {
-      base: "USD",
-      target: "KHR",
-      rate: Math.round(rate),
-      lastUpdated: data.time_last_update_utc
-        ? new Date(data.time_last_update_utc).toLocaleDateString()
-        : "Today",
-      isLive: true,
-    };
-  } catch (err) {
-    console.warn("Exchange rate API offline, fallback to standard rate", err);
-    return {
-      base: "USD",
-      target: "KHR",
-      rate: 4120,
-      lastUpdated: "Standard Rate",
-      isLive: false,
-    };
-  }
-}
-
-/**
- * 4. PERSISTENT GUESTBOOK API SERVICE
- * Provides persistent storage using localStorage with simulated network latency and API responses.
+ * 2. PERSISTENT GUESTBOOK API SERVICE
  */
 const GUESTBOOK_STORAGE_KEY = "angkor_lux_guestbook_notes_v1";
 const MY_NOTES_STORAGE_KEY = "angkor_lux_my_note_ids";
 
 function getMyNoteIds() {
+  if (typeof window === "undefined") return [];
   try {
     const stored = localStorage.getItem(MY_NOTES_STORAGE_KEY);
     return stored ? JSON.parse(stored) : [];
@@ -208,6 +100,7 @@ function getMyNoteIds() {
 }
 
 function addMyNoteId(id) {
+  if (typeof window === "undefined") return;
   try {
     const current = getMyNoteIds();
     localStorage.setItem(
@@ -270,6 +163,7 @@ const DEFAULT_GUESTBOOK_NOTES = [
   },
 ];
 
+// DELETE (Remove a Note)
 export async function deleteGuestbookNote(noteId) {
   if (isSupabaseConfigured && supabase) {
     try {
@@ -283,7 +177,9 @@ export async function deleteGuestbookNote(noteId) {
   try {
     const current = await fetchGuestbookNotes();
     const updated = current.filter((note) => note.id !== noteId);
-    localStorage.setItem(GUESTBOOK_STORAGE_KEY, JSON.stringify(updated));
+    if (typeof window !== "undefined") {
+      localStorage.setItem(GUESTBOOK_STORAGE_KEY, JSON.stringify(updated));
+    }
     return updated;
   } catch (err) {
     console.error("Error deleting guestbook note:", err);
@@ -291,6 +187,7 @@ export async function deleteGuestbookNote(noteId) {
   }
 }
 
+// READ (SELECT ALL REVIEWS)
 export async function fetchGuestbookNotes() {
   if (isSupabaseConfigured && supabase) {
     try {
@@ -321,20 +218,18 @@ export async function fetchGuestbookNotes() {
   // Fallback to local storage / default mock data
   await new Promise((resolve) => setTimeout(resolve, 300));
   let notes = DEFAULT_GUESTBOOK_NOTES;
-  try {
-    const saved = localStorage.getItem(GUESTBOOK_STORAGE_KEY);
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        notes = parsed.filter(
-          (n) =>
-            !n.comment?.toLowerCase().includes("sdfsdfs") &&
-            !n.comment?.toLowerCase().includes("test"),
-        );
+  if (typeof window !== "undefined") {
+    try {
+      const saved = localStorage.getItem(GUESTBOOK_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          notes = parsed;
+        }
       }
+    } catch (err) {
+      console.warn("Error loading saved guestbook notes:", err);
     }
-  } catch (err) {
-    console.warn("Error loading saved guestbook notes:", err);
   }
 
   const myNoteIds = getMyNoteIds();
@@ -344,6 +239,7 @@ export async function fetchGuestbookNotes() {
   }));
 }
 
+// CREATE (Insert a New Review)
 export async function saveGuestbookNote(noteData) {
   const formattedDate = new Date().toLocaleDateString("en-US", {
     month: "short",
@@ -378,7 +274,10 @@ export async function saveGuestbookNote(noteData) {
         };
       }
     } catch (err) {
-      console.warn("Supabase insert failed, using local storage fallback:", err);
+      console.warn(
+        "Supabase insert failed, using local storage fallback:",
+        err,
+      );
     }
   }
 
@@ -402,7 +301,9 @@ export async function saveGuestbookNote(noteData) {
   try {
     const current = await fetchGuestbookNotes();
     const updated = [newNote, ...current];
-    localStorage.setItem(GUESTBOOK_STORAGE_KEY, JSON.stringify(updated));
+    if (typeof window !== "undefined") {
+      localStorage.setItem(GUESTBOOK_STORAGE_KEY, JSON.stringify(updated));
+    }
     return { success: true, note: newNote, notes: updated };
   } catch (err) {
     console.error("Error saving guestbook note:", err);
@@ -410,7 +311,12 @@ export async function saveGuestbookNote(noteData) {
   }
 }
 
-export async function toggleLikeGuestbookNote(noteId, currentLikes, isCurrentlyLiked) {
+// UPDATE (Upvote / Like a Note)
+export async function toggleLikeGuestbookNote(
+  noteId,
+  currentLikes,
+  isCurrentlyLiked,
+) {
   const newLikes = (currentLikes || 0) + (isCurrentlyLiked ? -1 : 1);
 
   if (isSupabaseConfigured && supabase) {
@@ -436,7 +342,9 @@ export async function toggleLikeGuestbookNote(noteId, currentLikes, isCurrentlyL
           }
         : note,
     );
-    localStorage.setItem(GUESTBOOK_STORAGE_KEY, JSON.stringify(updated));
+    if (typeof window !== "undefined") {
+      localStorage.setItem(GUESTBOOK_STORAGE_KEY, JSON.stringify(updated));
+    }
     return updated;
   } catch (err) {
     console.error("Error toggling like:", err);

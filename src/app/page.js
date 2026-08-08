@@ -1,27 +1,30 @@
+"use client";
+
 /**
- * Home.jsx - Homepage Component
- * Features the main Hero section, Kingdom Pillars navigation cards,
+ * src/app/page.jsx - Next.js App Router Homepage
+ * Features the Luxury Hero section, Kingdom Pillars navigation cards,
  * auto-rotating preview gallery, and Quick Fact statistics.
  */
 
 import { useState, useEffect } from "react";
-import { ArrowRight, Compass, MapPin, ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, ChevronRight } from "lucide-react";
 
-// Image imports
-import heroAngkor from "../assets/hero_angkor.png";
-import bayonBuddhaClose from "../assets/bayon_buddha_close.jpg";
-import darkSkulls from "../assets/dark_skulls.jpg";
-import yeakLaom from "../assets/yeak_laom.png";
+// Image asset paths (public)
+const heroAngkor = "/assets/hero_angkor.png";
+const bayonBuddhaClose = "/assets/bayon_buddha_close.jpg";
+const darkSkulls = "/assets/dark_skulls.jpg";
+const yeakLaom = "/assets/yeak_laom.png";
 
 // Custom gallery preview images
-import galleryAngkor from "../assets/gallery_angkor.jpg";
-import galleryMuseum from "../assets/gallery_museum.jpg";
-import gallerySkyline from "../assets/gallery_skyline.jpg";
-import galleryPubstreet from "../assets/gallery_pubstreet.jpg";
-import galleryMountain from "../assets/gallery_mountain.jpg";
-import galleryFood1 from "../assets/gallery_food1.jpg";
-import galleryFood2 from "../assets/gallery_food2.jpg";
-import galleryFood3 from "../assets/gallery_food3.jpg";
+const galleryAngkor = "/assets/gallery_angkor.jpg";
+const galleryMuseum = "/assets/gallery_museum.jpg";
+const gallerySkyline = "/assets/gallery_skyline.jpg";
+const galleryPubstreet = "/assets/gallery_pubstreet.jpg";
+const galleryMountain = "/assets/gallery_mountain.jpg";
+const galleryFood1 = "/assets/gallery_food1.jpg";
+const galleryFood2 = "/assets/gallery_food2.jpg";
+const galleryFood3 = "/assets/gallery_food3.jpg";
 
 // Array of images for the auto-rotating gallery preview
 const slideshowImages = [
@@ -44,7 +47,7 @@ const slideshowImages = [
   },
 ];
 
-export const Home = ({ setActiveTab }) => {
+export default function HomePage() {
   const [slideIndex, setSlideIndex] = useState(0);
 
   // Rotate images automatically
@@ -83,29 +86,26 @@ export const Home = ({ setActiveTab }) => {
           </p>
 
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button
-              type="button"
-              onClick={() => setActiveTab("destinations")}
+            <Link
+              href="/destinations"
               className="bg-brand-gold hover:bg-brand-gold-light text-brand-dark px-10 py-4 text-sm sm:text-base font-bold tracking-[0.2em] uppercase rounded-full shadow-lg shadow-brand-gold/20 hover:shadow-brand-gold/40 hover:scale-[1.03] transition-all duration-300 cursor-pointer flex items-center space-x-2.5 focus-visible:ring-2 focus-visible:ring-brand-gold"
             >
               <span>EXPLORE DESTINATIONS</span>
               <ArrowRight size={18} />
-            </button>
+            </Link>
 
-            <button
-              type="button"
-              onClick={() => setActiveTab("plan-trip")}
+            <Link
+              href="/plan-trip"
               className="bg-amber-950/80 hover:bg-amber-900 text-amber-200 border border-amber-500/40 hover:border-amber-400 backdrop-blur-md px-9 py-4 text-sm sm:text-base font-bold tracking-[0.2em] uppercase rounded-full hover:scale-[1.03] shadow-lg shadow-black/50 transition-all duration-300 cursor-pointer focus-visible:ring-2 focus-visible:ring-brand-gold"
             >
               PLAN YOUR JOURNEY
-            </button>
+            </Link>
           </div>
         </div>
       </section>
 
       {/* 2. Experience Cambodia Introduction */}
       <section className="bg-brand-forest text-brand-cream-dark py-24 md:py-28 border-y border-brand-gold/20 relative overflow-hidden">
-        {/* Subtle decorative gold background glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-brand-gold/10 blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
@@ -192,9 +192,9 @@ export const Home = ({ setActiveTab }) => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Card 1: Cultural */}
-          <div
-            className="relative overflow-hidden rounded-2xl aspect-[4/5] group cursor-pointer border border-brand-gold/25 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500"
-            onClick={() => setActiveTab("destinations", "cultural-tourism")}
+          <Link
+            href="/destinations?category=cultural-tourism"
+            className="relative overflow-hidden rounded-2xl aspect-[4/5] group cursor-pointer border border-brand-gold/25 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 block"
           >
             <span className="absolute top-5 left-5 bg-brand-gold text-brand-dark backdrop-blur-md px-4 py-1.5 text-xs font-bold tracking-[0.2em] uppercase z-10 rounded-full border-none outline-none ring-0">
               Heritage
@@ -218,12 +218,12 @@ export const Home = ({ setActiveTab }) => {
                 <ChevronRight size={16} className="ml-1" />
               </div>
             </div>
-          </div>
+          </Link>
 
           {/* Card 2: Dark */}
-          <div
-            className="relative overflow-hidden rounded-2xl aspect-[4/5] group cursor-pointer border border-brand-gold/25 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500"
-            onClick={() => setActiveTab("destinations", "dark-tourism")}
+          <Link
+            href="/destinations?category=dark-tourism"
+            className="relative overflow-hidden rounded-2xl aspect-[4/5] group cursor-pointer border border-brand-gold/25 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 block"
           >
             <span className="absolute top-5 left-5 bg-[#8B1E1E] text-white backdrop-blur-md px-4 py-1.5 text-xs font-bold tracking-[0.2em] uppercase z-10 rounded-full border-none outline-none ring-0">
               Reflection
@@ -247,12 +247,12 @@ export const Home = ({ setActiveTab }) => {
                 <ChevronRight size={16} className="ml-1" />
               </div>
             </div>
-          </div>
+          </Link>
 
           {/* Card 3: Eco */}
-          <div
-            className="relative overflow-hidden rounded-2xl aspect-[4/5] group cursor-pointer border border-brand-gold/25 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500"
-            onClick={() => setActiveTab("destinations", "eco-tourism")}
+          <Link
+            href="/destinations?category=eco-tourism"
+            className="relative overflow-hidden rounded-2xl aspect-[4/5] group cursor-pointer border border-brand-gold/25 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 block"
           >
             <span className="absolute top-5 left-5 bg-brand-forest text-white backdrop-blur-md px-4 py-1.5 text-xs font-bold tracking-[0.2em] uppercase z-10 rounded-full border-none outline-none ring-0">
               Sanctuary
@@ -276,7 +276,7 @@ export const Home = ({ setActiveTab }) => {
                 <ChevronRight size={16} className="ml-1" />
               </div>
             </div>
-          </div>
+          </Link>
         </div>
       </section>
 
@@ -299,7 +299,6 @@ export const Home = ({ setActiveTab }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Main Slideshow Frame: Cambodian Destinations */}
           <div className="lg:col-span-6 relative rounded-2xl overflow-hidden aspect-[4/3] border border-brand-gold/25 shadow-xl group">
-            {/* Destination Place Badge (Left Top) */}
             <span className="absolute top-4 left-4 bg-brand-gold text-brand-dark backdrop-blur-md px-3.5 py-1 text-xs font-bold tracking-[0.15em] uppercase rounded-full shadow border border-brand-gold z-10 flex items-center space-x-1">
               <span>CAMBODIAN DESTINATION</span>
             </span>
@@ -321,13 +320,12 @@ export const Home = ({ setActiveTab }) => {
                   {slideshowImages[slideIndex].label}
                 </h3>
               </div>
-              <button
-                type="button"
-                onClick={() => setActiveTab("gallery")}
+              <Link
+                href="/gallery"
                 className="bg-brand-gold/90 hover:bg-brand-gold text-brand-dark px-4 py-2 text-xs font-bold tracking-widest uppercase rounded-full shadow transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-brand-gold"
               >
                 View Gallery
-              </button>
+              </Link>
             </div>
 
             {/* Slide indicators */}
@@ -350,7 +348,6 @@ export const Home = ({ setActiveTab }) => {
 
           {/* Right Preview Grid: Cambodian Food */}
           <div className="lg:col-span-6 space-y-4">
-            {/* Header label for Cambodian Food section */}
             <div className="flex items-center justify-between pb-2 border-b border-brand-gold/25">
               <span className="text-brand-gold-dark text-xs sm:text-sm font-bold tracking-[0.2em] uppercase flex items-center space-x-1.5">
                 <span>CAMBODIAN FOOD & CUISINE</span>
@@ -361,9 +358,9 @@ export const Home = ({ setActiveTab }) => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div
-                className="rounded-xl overflow-hidden h-44 border border-brand-gold/20 shadow-sm group cursor-pointer relative"
-                onClick={() => setActiveTab("gallery")}
+              <Link
+                href="/gallery"
+                className="rounded-xl overflow-hidden h-44 border border-brand-gold/20 shadow-sm group cursor-pointer relative block"
               >
                 <img
                   src={galleryFood1}
@@ -375,11 +372,11 @@ export const Home = ({ setActiveTab }) => {
                 <span className="absolute bottom-3 left-3 text-white text-xs font-bold tracking-widest uppercase bg-brand-dark/80 backdrop-blur-xs px-3 py-1 rounded border border-brand-gold/30">
                   Khmer Gastronomy
                 </span>
-              </div>
+              </Link>
 
-              <div
-                className="rounded-xl overflow-hidden h-44 border border-brand-gold/20 shadow-sm group cursor-pointer relative"
-                onClick={() => setActiveTab("gallery")}
+              <Link
+                href="/gallery"
+                className="rounded-xl overflow-hidden h-44 border border-brand-gold/20 shadow-sm group cursor-pointer relative block"
               >
                 <img
                   src={galleryFood2}
@@ -391,11 +388,11 @@ export const Home = ({ setActiveTab }) => {
                 <span className="absolute bottom-3 left-3 text-white text-xs font-bold tracking-widest uppercase bg-brand-dark/80 backdrop-blur-xs px-3 py-1 rounded border border-brand-gold/30">
                   Traditional Amok
                 </span>
-              </div>
+              </Link>
 
-              <div
-                className="sm:col-span-2 rounded-xl overflow-hidden h-44 border border-brand-gold/20 shadow-sm group cursor-pointer relative"
-                onClick={() => setActiveTab("gallery")}
+              <Link
+                href="/gallery"
+                className="sm:col-span-2 rounded-xl overflow-hidden h-44 border border-brand-gold/20 shadow-sm group cursor-pointer relative block"
               >
                 <img
                   src={galleryFood3}
@@ -407,7 +404,7 @@ export const Home = ({ setActiveTab }) => {
                 <span className="absolute bottom-3 left-3 text-white text-xs font-bold tracking-widest uppercase bg-brand-dark/80 backdrop-blur-xs px-3 py-1 rounded border border-brand-gold/30">
                   Night Market Delicacies
                 </span>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
@@ -435,4 +432,4 @@ export const Home = ({ setActiveTab }) => {
       </section>
     </div>
   );
-};
+}

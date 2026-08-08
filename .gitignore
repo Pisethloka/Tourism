@@ -1,27 +1,32 @@
-# Logs
-logs
-*.log
+# Next.js build output
+.next/
+out/
+build/
+dist/
+
+# Node dependencies
+node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Environment files
 .env
-.env.*
-!.env.example
+.env*.local
+.env.production
+.env.development
 
-# Editor directories and files
+# Vercel
+.vercel
+
+# Editor & OS
+.DS_Store
+*.pem
 .vscode/*
 !.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+.idea/
+
+# Agent temp files
+AGENTS.md
+CLAUDE.md

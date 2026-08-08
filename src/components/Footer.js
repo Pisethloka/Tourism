@@ -1,15 +1,13 @@
+"use client";
+
 /**
- * Footer.jsx - Application Footer Component
+ * Footer.jsx - Application Footer Component (Next.js App Router)
  * Displays tourism links, kingdom highlights, travel advisories, and copyright information.
  */
 
-import logoImg from "../assets/logo_gold.png";
+import Link from "next/link";
 
-export const Footer = ({ setActiveTab }) => {
-  const handleLinkClick = (tab, sectionId = null) => {
-    setActiveTab(tab, sectionId);
-  };
-
+export const Footer = () => {
   return (
     <footer className="bg-brand-dark border-t border-brand-gold/15 text-brand-cream-dark/80 pt-16 pb-8 px-6 md:px-12 relative overflow-hidden">
       {/* Subtle gold background glow */}
@@ -19,16 +17,16 @@ export const Footer = ({ setActiveTab }) => {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12 relative z-10">
         {/* Brand Column */}
         <div className="md:col-span-2 space-y-4">
-          <div className="flex items-center space-x-3">
+          <Link href="/" className="flex items-center space-x-3 group w-fit">
             <img
-              src={logoImg}
-              className="h-10 w-10 object-contain"
+              src="/assets/logo_gold.png"
+              className="h-10 w-10 object-contain transition-transform duration-300 group-hover:scale-105"
               alt="Angkor Lux Logo"
             />
-            <h3 className="font-serif text-2xl font-bold tracking-widest text-brand-gold uppercase whitespace-nowrap">
+            <h3 className="font-serif text-2xl font-bold tracking-widest text-brand-gold uppercase whitespace-nowrap group-hover:text-brand-gold-light transition-colors">
               ANGKOR LUX
             </h3>
-          </div>
+          </Link>
           <p className="text-sm md:text-base font-normal leading-relaxed text-brand-cream-dark/90 max-w-sm">
             Curating the most exclusive journeys through the Kingdom of Wonder.
             Authentic, sustainable, and undeniably majestic.
@@ -42,33 +40,28 @@ export const Footer = ({ setActiveTab }) => {
           </h4>
           <ul className="space-y-2.5 text-xs sm:text-sm font-normal text-brand-cream-dark/90 uppercase tracking-wider">
             <li>
-              <button
-                type="button"
-                onClick={() =>
-                  handleLinkClick("destinations", "cultural-tourism")
-                }
-                className="hover:text-brand-gold transition-colors text-left focus-visible:ring-1 focus-visible:ring-brand-gold rounded"
+              <Link
+                href="/destinations?category=cultural-tourism"
+                className="hover:text-brand-gold transition-colors text-left focus-visible:ring-1 focus-visible:ring-brand-gold rounded inline-block"
               >
                 Cultural Tourism
-              </button>
+              </Link>
             </li>
             <li>
-              <button
-                type="button"
-                onClick={() => handleLinkClick("destinations", "dark-tourism")}
-                className="hover:text-brand-gold transition-colors text-left focus-visible:ring-1 focus-visible:ring-brand-gold rounded"
+              <Link
+                href="/destinations?category=dark-tourism"
+                className="hover:text-brand-gold transition-colors text-left focus-visible:ring-1 focus-visible:ring-brand-gold rounded inline-block"
               >
                 Dark Tourism
-              </button>
+              </Link>
             </li>
             <li>
-              <button
-                type="button"
-                onClick={() => handleLinkClick("destinations", "eco-tourism")}
-                className="hover:text-brand-gold transition-colors text-left focus-visible:ring-1 focus-visible:ring-brand-gold rounded"
+              <Link
+                href="/destinations?category=eco-tourism"
+                className="hover:text-brand-gold transition-colors text-left focus-visible:ring-1 focus-visible:ring-brand-gold rounded inline-block"
               >
                 Eco Tourism
-              </button>
+              </Link>
             </li>
           </ul>
         </div>
@@ -80,58 +73,52 @@ export const Footer = ({ setActiveTab }) => {
           </h4>
           <ul className="space-y-2.5 text-xs sm:text-sm font-normal text-brand-cream-dark/90 uppercase tracking-wider">
             <li>
-              <button
-                type="button"
-                onClick={() => handleLinkClick("home")}
-                className="hover:text-brand-gold transition-colors text-left focus-visible:ring-1 focus-visible:ring-brand-gold rounded"
+              <Link
+                href="/"
+                className="hover:text-brand-gold transition-colors text-left focus-visible:ring-1 focus-visible:ring-brand-gold rounded inline-block"
               >
                 Home
-              </button>
+              </Link>
             </li>
             <li>
-              <button
-                type="button"
-                onClick={() => handleLinkClick("destinations")}
-                className="hover:text-brand-gold transition-colors text-left focus-visible:ring-1 focus-visible:ring-brand-gold rounded"
+              <Link
+                href="/destinations"
+                className="hover:text-brand-gold transition-colors text-left focus-visible:ring-1 focus-visible:ring-brand-gold rounded inline-block"
               >
                 Destinations
-              </button>
+              </Link>
             </li>
             <li>
-              <button
-                type="button"
-                onClick={() => handleLinkClick("gallery")}
-                className="hover:text-brand-gold transition-colors text-left focus-visible:ring-1 focus-visible:ring-brand-gold rounded"
+              <Link
+                href="/gallery"
+                className="hover:text-brand-gold transition-colors text-left focus-visible:ring-1 focus-visible:ring-brand-gold rounded inline-block"
               >
                 Gallery
-              </button>
+              </Link>
             </li>
             <li>
-              <button
-                type="button"
-                onClick={() => handleLinkClick("guestbook")}
-                className="hover:text-brand-gold transition-colors text-left focus-visible:ring-1 focus-visible:ring-brand-gold rounded"
+              <Link
+                href="/guestbook"
+                className="hover:text-brand-gold transition-colors text-left focus-visible:ring-1 focus-visible:ring-brand-gold rounded inline-block"
               >
                 Guestbook
-              </button>
+              </Link>
             </li>
             <li>
-              <button
-                type="button"
-                onClick={() => handleLinkClick("map")}
-                className="hover:text-brand-gold transition-colors text-left focus-visible:ring-1 focus-visible:ring-brand-gold rounded"
+              <Link
+                href="/map"
+                className="hover:text-brand-gold transition-colors text-left focus-visible:ring-1 focus-visible:ring-brand-gold rounded inline-block"
               >
                 Map
-              </button>
+              </Link>
             </li>
             <li>
-              <button
-                type="button"
-                onClick={() => handleLinkClick("plan-trip")}
-                className="hover:text-brand-gold transition-colors text-left focus-visible:ring-1 focus-visible:ring-brand-gold rounded"
+              <Link
+                href="/plan-trip"
+                className="hover:text-brand-gold transition-colors text-left focus-visible:ring-1 focus-visible:ring-brand-gold rounded inline-block"
               >
                 Plan Trip
-              </button>
+              </Link>
             </li>
           </ul>
         </div>

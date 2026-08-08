@@ -1,5 +1,7 @@
+"use client";
+
 /**
- * PlanTrip.jsx - Expedition Calculator & Itinerary Estimator Component
+ * src/app/plan-trip/page.jsx - Next.js App Router Expedition Calculator & Itinerary Estimator
  * Allows travelers to customize trip duration, guest count, accommodation tier,
  * local transfer modes, and private excursions with an instant PNG itinerary download.
  */
@@ -16,18 +18,18 @@ import {
   Download,
 } from "lucide-react";
 
-// Import local image assets (Real Photographs)
-import galleryAngkor from "../assets/gallery_angkor.jpg";
-import galleryMuseum from "../assets/gallery_museum.jpg";
-import gallerySkyline from "../assets/gallery_skyline.jpg";
-import kohRongSanloemPhoto from "../assets/koh_rong_sanloem_photo.jpg";
-import ecoIslandLagoon from "../assets/eco_island_lagoon.jpg";
-import ecoRainforestCanopy from "../assets/eco_rainforest_canopy.jpg";
-import cardamomMountainsPhoto from "../assets/cardamom_mountains_photo.jpg";
-import tukTukReal from "../assets/tuk_tuk_real.jpg";
-import foodKhmerPlatter from "../assets/food_khmer_platter.jpg";
+// Public image asset paths
+const galleryAngkor = "/assets/gallery_angkor.jpg";
+const galleryMuseum = "/assets/gallery_museum.jpg";
+const gallerySkyline = "/assets/gallery_skyline.jpg";
+const kohRongSanloemPhoto = "/assets/koh_rong_sanloem_photo.jpg";
+const ecoIslandLagoon = "/assets/eco_island_lagoon.jpg";
+const ecoRainforestCanopy = "/assets/eco_rainforest_canopy.jpg";
+const cardamomMountainsPhoto = "/assets/cardamom_mountains_photo.jpg";
+const tukTukReal = "/assets/tuk_tuk_real.jpg";
+const foodKhmerPlatter = "/assets/food_khmer_platter.jpg";
 
-// 2. Accurate Pricing Database (Real 2026 Rates in USD $)
+// Pricing Database
 const tierPricing = {
   boutique: { label: "Boutique Hotel ($85/night)", rate: 85 },
   luxury: { label: "Luxury Resort ($280/night)", rate: 280 },
@@ -76,8 +78,7 @@ const activityOptions = [
   },
 ];
 
-export const PlanTrip = () => {
-  // 1. Calculator Input States
+export default function PlanTripPage() {
   const [days, setDays] = useState(7);
   const [travelers, setTravelers] = useState(2);
   const [tier, setTier] = useState("luxury");
@@ -87,13 +88,9 @@ export const PlanTrip = () => {
     "mekong-cruise",
   ]);
 
-  // Mobile layout state to toggle quick drawer for statement preview
   const [showMobileDrawer, setShowMobileDrawer] = useState(false);
-
-  // Controls whether the cost estimate breakdown is visible
   const [showEstimate, setShowEstimate] = useState(false);
 
-  // 3. Dynamic Calculation logic
   const breakdown = useMemo(() => {
     const accommodationCost = days * tierPricing[tier].rate;
     const transportCost = days * transportPricing[transport].rate;
@@ -120,7 +117,6 @@ export const PlanTrip = () => {
     };
   }, [days, travelers, tier, transport, selectedActivities]);
 
-  // Toggle activity selection
   const handleActivityToggle = useCallback(
     (id) => {
       if (selectedActivities.includes(id)) {
@@ -134,24 +130,21 @@ export const PlanTrip = () => {
     [selectedActivities],
   );
 
-  // PNG Image Export Handler
   const handleSaveAsPng = useCallback(() => {
     const canvas = document.createElement("canvas");
     const width = 600;
     const activitiesCount = breakdown.selectedActivityDetails.length;
     const height = 530 + activitiesCount * 26;
-    const scale = 2; // High resolution retina scale
+    const scale = 2;
 
     canvas.width = width * scale;
     canvas.height = height * scale;
     const ctx = canvas.getContext("2d");
     ctx.scale(scale, scale);
 
-    // Canvas background
     ctx.fillStyle = "#FAF8F5";
     ctx.fillRect(0, 0, width, height);
 
-    // Outer and Inner Gold Borders
     ctx.strokeStyle = "rgba(197, 158, 63, 0.4)";
     ctx.lineWidth = 2;
     ctx.strokeRect(16, 16, width - 32, height - 32);
@@ -160,7 +153,6 @@ export const PlanTrip = () => {
     ctx.lineWidth = 1;
     ctx.strokeRect(22, 22, width - 44, height - 44);
 
-    // Header Title
     ctx.fillStyle = "#c59e3f";
     ctx.font = "bold 12px sans-serif";
     ctx.textAlign = "center";
@@ -184,7 +176,6 @@ export const PlanTrip = () => {
     ctx.lineTo(width - 60, 128);
     ctx.stroke();
 
-    // Total Cost Box
     const boxY = 145;
     ctx.fillStyle = "rgba(197, 158, 63, 0.12)";
     ctx.fillRect(50, boxY, width - 100, 75);
@@ -203,7 +194,6 @@ export const PlanTrip = () => {
       boxY + 58,
     );
 
-    // Selected Options
     let currentY = 260;
     ctx.textAlign = "left";
     ctx.fillStyle = "#120e0a";
@@ -218,7 +208,6 @@ export const PlanTrip = () => {
 
     currentY += 32;
 
-    // Lodging
     ctx.font = "600 13px sans-serif";
     ctx.fillStyle = "#120e0a";
     ctx.fillText(`Lodging (${days} nights)`, 50, currentY);
@@ -238,7 +227,6 @@ export const PlanTrip = () => {
 
     currentY += 28;
 
-    // Transfers
     ctx.font = "600 13px sans-serif";
     ctx.fillStyle = "#120e0a";
     ctx.fillText(`Transfers (${days} days)`, 50, currentY);
@@ -258,7 +246,6 @@ export const PlanTrip = () => {
 
     currentY += 28;
 
-    // Excursions
     ctx.font = "600 13px sans-serif";
     ctx.fillStyle = "#120e0a";
     ctx.fillText(`Selected Excursions (${activitiesCount})`, 50, currentY);
@@ -294,7 +281,6 @@ export const PlanTrip = () => {
       currentY += 24;
     }
 
-    // Watermark Footer
     currentY += 20;
     ctx.strokeStyle = "rgba(197, 158, 63, 0.25)";
     ctx.beginPath();
@@ -312,7 +298,6 @@ export const PlanTrip = () => {
       currentY,
     );
 
-    // Trigger PNG Download
     const link = document.createElement("a");
     link.download = `Cambodia_Trip_Estimate_${days}Days.png`;
     link.href = canvas.toDataURL("image/png");
@@ -321,17 +306,14 @@ export const PlanTrip = () => {
     document.body.removeChild(link);
   }, [breakdown, days, travelers, tier, transport]);
 
-  // Main Calculation Summary Renderer
   const renderStatementContent = () => (
     <div
       id="estimate-panel"
       className="bg-[#FAF8F5] border-2 border-brand-gold/40 p-6 md:p-8 rounded-3xl shadow-2xl flex flex-col justify-between relative overflow-hidden space-y-4"
     >
-      {/* Decorative ambient background glow */}
       <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-brand-gold/10 blur-2xl pointer-events-none" />
 
       <div className="space-y-4 relative z-10">
-        {/* Header */}
         <div className="text-center space-y-1 pb-3 border-b border-brand-gold/20">
           <span className="text-brand-gold text-xs font-bold tracking-[0.25em] uppercase block">
             ESTIMATED TRIP COST
@@ -344,7 +326,6 @@ export const PlanTrip = () => {
           </span>
         </div>
 
-        {/* Total Cost Highlight Box */}
         <div className="bg-brand-gold/10 border border-brand-gold/30 rounded-2xl p-4 text-center space-y-1">
           <span className="text-xs text-brand-dark/70 uppercase font-bold tracking-widest block">
             Total Estimated Cost
@@ -357,13 +338,11 @@ export const PlanTrip = () => {
           </span>
         </div>
 
-        {/* Selected Options List */}
         <div className="space-y-3 pt-1">
           <span className="text-xs font-bold uppercase tracking-wider text-brand-dark/80 block border-b border-brand-gold/15 pb-1.5">
             Your Selected Options
           </span>
 
-          {/* 1. Lodging Choice */}
           <div className="space-y-0.5">
             <div className="flex justify-between items-baseline text-xs sm:text-sm">
               <span className="font-semibold text-brand-dark">
@@ -378,7 +357,6 @@ export const PlanTrip = () => {
             </span>
           </div>
 
-          {/* 2. Transportation Choice */}
           <div className="space-y-0.5 pt-1.5 border-t border-brand-gold/10">
             <div className="flex justify-between items-baseline text-xs sm:text-sm">
               <span className="font-semibold text-brand-dark">
@@ -393,7 +371,6 @@ export const PlanTrip = () => {
             </span>
           </div>
 
-          {/* 3. Selected Excursions */}
           <div className="space-y-1.5 pt-1.5 border-t border-brand-gold/10">
             <div className="flex justify-between items-baseline text-xs sm:text-sm">
               <span className="font-semibold text-brand-dark">
@@ -429,7 +406,6 @@ export const PlanTrip = () => {
         </div>
       </div>
 
-      {/* Actions */}
       <div className="pt-3 border-t border-brand-gold/20 space-y-2 relative z-10">
         <button
           type="button"
@@ -445,12 +421,10 @@ export const PlanTrip = () => {
 
   return (
     <div className="pb-28 bg-brand-cream font-sans text-brand-dark min-h-screen relative">
-      {/* Editorial Main Container Layout */}
       <main className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 pt-28 pb-12">
         <div className="space-y-10 animate-fade-in">
           {/* Template Intro Section */}
           <section className="bg-[#FAF8F5] border border-brand-gold/40 rounded-3xl p-8 sm:p-10 md:p-12 relative overflow-hidden shadow-md hover:shadow-lg transition-shadow text-left">
-            {/* Right Side Faded Angkor Background Image */}
             <div className="absolute top-0 right-0 bottom-0 w-1/2 pointer-events-none hidden md:block overflow-hidden">
               <img
                 src={galleryAngkor}
@@ -461,7 +435,6 @@ export const PlanTrip = () => {
             </div>
 
             <div className="max-w-[560px] space-y-3.5 relative z-10">
-              {/* Temple Crest Icon & Line */}
               <div className="flex items-center space-x-3 mb-1">
                 <svg
                   width="36"
@@ -489,7 +462,6 @@ export const PlanTrip = () => {
                 <div className="w-12 h-[1px] bg-brand-gold/50" />
               </div>
 
-              {/* Title: PLAN in gold, YOUR JOURNEY in dark */}
               <div className="space-y-2">
                 <h1 className="font-cormorant text-4xl sm:text-5xl font-normal tracking-[0.15em] uppercase leading-tight">
                   <span className="text-brand-gold-dark font-semibold">
@@ -500,7 +472,6 @@ export const PlanTrip = () => {
                 <div className="w-16 h-[2px] bg-brand-gold/60" />
               </div>
 
-              {/* Description */}
               <p className="font-sans text-sm sm:text-base text-brand-dark/80 leading-relaxed max-w-lg font-light">
                 Choose your destination, accommodation, transportation, and
                 activities to receive an estimated trip cost.
@@ -510,7 +481,6 @@ export const PlanTrip = () => {
 
           {/* SECTION 1: Pacing & Companions */}
           <section className="bg-[#FAF8F5] border border-brand-gold/35 p-6 md:p-10 rounded-3xl shadow-md space-y-6">
-            {/* Section Header */}
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 rounded-full bg-brand-dark flex items-center justify-center text-white text-xs font-bold font-mono shadow-xs">
                 1
@@ -520,7 +490,6 @@ export const PlanTrip = () => {
               </h3>
             </div>
 
-            {/* Divider line with centered gold diamond */}
             <div className="relative my-4">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-brand-gold/35" />
@@ -532,9 +501,7 @@ export const PlanTrip = () => {
               </div>
             </div>
 
-            {/* Inner Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Duration Counter */}
               <div className="space-y-4 p-6 sm:p-8 bg-[#FAF8F5]/90 rounded-2xl border border-brand-gold/30 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
                 <label className="font-cormorant text-xl font-normal tracking-wide text-brand-dark uppercase block text-center">
                   Duration of Your Journey
@@ -575,7 +542,6 @@ export const PlanTrip = () => {
                 </p>
               </div>
 
-              {/* Travelers Counter */}
               <div className="space-y-4 p-6 sm:p-8 bg-[#FAF8F5]/90 rounded-2xl border border-brand-gold/30 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
                 <label className="font-cormorant text-xl font-normal tracking-wide text-brand-dark uppercase block text-center">
                   Number of Honored Guests
@@ -625,11 +591,10 @@ export const PlanTrip = () => {
                 2
               </div>
               <h3 className="font-cormorant text-2xl md:text-3xl font-normal uppercase tracking-wider text-brand-dark">
-                SANCTUARY LODGING
+                Places to stay
               </h3>
             </div>
 
-            {/* Divider line with centered gold diamond */}
             <div className="relative my-4">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-brand-gold/35" />
@@ -729,7 +694,6 @@ export const PlanTrip = () => {
               </h3>
             </div>
 
-            {/* Divider line with centered gold diamond */}
             <div className="relative my-4">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-brand-gold/35" />
@@ -829,7 +793,6 @@ export const PlanTrip = () => {
               </h3>
             </div>
 
-            {/* Divider line with centered gold diamond */}
             <div className="relative my-4">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-brand-gold/35" />
@@ -872,7 +835,6 @@ export const PlanTrip = () => {
                       <div className="absolute inset-0 bg-brand-gold/15 mix-blend-overlay pointer-events-none" />
                     )}
 
-                    {/* Check badge overlay */}
                     <div className="absolute top-4 right-4 z-20">
                       <div
                         className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all ${
@@ -931,7 +893,7 @@ export const PlanTrip = () => {
             </div>
           </section>
 
-          {/* 2026 Bottom Calculation Action Trigger */}
+          {/* Action Trigger */}
           <div className="pt-8 flex flex-col items-center space-y-3">
             <button
               type="button"
@@ -955,7 +917,7 @@ export const PlanTrip = () => {
             </span>
           </div>
 
-          {/* Calculated Cost Estimate Panel (Revealed smoothly when showEstimate is true) */}
+          {/* Calculated Cost Estimate Panel */}
           {showEstimate && (
             <div className="pt-6 animate-fade-in">
               {renderStatementContent()}
@@ -999,7 +961,7 @@ export const PlanTrip = () => {
         )}
       </div>
 
-      {/* Mobile Drawer (Slide-up modal detailing the estimate breakdown) */}
+      {/* Mobile Drawer */}
       {showMobileDrawer && (
         <div
           className="lg:hidden fixed inset-0 z-50 bg-brand-dark/70 backdrop-blur-sm flex items-end animate-fade-in"
@@ -1009,7 +971,6 @@ export const PlanTrip = () => {
             className="w-full bg-[#FAF8F5] max-h-[88vh] overflow-y-auto p-4 rounded-t-3xl relative animate-fade-in border-t border-brand-gold/30 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close icon drawer */}
             <button
               onClick={() => setShowMobileDrawer(false)}
               className="absolute top-4 right-4 w-9 h-9 rounded-full border border-brand-gold/30 flex items-center justify-center text-brand-dark/60 hover:text-brand-dark transition-colors cursor-pointer bg-white"
@@ -1023,4 +984,4 @@ export const PlanTrip = () => {
       )}
     </div>
   );
-};
+}

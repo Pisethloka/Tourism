@@ -1,10 +1,13 @@
+"use client";
+
 /**
- * Map.jsx - Interactive Kingdom Explorer & Regional Filter Page
+ * src/app/map/page.jsx - Next.js App Router Interactive Kingdom Explorer & Regional Filter Page
  * Features an interactive Cambodian map canvas, custom region dropdown filter,
  * search query filtering, and detailed destination cards with Google Maps links.
  */
 
 import { useState, useMemo, useCallback, useRef, useEffect } from "react";
+import Link from "next/link";
 import {
   Search,
   MapPin,
@@ -14,15 +17,17 @@ import {
   ArrowRight,
   Check,
 } from "lucide-react";
-import heroAngkor from "../assets/hero_angkor.png";
-import bayonTemplePhoto from "../assets/bayon_temple_photo.jpg";
-import kohRongSanloemPhoto from "../assets/koh_rong_sanloem_photo.jpg";
-import preahVihearPhoto from "../assets/preah_vihear_photo.jpg";
-import bokorHillPhoto from "../assets/bokor_hill_photo.jpg";
-import tuolSlengPhoto from "../assets/tuol_sleng_photo.jpg";
-import cardamomMountainsPhoto from "../assets/cardamom_mountains_photo.jpg";
-import tonleSap from "../assets/tonle_sap.png";
-import phnomPenhPalace from "../assets/phnom_penh_palace.png";
+
+// Image asset paths (public)
+const heroAngkor = "/assets/hero_angkor.png";
+const bayonTemplePhoto = "/assets/bayon_temple_photo.jpg";
+const kohRongSanloemPhoto = "/assets/koh_rong_sanloem_photo.jpg";
+const preahVihearPhoto = "/assets/preah_vihear_photo.jpg";
+const bokorHillPhoto = "/assets/bokor_hill_photo.jpg";
+const tuolSlengPhoto = "/assets/tuol_sleng_photo.jpg";
+const cardamomMountainsPhoto = "/assets/cardamom_mountains_photo.jpg";
+const tonleSap = "/assets/tonle_sap.png";
+const phnomPenhPalace = "/assets/phnom_penh_palace.png";
 
 const SITES = [
   {
@@ -163,7 +168,6 @@ const CustomRegionDropdown = ({ value, onChange }) => {
 
   return (
     <div className="relative z-40" ref={dropdownRef}>
-      {/* Trigger Button */}
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
@@ -188,7 +192,6 @@ const CustomRegionDropdown = ({ value, onChange }) => {
         />
       </button>
 
-      {/* Custom Popup Options Menu */}
       {isOpen && (
         <div className="absolute top-full left-0 right-0 mt-1.5 bg-white border border-brand-gold/30 rounded-xl shadow-2xl p-1.5 space-y-0.5 z-50 animate-fade-in max-h-60 overflow-y-auto">
           {REGION_OPTIONS.map((region) => {
@@ -227,8 +230,7 @@ const CustomRegionDropdown = ({ value, onChange }) => {
   );
 };
 
-export const Map = ({ setActiveTab }) => {
-  // Filters State
+export default function MapPage() {
   const [tourismFilters, setTourismFilters] = useState({
     cultural: true,
     eco: true,
@@ -240,10 +242,7 @@ export const Map = ({ setActiveTab }) => {
   const [sortBy, setSortBy] = useState("Recommended");
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Active Map Node details overlay
-  const [activeMapSite, setActiveMapSite] = useState(SITES[3]); // Default to Bayon Temple
-
-  // Map markers search state
+  const [activeMapSite, setActiveMapSite] = useState(SITES[3]);
   const [mapSearchQuery, setMapSearchQuery] = useState("");
 
   const filteredMapSites = useMemo(
@@ -258,32 +257,28 @@ export const Map = ({ setActiveTab }) => {
 
   const handleFilterToggle = useCallback(
     (key) => {
-      setTourismFilters({
-        ...tourismFilters,
-        [key]: !tourismFilters[key],
-      });
+      setTourismFilters((prev) => ({
+        ...prev,
+        [key]: !prev[key],
+      }));
     },
-    [tourismFilters],
+    [],
   );
 
-  // Card filter & sort logic
   const filteredCards = useMemo(() => {
     return SITES.filter((site) => {
-      // Search query check
       if (
         searchQuery &&
         !site.name.toLowerCase().includes(searchQuery.toLowerCase())
       ) {
         return false;
       }
-      // Category check
       if (site.category === "CULTURAL" && !tourismFilters.cultural)
         return false;
       if (site.category === "ECO" && !tourismFilters.eco) return false;
       if (site.category === "DARK" && !tourismFilters.dark) return false;
       if (site.category === "BOUTIQUE" && !tourismFilters.boutique)
         return false;
-      // Region check
       if (selectedRegion !== "All Regions" && site.region !== selectedRegion)
         return false;
 
@@ -295,7 +290,6 @@ export const Map = ({ setActiveTab }) => {
       if (sortBy === "Recent") {
         return b.id.localeCompare(a.id);
       }
-      // 'Recommended' retains default array order
       return 0;
     });
   }, [searchQuery, tourismFilters, selectedRegion, sortBy]);
@@ -332,8 +326,7 @@ export const Map = ({ setActiveTab }) => {
 
       {/* 3. Main Filter & Listings Grid Section */}
       <section className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-4 gap-10 items-start mb-24">
-        {" "}
-        {/* Left Filter Sidebar (Warm Ivory Container) */}
+        {/* Left Filter Sidebar */}
         <div className="bg-white/90 border border-brand-gold/25 p-7 sm:p-8 space-y-8 rounded-2xl shadow-sm relative backdrop-blur-md z-20">
           <div className="flex items-center space-x-2.5 text-brand-gold-dark font-bold text-xs sm:text-sm uppercase tracking-[0.25em] pb-4 border-b border-brand-gold/15 relative z-10">
             <SlidersHorizontal
@@ -452,7 +445,8 @@ export const Map = ({ setActiveTab }) => {
             </div>
           </div>
         </div>
-        {/* Right Cards Grid (Warm Ivory Cards) */}
+
+        {/* Right Cards Grid */}
         <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-6">
           {visibleCards.length > 0 ? (
             visibleCards.map((card) => (
@@ -514,7 +508,7 @@ export const Map = ({ setActiveTab }) => {
             </div>
           )}
         </div>
-        {/* Toggle Show More Button - Centered across entire section width */}
+
         {filteredCards.length > 6 && (
           <div className="col-span-1 lg:col-span-4 flex justify-center pt-8">
             <button
@@ -556,7 +550,6 @@ export const Map = ({ setActiveTab }) => {
         <div className="bg-[#18130D] rounded-2xl border border-brand-gold/40 overflow-hidden shadow-2xl relative min-h-[580px] flex flex-col lg:flex-row backdrop-blur-xl">
           {/* Map Left Overlay Info Pane */}
           <div className="lg:w-[30%] p-6 md:p-8 bg-[#18130D] border-b lg:border-b-0 lg:border-r border-brand-gold/20 flex flex-col justify-between z-10 space-y-6 shrink-0 relative">
-            {/* Ambient Radial Glow */}
             <div className="absolute top-0 left-0 w-40 h-40 bg-brand-gold/10 rounded-full blur-2xl pointer-events-none" />
 
             <div
@@ -581,26 +574,18 @@ export const Map = ({ setActiveTab }) => {
             </div>
 
             <div className="relative z-10 pt-4 border-t border-brand-gold/15">
-              <button
-                type="button"
-                onClick={() => {
-                  if (setActiveTab) {
-                    setActiveTab("destinations");
-                  } else {
-                    window.scrollTo({ top: 400, behavior: "smooth" });
-                  }
-                }}
+              <Link
+                href="/destinations"
                 className="w-full bg-brand-gold hover:bg-brand-gold-light text-brand-dark py-3.5 text-xs font-bold tracking-[0.25em] uppercase rounded-full transition-all duration-300 shadow-lg shadow-brand-gold/20 hover:scale-[1.02] cursor-pointer flex items-center justify-center space-x-2"
               >
                 <span>VIEW FULL DETAILS</span>
                 <ArrowRight size={14} />
-              </button>
+              </Link>
             </div>
           </div>
 
-          {/* Center Map Stage (Interactive Satellite Google Map) */}
+          {/* Center Map Stage */}
           <div className="flex-grow bg-[#100D09] relative min-h-[420px] lg:min-h-auto overflow-hidden flex items-center justify-center border-t lg:border-t-0 lg:border-r border-brand-gold/20">
-            {/* Interactive Map Iframe */}
             <iframe
               src={`https://maps.google.com/maps?q=${encodeURIComponent(
                 activeMapSite.id === "angkor"
@@ -638,7 +623,6 @@ export const Map = ({ setActiveTab }) => {
                 EXPLORE MARKERS
               </span>
 
-              {/* Map search input */}
               <div className="relative">
                 <input
                   type="text"
@@ -654,7 +638,6 @@ export const Map = ({ setActiveTab }) => {
               </div>
             </div>
 
-            {/* List of markers */}
             <div className="flex-grow overflow-y-auto space-y-2 max-h-[300px] lg:max-h-none pr-1 font-sans">
               {filteredMapSites.map((site) => {
                 const isActive = activeMapSite.id === site.id;
@@ -691,4 +674,4 @@ export const Map = ({ setActiveTab }) => {
       </section>
     </div>
   );
-};
+}
