@@ -470,9 +470,6 @@ export default function MapPage() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent" />
-                  <span className="absolute top-4 left-4 bg-brand-gold text-brand-dark text-xs font-bold tracking-[0.15em] uppercase px-3 py-1 rounded-md shadow border border-brand-gold">
-                    {card.tag}
-                  </span>
                 </div>
                 <div className="p-5 flex-grow flex flex-col justify-between space-y-4 text-center">
                   <div className="space-y-1.5">
@@ -557,13 +554,10 @@ export default function MapPage() {
               key={activeMapSite.id}
             >
               <div className="flex flex-col items-center text-center">
-                <span className="inline-block px-3 py-1 bg-brand-gold/15 border border-brand-gold/40 text-brand-gold text-xs font-bold tracking-[0.25em] uppercase rounded-full">
-                  {activeMapSite.tag}
-                </span>
-                <h3 className="font-cormorant text-2xl md:text-3xl text-white tracking-wide uppercase mt-3 text-center">
+                <h3 className="font-cormorant text-2xl md:text-3xl text-white tracking-wide uppercase text-center">
                   {activeMapSite.name}
                 </h3>
-                <div className="flex items-center justify-center space-x-1.5 text-xs text-brand-gold-light/80 tracking-wider uppercase font-mono mt-1">
+                <div className="flex items-center justify-center space-x-1.5 text-xs text-brand-gold-light/80 tracking-wider uppercase font-mono mt-1.5">
                   <MapPin size={12} className="text-brand-gold" />
                   <span>{activeMapSite.region}</span>
                 </div>
