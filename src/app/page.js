@@ -166,6 +166,7 @@ export default function HomePage() {
             <iframe
               src="https://www.youtube.com/embed/RTAP1Nk9fEE?autoplay=1&mute=1&loop=1&playlist=RTAP1Nk9fEE&rel=0"
               title="Cambodia Showcase Video"
+              loading="lazy"
               allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
               className="w-full h-full object-cover"

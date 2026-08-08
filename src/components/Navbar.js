@@ -51,6 +51,7 @@ export const Navbar = () => {
               <Link
                 key={item.href}
                 href={item.href}
+                prefetch={true}
                 className={`relative flex items-center space-x-2 text-sm font-medium tracking-wide uppercase transition-all duration-300 py-1.5 px-3 rounded-lg focus-visible:ring-2 focus-visible:ring-brand-gold ${
                   isActive
                     ? "text-brand-gold font-bold"
@@ -70,6 +71,7 @@ export const Navbar = () => {
         <div className="hidden md:flex justify-self-end">
           <Link
             href="/plan-trip"
+            prefetch={true}
             className="bg-brand-gold hover:bg-brand-gold-light text-brand-dark px-6 py-2.5 rounded-full text-xs md:text-sm font-bold tracking-widest uppercase transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-brand-gold/20 hover:shadow-brand-gold/40 cursor-pointer focus-visible:ring-2 focus-visible:ring-brand-gold inline-block"
           >
             PLAN YOUR TRIP
@@ -100,6 +102,7 @@ export const Navbar = () => {
                 <Link
                   key={item.href}
                   href={item.href}
+                  prefetch={true}
                   onClick={() => setIsOpen(false)}
                   className={`w-full flex items-center space-x-4 px-4 py-3 rounded-xl transition-all duration-300 ${
                     isActive
@@ -118,6 +121,7 @@ export const Navbar = () => {
             <div className="pt-2 border-t border-brand-gold/10">
               <Link
                 href="/plan-trip"
+                prefetch={true}
                 onClick={() => setIsOpen(false)}
                 className="w-full bg-brand-gold hover:bg-brand-gold-light text-brand-dark py-3 rounded-xl text-xs sm:text-sm font-semibold tracking-wider uppercase transition-all duration-300 text-center block shadow-md shadow-brand-gold/20"
               >
