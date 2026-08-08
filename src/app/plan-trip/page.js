@@ -799,22 +799,22 @@ export default function PlanTripPage() {
           </section>
 
           {/* SECTION 4: Tailored Excursions */}
-          <section className="bg-brand-dark border border-brand-gold/40 text-white p-6 md:p-10 rounded-3xl shadow-xl space-y-6">
+          <section className="bg-[#FAF8F5] border border-brand-gold/35 p-6 md:p-10 rounded-3xl shadow-md space-y-6">
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 rounded-full bg-brand-gold flex items-center justify-center text-brand-dark text-xs font-bold font-mono shadow-xs">
+              <div className="w-8 h-8 rounded-full bg-brand-dark flex items-center justify-center text-white text-xs font-bold font-mono shadow-xs">
                 4
               </div>
-              <h3 className="font-cormorant text-2xl md:text-3xl font-normal uppercase tracking-wider text-brand-gold">
+              <h3 className="font-cormorant text-2xl md:text-3xl font-normal uppercase tracking-wider text-brand-dark">
                 TAILORED EXCURSIONS
               </h3>
             </div>
 
             <div className="relative my-4">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-brand-gold/30" />
+                <div className="w-full border-t border-brand-gold/35" />
               </div>
               <div className="relative flex justify-center">
-                <span className="bg-brand-dark px-3 text-brand-gold text-xs">
+                <span className="bg-[#FAF8F5] px-3 text-brand-gold-dark text-xs">
                   ◆
                 </span>
               </div>
@@ -835,80 +835,85 @@ export default function PlanTripPage() {
                     key={act.id}
                     type="button"
                     onClick={() => handleActivityToggle(act.id)}
-                    className={`group relative text-left bg-brand-dark rounded-2xl overflow-hidden transition-all duration-500 h-72 flex flex-col justify-end cursor-pointer ${
+                    className={`group relative text-left bg-white rounded-2xl overflow-hidden transition-all duration-500 flex flex-col justify-between h-full cursor-pointer shadow-sm ${
                       isSelected
-                        ? "ring-2 ring-brand-gold shadow-xl scale-[1.02]"
-                        : "border border-brand-gold/20 hover:border-brand-gold/40"
+                        ? "ring-2 ring-brand-gold shadow-xl scale-[1.02] border-transparent"
+                        : "border border-brand-gold/30 hover:border-brand-gold/60 hover:shadow-lg"
                     }`}
                   >
-                    <img
-                      src={imageMap[act.id]}
-                      alt={act.name}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/95 via-brand-dark/40 to-transparent" />
-                    {isSelected && (
-                      <div className="absolute inset-0 bg-brand-gold/15 mix-blend-overlay pointer-events-none" />
-                    )}
+                    <div className="relative h-48 overflow-hidden shrink-0">
+                      <img
+                        src={imageMap[act.id]}
+                        alt={act.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-                    <div className="absolute top-4 right-4 z-20">
-                      <div
-                        className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all ${
-                          isSelected
-                            ? "border-brand-gold bg-brand-gold text-brand-dark scale-110 shadow"
-                            : "border-white/40 bg-black/50 backdrop-blur-xs text-white"
-                        }`}
-                      >
-                        {isSelected ? (
-                          <Check
-                            size={16}
-                            className="text-brand-dark stroke-[3]"
-                          />
-                        ) : (
-                          <span className="font-sans text-sm text-white/70 font-semibold">
-                            +
-                          </span>
-                        )}
+                      <div className="absolute top-4 right-4 z-20">
+                        <div
+                          className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all ${
+                            isSelected
+                              ? "border-brand-gold bg-brand-gold text-brand-dark scale-110 shadow"
+                              : "border-white/50 bg-black/40 backdrop-blur-xs text-white"
+                          }`}
+                        >
+                          {isSelected ? (
+                            <Check
+                              size={16}
+                              className="text-brand-dark stroke-[3]"
+                            />
+                          ) : (
+                            <span className="font-sans text-sm text-white font-bold">
+                              +
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
 
-                    <div className="relative z-10 p-6 space-y-2">
-                      <span className="font-sans text-xs font-bold tracking-widest text-brand-gold uppercase block">
-                        Private Excursion
-                      </span>
-                      <h4 className="font-cormorant text-2xl font-normal text-white leading-tight">
-                        {act.name}
-                      </h4>
-                      <p className="font-sans text-xs font-light text-brand-cream-dark/85 line-clamp-2 leading-relaxed">
-                        {act.id === "angkor-sunrise" &&
-                          "Witness sunrise over Angkor Wat before exploring key galleries with a lead historian."}
-                        {act.id === "helicopter" &&
-                          "Fly above Siem Reap temples and the vast Tonle Sap lake on a scenic private flight."}
-                        {act.id === "mekong-cruise" &&
-                          "Glide past floating villages on a restored traditional barge while dining on local gourmet recipes."}
-                        {act.id === "rainforest-trek" &&
-                          "Trek alongside forest rangers through cardamom sanctuaries to spot wild elephants."}
-                        {act.id === "culinary-class" &&
-                          "Pick fresh lemongrass and craft classic Royal Khmer recipes with a master chef."}
-                      </p>
-                      <div className="pt-2.5 flex justify-between items-center border-t border-white/20">
-                        <span className="font-sans text-xs text-white/70 uppercase font-semibold tracking-wider">
+                    <div className="p-5 flex-grow flex flex-col justify-between space-y-4 font-sans">
+                      <div className="space-y-1.5">
+                        <span className="text-[11px] font-semibold tracking-wider text-[#8C6B1F] uppercase block">
+                          Private Excursion
+                        </span>
+                        <h4 className="font-cormorant text-2xl font-medium text-brand-dark leading-tight">
+                          {act.name}
+                        </h4>
+                        <p className="text-sm font-normal text-stone-700 line-clamp-2 leading-relaxed">
+                          {act.id === "angkor-sunrise" &&
+                            "Witness sunrise over Angkor Wat before exploring key galleries with a lead historian."}
+                          {act.id === "helicopter" &&
+                            "Fly above Siem Reap temples and the vast Tonle Sap lake on a scenic private flight."}
+                          {act.id === "mekong-cruise" &&
+                            "Glide past floating villages on a restored traditional barge while dining on local gourmet recipes."}
+                          {act.id === "rainforest-trek" &&
+                            "Trek alongside forest rangers through cardamom sanctuaries to spot wild elephants."}
+                          {act.id === "culinary-class" &&
+                            "Pick fresh lemongrass and craft classic Royal Khmer recipes with a master chef."}
+                        </p>
+                      </div>
+
+                      <div className="pt-3.5 flex justify-between items-center border-t border-brand-gold/20">
+                        <span className="font-sans text-xs tracking-wider text-stone-500 uppercase font-semibold">
                           Rate Per Guest
                         </span>
-                        <span
-                          className="font-sans text-lg font-bold text-brand-gold-light lining-nums tabular-nums"
-                          style={{
-                            fontVariantNumeric: "lining-nums tabular-nums",
-                            fontFeatureSettings: '"lnum" 1, "tnum" 1',
-                          }}
-                        >
-                          ${act.pricePerPerson}{" "}
-                          <span className="text-xs font-normal text-white/70">
+                        <div className="flex items-baseline space-x-1 font-sans">
+                          <span
+                            className="text-2xl font-bold text-[#8C6B1F] lining-nums tabular-nums"
+                            style={{
+                              fontVariantNumeric: "lining-nums tabular-nums",
+                              fontFeatureSettings: '"lnum" 1, "tnum" 1',
+                            }}
+                          >
+                            ${act.pricePerPerson}
+                          </span>
+                          <span className="text-xs text-stone-500 font-normal">
                             USD
                           </span>
-                        </span>
+                        </div>
                       </div>
                     </div>
+
                     {isSelected && (
                       <div className="absolute inset-0 border-2 border-brand-gold rounded-2xl pointer-events-none" />
                     )}
