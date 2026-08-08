@@ -22,6 +22,7 @@ import {
   Quote,
   LayoutGrid,
   SlidersHorizontal,
+  Search,
 } from "lucide-react";
 import {
   fetchGuestbookNotes,
@@ -289,12 +290,28 @@ export default function GuestbookPage() {
           </div>
         </div>
 
-        <div className="flex justify-center pt-2">
+        {/* Centered Search & View Mode Toggle Bar Above User Reviews */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+          {/* Live Search Input */}
+          <div className="relative w-full sm:max-w-xs">
+            <input
+              type="text"
+              placeholder="Search reflections..."
+              value={reviewQuery}
+              onChange={(e) => setReviewQuery(e.target.value)}
+              className="w-full pl-9 pr-4 py-2 bg-white border border-brand-gold/35 rounded-full text-xs font-normal text-brand-dark placeholder-brand-dark/40 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/30 shadow-xs"
+            />
+            <Search
+              size={14}
+              className="text-brand-gold-dark/60 absolute left-3.5 top-1/2 -translate-y-1/2"
+            />
+          </div>
+
           <div className="inline-flex items-center space-x-1 bg-white border border-brand-gold/35 p-1.5 rounded-full shadow-xs">
             <button
               type="button"
               onClick={() => setViewMode("CAROUSEL")}
-              className={`px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider flex items-center space-x-2 transition-all cursor-pointer ${
+              className={`px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider flex items-center space-x-2 transition-all cursor-pointer ${
                 viewMode === "CAROUSEL"
                   ? "bg-brand-dark text-brand-gold shadow-xs"
                   : "text-brand-dark/70 hover:text-brand-dark"
@@ -306,7 +323,7 @@ export default function GuestbookPage() {
             <button
               type="button"
               onClick={() => setViewMode("GRID")}
-              className={`px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider flex items-center space-x-2 transition-all cursor-pointer ${
+              className={`px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider flex items-center space-x-2 transition-all cursor-pointer ${
                 viewMode === "GRID"
                   ? "bg-brand-dark text-brand-gold shadow-xs"
                   : "text-brand-dark/70 hover:text-brand-dark"

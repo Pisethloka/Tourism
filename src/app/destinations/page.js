@@ -61,7 +61,7 @@ function DestinationsContent() {
           setDestinations(data);
           setError(null);
         }
-      } catch (err) {
+      } catch {
         if (isMounted) {
           setError("Failed to fetch destinations from API. Please try again.");
         }
@@ -80,13 +80,17 @@ function DestinationsContent() {
 
   // Handle Hash/URL Category Section Auto-Expand
   useEffect(() => {
-    if (activeSection === "cultural-tourism") {
-      setExpandedSections((prev) => ({ ...prev, cultural: true }));
-    } else if (activeSection === "dark-tourism") {
-      setExpandedSections((prev) => ({ ...prev, dark: true }));
-    } else if (activeSection === "eco-tourism") {
-      setExpandedSections((prev) => ({ ...prev, eco: true }));
-    }
+    if (!activeSection) return;
+    const timer = setTimeout(() => {
+      if (activeSection === "cultural-tourism") {
+        setExpandedSections((prev) => ({ ...prev, cultural: true }));
+      } else if (activeSection === "dark-tourism") {
+        setExpandedSections((prev) => ({ ...prev, dark: true }));
+      } else if (activeSection === "eco-tourism") {
+        setExpandedSections((prev) => ({ ...prev, eco: true }));
+      }
+    }, 0);
+    return () => clearTimeout(timer);
   }, [activeSection]);
 
   const toggleCard = useCallback(

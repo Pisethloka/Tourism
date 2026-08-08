@@ -94,7 +94,7 @@ function getMyNoteIds() {
   try {
     const stored = localStorage.getItem(MY_NOTES_STORAGE_KEY);
     return stored ? JSON.parse(stored) : [];
-  } catch (e) {
+  } catch {
     return [];
   }
 }
