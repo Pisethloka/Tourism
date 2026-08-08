@@ -649,9 +649,9 @@ export default function PlanTripPage() {
                             ? "Boutique Heritage"
                             : key === "luxury"
                               ? "Luxury Resort"
-                              : "Ultra-Luxury Villa"}
+                              : "Ultra Luxury Villa"}
                         </h4>
-                        <p className="font-sans text-xs font-light text-brand-dark/75 leading-relaxed">
+                        <p className="font-sans text-s font-light text-brand-dark/75 leading-relaxed">
                           {key === "boutique" &&
                             "Premium heritage properties, colonial guest houses, and local boutique hotels."}
                           {key === "luxury" &&
@@ -661,16 +661,24 @@ export default function PlanTripPage() {
                         </p>
                       </div>
 
-                      <div className="pt-3 flex justify-between items-baseline border-t border-brand-gold/20">
-                        <span className="font-sans text-xs tracking-widest text-brand-dark/50 uppercase font-semibold">
+                      <div className="pt-3.5 flex justify-between items-center border-t border-brand-gold/20">
+                        <span className="font-sans text-xs tracking-wider text-stone-500 uppercase font-semibold">
                           Nightly Rate
                         </span>
-                        <span className="font-cormorant text-2xl font-normal text-brand-gold-dark">
-                          ${value.rate}{" "}
-                          <span className="font-sans text-xs text-brand-dark/50 font-light">
+                        <div className="flex items-baseline space-x-1 font-sans">
+                          <span
+                            className="text-2xl font-bold text-[#8C6B1F] lining-nums tabular-nums"
+                            style={{
+                              fontVariantNumeric: "lining-nums tabular-nums",
+                              fontFeatureSettings: '"lnum" 1, "tnum" 1',
+                            }}
+                          >
+                            ${value.rate}
+                          </span>
+                          <span className="text-xs text-stone-500 font-normal">
                             / night
                           </span>
-                        </span>
+                        </div>
                       </div>
                     </div>
 
@@ -745,7 +753,7 @@ export default function PlanTripPage() {
                       <div className="space-y-1.5">
                         <h4 className="font-cormorant text-2xl font-normal text-brand-dark">
                           {key === "tuk-tuk"
-                            ? "Tuk-Tuk Explorer"
+                            ? "Tuk Tuk Explorer"
                             : key === "chauffeur"
                               ? "Private Chauffeur"
                               : "Regional Flights"}
@@ -760,16 +768,24 @@ export default function PlanTripPage() {
                         </p>
                       </div>
 
-                      <div className="pt-3 flex justify-between items-baseline border-t border-brand-gold/20">
-                        <span className="font-sans text-xs tracking-widest text-brand-dark/50 uppercase font-semibold">
+                      <div className="pt-3.5 flex justify-between items-center border-t border-brand-gold/20">
+                        <span className="font-sans text-xs tracking-wider text-stone-500 uppercase font-semibold">
                           Daily Rate
                         </span>
-                        <span className="font-cormorant text-2xl font-normal text-brand-gold-dark">
-                          ${value.rate}{" "}
-                          <span className="font-sans text-xs text-brand-dark/50 font-light">
+                        <div className="flex items-baseline space-x-1 font-sans">
+                          <span
+                            className="text-2xl font-bold text-[#8C6B1F] lining-nums tabular-nums"
+                            style={{
+                              fontVariantNumeric: "lining-nums tabular-nums",
+                              fontFeatureSettings: '"lnum" 1, "tnum" 1',
+                            }}
+                          >
+                            ${value.rate}
+                          </span>
+                          <span className="text-xs text-stone-500 font-normal">
                             / day
                           </span>
-                        </span>
+                        </div>
                       </div>
                     </div>
 
@@ -782,23 +798,23 @@ export default function PlanTripPage() {
             </div>
           </section>
 
-          {/* SECTION 4: Curated Excursions */}
-          <section className="bg-[#FAF8F5] border border-brand-gold/35 p-6 md:p-10 rounded-3xl shadow-md space-y-6">
+          {/* SECTION 4: Tailored Excursions */}
+          <section className="bg-brand-dark border border-brand-gold/40 text-white p-6 md:p-10 rounded-3xl shadow-xl space-y-6">
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 rounded-full bg-brand-dark flex items-center justify-center text-white text-xs font-bold font-mono shadow-xs">
+              <div className="w-8 h-8 rounded-full bg-brand-gold flex items-center justify-center text-brand-dark text-xs font-bold font-mono shadow-xs">
                 4
               </div>
-              <h3 className="font-cormorant text-2xl md:text-3xl font-normal uppercase tracking-wider text-brand-dark">
-                Featured Experiences
+              <h3 className="font-cormorant text-2xl md:text-3xl font-normal uppercase tracking-wider text-brand-gold">
+                TAILORED EXCURSIONS
               </h3>
             </div>
 
             <div className="relative my-4">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-brand-gold/35" />
+                <div className="w-full border-t border-brand-gold/30" />
               </div>
               <div className="relative flex justify-center">
-                <span className="bg-[#FAF8F5] px-3 text-brand-gold-dark text-xs">
+                <span className="bg-brand-dark px-3 text-brand-gold text-xs">
                   ◆
                 </span>
               </div>
@@ -875,12 +891,21 @@ export default function PlanTripPage() {
                         {act.id === "culinary-class" &&
                           "Pick fresh lemongrass and craft classic Royal Khmer recipes with a master chef."}
                       </p>
-                      <div className="pt-2 flex justify-between items-baseline border-t border-white/15">
-                        <span className="font-sans text-xs text-brand-cream-dark/60 uppercase font-semibold">
+                      <div className="pt-2.5 flex justify-between items-center border-t border-white/20">
+                        <span className="font-sans text-xs text-white/70 uppercase font-semibold tracking-wider">
                           Rate Per Guest
                         </span>
-                        <span className="font-cormorant text-xl font-normal text-brand-gold-light">
-                          ${act.pricePerPerson} USD
+                        <span
+                          className="font-sans text-lg font-bold text-brand-gold-light lining-nums tabular-nums"
+                          style={{
+                            fontVariantNumeric: "lining-nums tabular-nums",
+                            fontFeatureSettings: '"lnum" 1, "tnum" 1',
+                          }}
+                        >
+                          ${act.pricePerPerson}{" "}
+                          <span className="text-xs font-normal text-white/70">
+                            USD
+                          </span>
                         </span>
                       </div>
                     </div>
