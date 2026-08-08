@@ -230,22 +230,28 @@ export default function GuestbookPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-12 gap-8 items-center relative z-10 pt-2">
-            <div className="sm:col-span-5 flex flex-col items-center justify-center p-6 sm:p-8 bg-white/90 rounded-2xl border border-brand-gold/25 text-center shadow-2xs">
-              <span className="font-cormorant text-6xl sm:text-7xl font-bold text-brand-gold-dark leading-none">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center relative z-10 pt-2">
+            {/* Left Overall Rating Box - Perfectly Centered */}
+            <div className="md:col-span-5 flex flex-col items-center justify-center p-6 sm:p-8 bg-white/95 rounded-2xl border border-brand-gold/30 text-center shadow-xs w-full">
+              <span className="font-cormorant text-6xl sm:text-7xl font-bold text-brand-gold-dark leading-none block text-center tracking-tight">
                 {ratingStats.avg}
               </span>
-              <div className="flex text-brand-gold-dark space-x-1.5 my-3">
+              <div className="flex items-center justify-center text-brand-gold-dark space-x-1.5 my-3">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={20} fill="currentColor" />
+                  <Star
+                    key={i}
+                    size={22}
+                    className="fill-brand-gold text-brand-gold"
+                  />
                 ))}
               </div>
-              <span className="text-xs font-sans font-medium text-brand-dark/75">
-                Out of 5.0 Rating Score ({ratingStats.total} Notes)
-              </span>
+              <p className="text-xs sm:text-sm font-sans font-medium text-brand-dark/75 text-center leading-normal">
+                Out of 5.0 Rating Score ({ratingStats.total} {ratingStats.total === 1 ? "Note" : "Notes"})
+              </p>
             </div>
 
-            <div className="sm:col-span-7 space-y-4">
+            {/* Right Star Breakdown - Perfectly Aligned Rows */}
+            <div className="md:col-span-7 space-y-3.5 w-full">
               {[5, 4, 3, 2, 1].map((starNum) => {
                 const count = ratingStats.counts[starNum] || 0;
                 const pct =
@@ -256,7 +262,7 @@ export default function GuestbookPage() {
                 return (
                   <div
                     key={starNum}
-                    className="flex items-center space-x-3 text-sm"
+                    className="flex items-center space-x-3 text-sm w-full"
                   >
                     <button
                       type="button"
@@ -264,23 +270,23 @@ export default function GuestbookPage() {
                         if (starNum === 5) setReviewFilter("5_STARS");
                         else setReviewFilter("ALL");
                       }}
-                      className="flex items-center space-x-1 shrink-0 w-16 text-brand-dark font-bold hover:text-brand-gold-dark cursor-pointer font-mono"
+                      className="flex items-center justify-start space-x-1.5 shrink-0 w-14 text-brand-dark font-bold hover:text-brand-gold-dark cursor-pointer font-mono text-xs sm:text-sm"
                     >
-                      <span>{starNum}</span>
+                      <span className="tabular-nums">{starNum}</span>
                       <Star
-                        size={12}
+                        size={14}
                         className="fill-brand-gold text-brand-gold"
                       />
                     </button>
 
-                    <div className="flex-grow bg-brand-dark/10 h-3.5 rounded-full overflow-hidden relative shadow-inner">
+                    <div className="flex-grow bg-brand-dark/10 h-3 rounded-full overflow-hidden relative shadow-inner">
                       <div
                         className="bg-gradient-to-r from-brand-gold-dark via-brand-gold to-brand-gold-dark h-full rounded-full transition-all duration-700"
                         style={{ width: `${pct}%` }}
                       />
                     </div>
 
-                    <span className="w-20 text-right font-mono text-[14px] text-brand-dark/70 font-semibold">
+                    <span className="w-24 text-right font-mono text-xs sm:text-sm text-brand-dark/70 font-semibold tabular-nums shrink-0">
                       {count} ({pct}%)
                     </span>
                   </div>
