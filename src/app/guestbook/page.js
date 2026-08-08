@@ -409,9 +409,6 @@ export default function GuestbookPage() {
                       <Star key={i} size={18} fill="currentColor" />
                     ))}
                   </div>
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-brand-gold-dark bg-brand-gold/10 px-2.5 py-0.5 rounded-full border border-brand-gold/25">
-                    Verified Reflection
-                  </span>
                 </div>
               </div>
 
@@ -626,60 +623,29 @@ export default function GuestbookPage() {
         )}
 
         {/* Luxury White Guestbook Submission Card Inspired by Reference */}
+        {/* Luxury White Guestbook Submission Card (Transparent background outside) */}
         <section
           id="write-note-form"
-          className="pt-10 pb-20 animate-fade-in font-sans relative overflow-hidden flex items-center justify-center"
+          className="pt-6 pb-20 animate-fade-in font-sans relative bg-transparent flex items-center justify-center"
         >
-          {/* Subtle Angkor Temple Watermark Silhouette in Background */}
-          <div
-            className="absolute inset-0 pointer-events-none opacity-[0.05] bg-center bg-no-repeat bg-contain"
-            style={{
-              backgroundImage: "url('/assets/hero_angkor.png')",
-              filter: "grayscale(100%)",
-            }}
-          />
-
-          <div className="max-w-2xl w-full mx-auto bg-white rounded-[2rem] p-8 sm:p-12 shadow-2xl shadow-amber-950/10 border border-[#EBDCC0]/80 relative z-10 space-y-7">
+          <div className="max-w-2xl w-full mx-auto bg-white rounded-[2rem] p-8 sm:p-12 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)] border border-[#EBDCC0]/80 relative z-10 space-y-6">
             {/* Top Royal Lotus Crest Flourish Divider */}
             <div className="flex items-center justify-center space-x-3 text-[#C59E3F] max-w-xs mx-auto">
-              <div className="flex-grow h-[1px] bg-gradient-to-r from-transparent via-[#C59E3F]/80 to-[#C59E3F] relative">
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rotate-45 bg-[#C59E3F]" />
+              <span className="flex-grow h-[1px] bg-gradient-to-r from-transparent via-[#C59E3F] to-[#C59E3F]" />
+              <div className="flex items-center space-x-1.5 text-[#C59E3F] px-1">
+                <span className="text-[10px] opacity-75">✦</span>
+                <span className="text-base font-serif select-none">❖</span>
+                <span className="text-[10px] opacity-75">✦</span>
               </div>
-
-              {/* Bespoke Royal Khmer Lotus / Fleur-de-lis Emblem */}
-              <svg
-                width="46"
-                height="24"
-                viewBox="0 0 48 24"
-                fill="currentColor"
-                className="shrink-0 text-[#C59E3F] drop-shadow-xs"
-              >
-                <path
-                  d="M24 1 C25.5 5, 29 7, 33 5 C31 9, 36 10, 42 7 C38 12, 44 14, 48 13 C42 16, 45 20, 47 23 C40 21, 37 23, 33 21 C29 23, 26 21, 24 23 C22 21, 19 23, 15 21 C11 23, 8 21, 1 23 C3 20, 6 16, 0 13 C4 14, 10 12, 6 7 C12 10, 17 9, 15 5 C19 7, 22 5, 24 1 Z"
-                  opacity="0.95"
-                />
-                <circle
-                  cx="24"
-                  cy="12"
-                  r="2.2"
-                  fill="#FFFFFF"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                />
-                <circle cx="24" cy="12" r="1" fill="currentColor" />
-              </svg>
-
-              <div className="flex-grow h-[1px] bg-gradient-to-l from-transparent via-[#C59E3F]/80 to-[#C59E3F] relative">
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rotate-45 bg-[#C59E3F]" />
-              </div>
+              <span className="flex-grow h-[1px] bg-gradient-to-l from-transparent via-[#C59E3F] to-[#C59E3F]" />
             </div>
 
-            {/* Header Title & Description */}
+            {/* Header Title & Description (Single crisp line, high-definition serif) */}
             <div className="text-center space-y-2">
-              <h3 className="font-cormorant text-3xl sm:text-4xl md:text-[2.65rem] font-bold tracking-wider text-[#1C150D] uppercase leading-tight">
+              <h3 className="font-cinzel text-2xl sm:text-3xl md:text-[2.15rem] font-medium tracking-[0.14em] text-[#1A140E] uppercase leading-tight antialiased">
                 WRITE YOUR GUESTBOOK
               </h3>
-              <p className="text-xs sm:text-sm text-stone-600 font-light max-w-md mx-auto leading-relaxed">
+              <p className="font-sans text-xs sm:text-sm text-stone-500 font-light max-w-md mx-auto leading-relaxed antialiased">
                 Pen your memories, recommendations, or reflections for honored
                 guests exploring the Kingdom of Cambodia.
               </p>
