@@ -66,7 +66,7 @@ const activityOptions = [
   },
   {
     id: "rainforest-trek",
-    name: "Cardamoms Private Ranger Eco-Trek",
+    name: "Cardamoms Private Ranger Eco Trek",
     pricePerPerson: 65,
     icon: <Compass size={16} />,
   },
@@ -422,7 +422,7 @@ export default function PlanTripPage() {
   return (
     <div className="pb-28 bg-brand-cream font-sans text-brand-dark min-h-screen relative">
       <main className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 pt-28 pb-12">
-        <div className="space-y-10 animate-fade-in">
+        <div className="space-y-16 sm:space-y-20 animate-fade-in">
           {/* Template Intro Section */}
           <section className="bg-[#FAF8F5] border border-brand-gold/40 rounded-3xl p-8 sm:p-10 md:p-12 relative overflow-hidden shadow-md hover:shadow-lg transition-shadow text-left">
             <div className="absolute top-0 right-0 bottom-0 w-1/2 pointer-events-none hidden md:block overflow-hidden">
