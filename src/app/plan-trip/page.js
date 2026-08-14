@@ -21,7 +21,6 @@ import {
 // Public image asset paths
 const galleryAngkor = "/assets/gallery_angkor.jpg";
 const gallerySkyline = "/assets/gallery_skyline.jpg";
-const ecoIslandLagoon = "/assets/eco_island_lagoon.jpg";
 const ecoRainforestCanopy = "/assets/eco_rainforest_canopy.jpg";
 const cardamomMountainsPhoto = "/assets/cardamom_mountains_photo.jpg";
 const tukTukReal = "/assets/tuk_tuk_real.jpg";
@@ -29,6 +28,8 @@ const galleryFood1 = "/assets/gallery_food1.jpg";
 const lodgingBoutique = "/assets/lodging_boutique.jpg";
 const lodgingResort = "/assets/lodging_resort.png";
 const lodgingVilla = "/assets/lodging_villa.jpg";
+const transportCar = "/assets/transport_car.png";
+const transportFlight = "/assets/transport_flight.png";
 
 // Pricing Database (Authentic Cambodia Tourism Rates)
 const tierPricing = {
@@ -38,10 +39,10 @@ const tierPricing = {
 };
 
 const transportPricing = {
-  "tuk-tuk": { label: "Cambodian Tuk-Tuk / Remorque ($20/day)", rate: 20 },
-  chauffeur: { label: "Private Car / SUV with Chauffeur ($55/day)", rate: 55 },
+  "tuk-tuk": { label: "Local Tuk Tuk ($20/day)", rate: 20 },
+  chauffeur: { label: "Private Car ($55/day)", rate: 55 },
   "domestic-flights": {
-    label: "Express Van & Regional Flights ($130/day)",
+    label: "Domestic Flight ($130/day)",
     rate: 130,
   },
 };
@@ -719,8 +720,8 @@ export default function PlanTripPage() {
                 const isSelected = transport === key;
                 const imageMap = {
                   "tuk-tuk": tukTukReal,
-                  chauffeur: gallerySkyline,
-                  "domestic-flights": ecoIslandLagoon,
+                  chauffeur: transportCar,
+                  "domestic-flights": transportFlight,
                 };
                 return (
                   <button
@@ -754,18 +755,18 @@ export default function PlanTripPage() {
                       <div className="space-y-1.5">
                         <h4 className="font-cormorant text-2xl font-normal text-brand-dark">
                           {key === "tuk-tuk"
-                            ? "Tuk-Tuk / Remorque"
+                            ? "Local Tuk-Tuk"
                             : key === "chauffeur"
-                              ? "Private Car / SUV"
-                              : "Express & Flights"}
+                              ? "Private Car"
+                              : "Domestic Flight"}
                         </h4>
                         <p className="font-sans text-xs font-light text-brand-dark/75 leading-relaxed">
                           {key === "tuk-tuk" &&
-                            "Traditional Cambodian open-air remorque with local driver for city trips and temple loops."}
+                            "Traditional open-air Cambodian tuk-tuk with a dedicated driver for city and temple tours."}
                           {key === "chauffeur" &&
-                            "Air-conditioned private vehicle with professional driver for all-day sightseeing and temple tours."}
+                            "Comfortable air-conditioned private car with a dedicated driver for smooth, flexible travel."}
                           {key === "domestic-flights" &&
-                            "Private expressway minivan or domestic flight connections between Phnom Penh, Siem Reap, and the coast."}
+                            "Fast domestic flights between Phnom Penh, Siem Reap, and the southern islands."}
                         </p>
                       </div>
 
