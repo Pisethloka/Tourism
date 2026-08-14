@@ -20,16 +20,17 @@ import {
 
 // Public image asset paths
 const galleryAngkor = "/assets/gallery_angkor.jpg";
-const gallerySkyline = "/assets/gallery_skyline.jpg";
-const ecoRainforestCanopy = "/assets/eco_rainforest_canopy.jpg";
-const cardamomMountainsPhoto = "/assets/cardamom_mountains_photo.jpg";
 const tukTukReal = "/assets/tuk_tuk_real.jpg";
-const galleryFood1 = "/assets/gallery_food1.jpg";
 const lodgingBoutique = "/assets/lodging_boutique.jpg";
 const lodgingResort = "/assets/lodging_resort.png";
 const lodgingVilla = "/assets/lodging_villa.jpg";
 const transportCar = "/assets/transport_car.png";
 const transportFlight = "/assets/transport_flight.png";
+const excursionSunrise = "/assets/excursion_sunrise.jpg";
+const excursionHelicopter = "/assets/excursion_helicopter.png";
+const excursionCruise = "/assets/excursion_cruise.png";
+const excursionElephants = "/assets/excursion_elephants.jpg";
+const excursionCooking = "/assets/excursion_cooking.jpg";
 
 // Pricing Database (Authentic Cambodia Tourism Rates)
 const tierPricing = {
@@ -755,7 +756,7 @@ export default function PlanTripPage() {
                       <div className="space-y-1.5">
                         <h4 className="font-cormorant text-2xl font-normal text-brand-dark">
                           {key === "tuk-tuk"
-                            ? "Local Tuk-Tuk"
+                            ? "Local TukTuk"
                             : key === "chauffeur"
                               ? "Private Car"
                               : "Domestic Flight"}
@@ -826,11 +827,11 @@ export default function PlanTripPage() {
               {activityOptions.map((act) => {
                 const isSelected = selectedActivities.includes(act.id);
                 const imageMap = {
-                  "angkor-sunrise": galleryAngkor,
-                  helicopter: ecoRainforestCanopy,
-                  "mekong-cruise": gallerySkyline,
-                  "rainforest-trek": cardamomMountainsPhoto,
-                  "culinary-class": galleryFood1,
+                  "angkor-sunrise": excursionSunrise,
+                  helicopter: excursionHelicopter,
+                  "mekong-cruise": excursionCruise,
+                  "rainforest-trek": excursionElephants,
+                  "culinary-class": excursionCooking,
                 };
                 return (
                   <button
