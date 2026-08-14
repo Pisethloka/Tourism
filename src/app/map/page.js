@@ -40,7 +40,7 @@ const SITES = [
     image: heroAngkor,
     tag: "HERITAGE",
     description:
-      "The soul of the Khmer Empire, a vast stone symphony and the largest religious monument in the world.",
+      "The heart of ancient Cambodia and the largest religious temple in the world.",
     coordinates: { x: 45, y: 35 },
   },
   {
@@ -52,7 +52,7 @@ const SITES = [
     image: kohRongSanloemPhoto,
     tag: "LUXURY",
     description:
-      "Pristine turquoise shores and white sand beaches, ideal for a peaceful luxury retreat.",
+      "A peaceful tropical island with clear blue water and soft white sand beaches.",
     coordinates: { x: 50, y: 80 },
   },
   {
@@ -64,7 +64,7 @@ const SITES = [
     image: preahVihearPhoto,
     tag: "HERITAGE",
     description:
-      "An ancient temple perched on a cliff-edge on the Dângrêk Mountains with panoramic views.",
+      "An ancient clifftop temple with breathtaking views over the surrounding countryside.",
     coordinates: { x: 65, y: 15 },
   },
   {
@@ -76,7 +76,7 @@ const SITES = [
     image: bayonTemplePhoto,
     tag: "CULTURAL",
     description:
-      "Witness the mountain-temple of Avalokiteshvara, a 12th-century masterpiece of Khmer architecture. A sanctuary of spiritual geometry.",
+      "A famous 12th-century temple known for its giant smiling stone faces and rich history.",
     coordinates: { x: 43, y: 33 },
   },
   {
@@ -88,7 +88,7 @@ const SITES = [
     image: tonleSap,
     tag: "ECOTRAVEL",
     description:
-      "The beating heart of Cambodia, featuring unique floating communities and seasonal floods.",
+      "The largest freshwater lake in Southeast Asia, famous for its lively floating villages.",
     coordinates: { x: 42, y: 48 },
   },
   {
@@ -100,7 +100,7 @@ const SITES = [
     image: bokorHillPhoto,
     tag: "HISTORIC",
     description:
-      "A misty mountain canopy featuring haunting French colonial ruins and panoramic gulf views.",
+      "A cool, misty mountain park featuring historic French buildings and ocean views.",
     coordinates: { x: 48, y: 78 },
   },
   {
@@ -112,7 +112,7 @@ const SITES = [
     image: tuolSlengPhoto,
     tag: "MEMORIAL",
     description:
-      "A former high school turned interrogation facility, now standing as a memorial to historical truth.",
+      "A former high school that became a historic prison, now preserved as a memorial museum.",
     coordinates: { x: 55, y: 62 },
   },
   {
@@ -124,7 +124,7 @@ const SITES = [
     image: cardamomMountainsPhoto,
     tag: "WILDERNESS",
     description:
-      "One of Southeast Asia's last great wilderness areas, home to rare wildlife and hidden waterfalls.",
+      "A vast tropical rainforest home to rare wildlife, jungle rivers, and hidden waterfalls.",
     coordinates: { x: 28, y: 55 },
   },
   {
@@ -136,7 +136,7 @@ const SITES = [
     image: phnomPenhPalace,
     tag: "ROYALTY",
     description:
-      "A shining example of classic Khmer architecture with its golden spires and royal gardens.",
+      "The official royal residence in Phnom Penh, famous for its golden roofs and beautiful gardens.",
     coordinates: { x: 56, y: 60 },
   },
 ];
@@ -305,8 +305,8 @@ export default function MapPage() {
         </h1>
         <div className="w-100 h-[1px] bg-brand-gold mx-auto" />
         <p className="font-sans text-base sm:text-lg md:text-xl text-stone-700 font-normal max-w-2xl mx-auto leading-relaxed">
-          Search, filter, and navigate across Cambodia's most iconic provinces,
-          sacred temples, and natural sanctuaries.
+          Search, filter, and explore Cambodia's most famous temples, islands,
+          cities, and nature parks.
         </p>
       </div>
 
@@ -505,8 +505,7 @@ export default function MapPage() {
                 No Destinations Found
               </p>
               <p className="text-sm text-stone-600">
-                Try adjusting your search query or filters to discover more
-                sites.
+                Try adjusting your search query or filters to discover more sites.
               </p>
             </div>
           )}
@@ -544,8 +543,7 @@ export default function MapPage() {
           </h2>
           <div className="w-20 h-[1px] bg-brand-gold mx-auto" />
           <p className="font-sans text-base sm:text-lg md:text-xl text-stone-700 max-w-2xl mx-auto leading-relaxed font-normal">
-            Interactive geographical survey of Cambodia's premier heritage,
-            ecological, and coastal landmarks.
+            Explore Cambodia's famous landmarks, temples, and coastal destinations on an interactive map.
           </p>
         </div>
 
