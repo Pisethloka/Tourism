@@ -483,17 +483,17 @@ export default function MapPage() {
                       {card.description}
                     </p>
                   </div>
-                  <div className="pt-3.5 border-t border-stone-200/80 flex justify-center items-center gap-3 text-xs tracking-[0.14em] uppercase font-sans">
-                    <span className="inline-flex items-center space-x-1.5 text-stone-700 font-medium">
+                  <div className="pt-3.5 border-t border-stone-200/80 flex justify-center items-center gap-2.5 text-xs tracking-wider uppercase font-sans">
+                    <span className="inline-flex items-center space-x-1.5 text-stone-700 font-medium truncate min-w-0">
                       <MapPin size={13} className="text-[#C59E3F] shrink-0" />
-                      <span>{card.region}</span>
+                      <span className="truncate">{card.region}</span>
                     </span>
 
-                    <span className="w-1 h-1 rounded-full bg-[#C59E3F]/60" />
+                    <span className="w-1 h-1 rounded-full bg-[#C59E3F]/60 shrink-0" />
 
-                    <span className="inline-flex items-center space-x-1.5 text-[#8C6B1F] font-semibold bg-[#FAF7F0] px-3 py-0.5 rounded-full border border-[#E8DFC8] text-[11px]">
+                    <span className="inline-flex items-center space-x-1.5 text-[#8C6B1F] font-semibold bg-[#FAF7F0] px-3 py-1 rounded-full border border-[#E8DFC8] text-[11px] whitespace-nowrap shrink-0">
                       <Clock size={11} className="text-[#8C6B1F] shrink-0" />
-                      <span>{card.duration}</span>
+                      <span className="whitespace-nowrap">{card.duration}</span>
                     </span>
                   </div>
                 </div>
