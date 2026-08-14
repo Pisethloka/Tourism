@@ -303,7 +303,7 @@ export default function MapPage() {
         <h1 className="font-cormorant text-4xl sm:text-5xl md:text-6xl text-brand-dark font-normal tracking-wide uppercase">
           Begin Your Exploration
         </h1>
-        <div className="w-20 h-[1px] bg-brand-gold mx-auto" />
+        <div className="w-100 h-[1px] bg-brand-gold mx-auto" />
         <p className="font-sans text-base sm:text-lg md:text-xl text-stone-700 font-normal max-w-2xl mx-auto leading-relaxed">
           Search, filter, and navigate across Cambodia's most iconic provinces,
           sacred temples, and natural sanctuaries.

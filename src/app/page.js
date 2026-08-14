@@ -352,8 +352,8 @@ export default function HomePage() {
               <span className="text-brand-gold-dark text-xs sm:text-sm font-bold tracking-[0.2em] uppercase flex items-center space-x-1.5">
                 <span>CAMBODIAN FOOD & CUISINE</span>
               </span>
-              <span className="text-xs text-brand-dark/75 uppercase font-sans">
-                Authentic Local Dishes
+              <span className="text-sm text-brand-dark/75 uppercase font-sans">
+                Local Dishes
               </span>
             </div>
 

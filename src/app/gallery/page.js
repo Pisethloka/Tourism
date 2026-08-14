@@ -8,7 +8,7 @@
 
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { createPortal } from "react-dom";
-import { X, ChevronLeft, ChevronRight, Eye } from "lucide-react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 // Image asset paths (public)
 const heroAngkor = "/assets/hero_angkor.png";
@@ -435,15 +435,11 @@ export default function GalleryPage() {
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-brand-dark/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-              <div className="text-center text-white space-y-1.5 p-4">
-                <span className="text-xs font-bold tracking-widest uppercase text-brand-gold-light">
-                  {item.category}
-                </span>
-                <h3 className="font-serif text-base sm:text-lg font-bold tracking-wide uppercase">
+              <div className="text-center text-white space-y-2 p-4">
+                <h3 className="font-serif text-lg sm:text-xl font-medium tracking-wider uppercase">
                   {item.title}
                 </h3>
                 <div className="pt-2 flex items-center justify-center text-xs font-semibold text-brand-gold space-x-1.5">
-                  <Eye size={14} />
                   <span>VIEW FULLSCREEN</span>
                 </div>
               </div>
@@ -492,9 +488,6 @@ export default function GalleryPage() {
                 <h4 className="font-serif text-lg md:text-2xl text-brand-gold font-normal">
                   {filteredItems[selectedImageIndex].title}
                 </h4>
-                <p className="text-xs text-brand-cream-dark/60 uppercase tracking-widest mt-1">
-                  Category: {filteredItems[selectedImageIndex].category}
-                </p>
               </div>
               <button
                 type="button"
