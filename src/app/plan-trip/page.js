@@ -20,19 +20,21 @@ import {
 
 // Public image asset paths
 const galleryAngkor = "/assets/gallery_angkor.jpg";
-const galleryMuseum = "/assets/gallery_museum.jpg";
 const gallerySkyline = "/assets/gallery_skyline.jpg";
-const kohRongSanloemPhoto = "/assets/koh_rong_sanloem_photo.jpg";
 const ecoIslandLagoon = "/assets/eco_island_lagoon.jpg";
 const ecoRainforestCanopy = "/assets/eco_rainforest_canopy.jpg";
 const cardamomMountainsPhoto = "/assets/cardamom_mountains_photo.jpg";
 const tukTukReal = "/assets/tuk_tuk_real.jpg";
 const galleryFood1 = "/assets/gallery_food1.jpg";
+const lodgingBoutique = "/assets/lodging_boutique.jpg";
+const lodgingResort = "/assets/lodging_resort.png";
+const lodgingVilla = "/assets/lodging_villa.jpg";
+
 // Pricing Database (Authentic Cambodia Tourism Rates)
 const tierPricing = {
-  boutique: { label: "Boutique Heritage Hotel ($85/night)", rate: 85 },
-  luxury: { label: "5-Star Luxury Resort ($280/night)", rate: 280 },
-  ultra: { label: "Ultra-Luxury Villa ($650/night)", rate: 650 },
+  boutique: { label: "Boutique Hotel ($85/night)", rate: 85 },
+  luxury: { label: "Luxury Resort ($280/night)", rate: 280 },
+  ultra: { label: "Private Villa ($650/night)", rate: 650 },
 };
 
 const transportPricing = {
@@ -609,9 +611,9 @@ export default function PlanTripPage() {
               {Object.entries(tierPricing).map(([key, value]) => {
                 const isSelected = tier === key;
                 const imageMap = {
-                  boutique: galleryMuseum,
-                  luxury: kohRongSanloemPhoto,
-                  ultra: ecoIslandLagoon,
+                  boutique: lodgingBoutique,
+                  luxury: lodgingResort,
+                  ultra: lodgingVilla,
                 };
                 return (
                   <button
@@ -645,18 +647,18 @@ export default function PlanTripPage() {
                       <div className="space-y-1.5">
                         <h4 className="font-cormorant text-2xl font-normal text-brand-dark capitalize">
                           {key === "boutique"
-                            ? "Boutique Heritage Hotel"
+                            ? "Boutique Hotel"
                             : key === "luxury"
-                              ? "5-Star Luxury Resort"
-                              : "Ultra-Luxury Villa"}
+                              ? "Luxury Resort"
+                              : "Private Villa"}
                         </h4>
                         <p className="font-sans text-s font-light text-brand-dark/75 leading-relaxed">
                           {key === "boutique" &&
-                            "Colonial-style boutique hotels, garden villas, and local guest houses with swimming pools."}
+                            "Charming boutique hotels and garden properties with swimming pools and personalized service."}
                           {key === "luxury" &&
-                            "Full-service luxury resorts with private balcony suites, spas, fine dining, and tropical pools."}
+                            "5-star luxury resorts featuring grand swimming pools, spas, fine dining, and prime locations."}
                           {key === "ultra" &&
-                            "Exclusive private island villas and luxury eco-resorts with private plunge pools and dedicated hosts."}
+                            "Exclusive private luxury villas with private swimming pools, tropical gardens, and dedicated hosts."}
                         </p>
                       </div>
 
