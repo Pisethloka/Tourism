@@ -27,20 +27,19 @@ const ecoIslandLagoon = "/assets/eco_island_lagoon.jpg";
 const ecoRainforestCanopy = "/assets/eco_rainforest_canopy.jpg";
 const cardamomMountainsPhoto = "/assets/cardamom_mountains_photo.jpg";
 const tukTukReal = "/assets/tuk_tuk_real.jpg";
-const foodKhmerPlatter = "/assets/food_khmer_platter.jpg";
-
-// Pricing Database
+const galleryFood1 = "/assets/gallery_food1.jpg";
+// Pricing Database (Authentic Cambodia Tourism Rates)
 const tierPricing = {
-  boutique: { label: "Boutique Hotel ($85/night)", rate: 85 },
-  luxury: { label: "Luxury Resort ($280/night)", rate: 280 },
+  boutique: { label: "Boutique Heritage Hotel ($85/night)", rate: 85 },
+  luxury: { label: "5-Star Luxury Resort ($280/night)", rate: 280 },
   ultra: { label: "Ultra-Luxury Villa ($650/night)", rate: 650 },
 };
 
 const transportPricing = {
-  "tuk-tuk": { label: "Local Tuk-Tuk ($20/day)", rate: 20 },
-  chauffeur: { label: "Private Chauffeur & SUV ($55/day)", rate: 55 },
+  "tuk-tuk": { label: "Cambodian Tuk-Tuk / Remorque ($20/day)", rate: 20 },
+  chauffeur: { label: "Private Car / SUV with Chauffeur ($55/day)", rate: 55 },
   "domestic-flights": {
-    label: "Private Chauffeur + Flights ($130/day)",
+    label: "Express Van & Regional Flights ($130/day)",
     rate: 130,
   },
 };
@@ -48,7 +47,7 @@ const transportPricing = {
 const activityOptions = [
   {
     id: "angkor-sunrise",
-    name: "Private Angkor Wat Sunrise Tour",
+    name: "Angkor Wat Sunrise Guided Tour",
     pricePerPerson: 75,
     icon: <Compass size={16} />,
   },
@@ -66,13 +65,13 @@ const activityOptions = [
   },
   {
     id: "rainforest-trek",
-    name: "Cardamoms Private Ranger Eco Trek",
+    name: "Cardamoms Protected Ranger Eco-Trek",
     pricePerPerson: 65,
     icon: <Compass size={16} />,
   },
   {
     id: "culinary-class",
-    name: "Private Khmer Cooking & Spice Tour",
+    name: "Traditional Khmer Cooking Class",
     pricePerPerson: 45,
     icon: <Compass size={16} />,
   },
@@ -646,18 +645,18 @@ export default function PlanTripPage() {
                       <div className="space-y-1.5">
                         <h4 className="font-cormorant text-2xl font-normal text-brand-dark capitalize">
                           {key === "boutique"
-                            ? "Boutique Heritage"
+                            ? "Boutique Heritage Hotel"
                             : key === "luxury"
-                              ? "Luxury Resort"
-                              : "Ultra Luxury Villa"}
+                              ? "5-Star Luxury Resort"
+                              : "Ultra-Luxury Villa"}
                         </h4>
                         <p className="font-sans text-s font-light text-brand-dark/75 leading-relaxed">
                           {key === "boutique" &&
-                            "Premium heritage properties, colonial guest houses, and local boutique hotels."}
+                            "Colonial-style boutique hotels, garden villas, and local guest houses with swimming pools."}
                           {key === "luxury" &&
-                            "Private luxury suites, curated wellness spas, and lavish resort pools."}
+                            "Full-service luxury resorts with private balcony suites, spas, fine dining, and tropical pools."}
                           {key === "ultra" &&
-                            "Ultra-luxury estates, dedicated butler service, and ultimate beachfront privacy."}
+                            "Exclusive private island villas and luxury eco-resorts with private plunge pools and dedicated hosts."}
                         </p>
                       </div>
 
@@ -719,7 +718,7 @@ export default function PlanTripPage() {
                 const imageMap = {
                   "tuk-tuk": tukTukReal,
                   chauffeur: gallerySkyline,
-                  "domestic-flights": ecoRainforestCanopy,
+                  "domestic-flights": ecoIslandLagoon,
                 };
                 return (
                   <button
@@ -753,18 +752,18 @@ export default function PlanTripPage() {
                       <div className="space-y-1.5">
                         <h4 className="font-cormorant text-2xl font-normal text-brand-dark">
                           {key === "tuk-tuk"
-                            ? "Tuk Tuk Explorer"
+                            ? "Tuk-Tuk / Remorque"
                             : key === "chauffeur"
-                              ? "Private Chauffeur"
-                              : "Regional Flights"}
+                              ? "Private Car / SUV"
+                              : "Express & Flights"}
                         </h4>
                         <p className="font-sans text-xs font-light text-brand-dark/75 leading-relaxed">
                           {key === "tuk-tuk" &&
-                            "Traditional open-air local transport for an authentic, breezy neighborhood tour."}
+                            "Traditional Cambodian open-air remorque with local driver for city trips and temple loops."}
                           {key === "chauffeur" &&
-                            "Air-conditioned luxury SUV with dedicated private English guide."}
+                            "Air-conditioned private vehicle with professional driver for all-day sightseeing and temple tours."}
                           {key === "domestic-flights" &&
-                            "Private chauffeur service combined with domestic flights between provinces."}
+                            "Private expressway minivan or domestic flight connections between Phnom Penh, Siem Reap, and the coast."}
                         </p>
                       </div>
 
@@ -828,7 +827,7 @@ export default function PlanTripPage() {
                   helicopter: ecoRainforestCanopy,
                   "mekong-cruise": gallerySkyline,
                   "rainforest-trek": cardamomMountainsPhoto,
-                  "culinary-class": foodKhmerPlatter,
+                  "culinary-class": galleryFood1,
                 };
                 return (
                   <button
@@ -881,15 +880,15 @@ export default function PlanTripPage() {
                         </h4>
                         <p className="text-sm font-normal text-stone-700 line-clamp-2 leading-relaxed">
                           {act.id === "angkor-sunrise" &&
-                            "Witness sunrise over Angkor Wat before exploring key galleries with a lead historian."}
+                            "Early morning sunrise at Angkor Wat followed by a guided temple tour with a licensed local historian."}
                           {act.id === "helicopter" &&
-                            "Fly above Siem Reap temples and the vast Tonle Sap lake on a scenic private flight."}
+                            "Scenic aerial helicopter tour over the ancient Angkor temple complex and Tonle Sap lake."}
                           {act.id === "mekong-cruise" &&
-                            "Glide past floating villages on a restored traditional barge while dining on local gourmet recipes."}
+                            "Evening riverboat cruise along the Phnom Penh riverfront with buffet dining and sunset views."}
                           {act.id === "rainforest-trek" &&
-                            "Trek alongside forest rangers through cardamom sanctuaries to spot wild elephants."}
+                            "Guided rainforest hike with local wildlife rangers through Cardamom Mountain trails and waterfalls."}
                           {act.id === "culinary-class" &&
-                            "Pick fresh lemongrass and craft classic Royal Khmer recipes with a master chef."}
+                            "Morning local market tour and hands-on cooking class preparing authentic Fish Amok and Khmer curry."}
                         </p>
                       </div>
 
