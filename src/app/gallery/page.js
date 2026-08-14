@@ -434,15 +434,10 @@ export default function GalleryPage() {
               decoding="async"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-brand-dark/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-              <div className="text-center text-white space-y-2 p-4">
-                <h3 className="font-serif text-lg sm:text-xl font-medium tracking-wider uppercase">
-                  {item.title}
-                </h3>
-                <div className="pt-2 flex items-center justify-center text-xs font-semibold text-brand-gold space-x-1.5">
-                  <span>VIEW FULLSCREEN</span>
-                </div>
-              </div>
+            <div className="absolute inset-0 bg-brand-dark/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+              <span className="px-5 py-2.5 rounded-full bg-brand-dark/80 border border-brand-gold/60 text-brand-gold text-xs font-semibold tracking-[0.2em] uppercase shadow-lg group-hover:scale-105 transition-transform duration-300">
+                VIEW FULLSCREEN
+              </span>
             </div>
           </div>
         ))}
@@ -531,12 +526,9 @@ export default function GalleryPage() {
               </button>
             </div>
 
-            {/* Bottom Caption */}
+            {/* Bottom Counter */}
             <div className="text-center w-full max-w-3xl mx-auto pb-4 z-10">
-              <p className="text-sm md:text-base font-light text-brand-cream-dark/90 leading-relaxed px-4">
-                {filteredItems[selectedImageIndex].description}
-              </p>
-              <div className="flex justify-center items-center space-x-2 mt-3 text-xs text-brand-gold/70 font-mono tracking-widest uppercase">
+              <div className="flex justify-center items-center space-x-2 text-xs text-brand-gold/70 font-mono tracking-widest uppercase">
                 <span>{selectedImageIndex + 1}</span>
                 <span>/</span>
                 <span>{filteredItems.length}</span>
