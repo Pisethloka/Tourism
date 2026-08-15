@@ -9,7 +9,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Image as ImageIcon, MapPin, Home, Map, MessageSquare } from "lucide-react";
+import { Menu, X, Image as ImageIcon, MapPin, Home, MessageSquare } from "lucide-react";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +20,6 @@ export const Navbar = () => {
     { href: "/destinations", label: "Destinations", icon: MapPin },
     { href: "/gallery", label: "Gallery", icon: ImageIcon },
     { href: "/guestbook", label: "Guestbook", icon: MessageSquare },
-    { href: "/map", label: "Map", icon: Map },
   ];
 
   return (

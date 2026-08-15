@@ -106,14 +106,6 @@ export const Footer = () => {
             </li>
             <li>
               <Link
-                href="/map"
-                className="hover:text-brand-gold transition-colors text-left focus-visible:ring-1 focus-visible:ring-brand-gold rounded inline-block"
-              >
-                Map
-              </Link>
-            </li>
-            <li>
-              <Link
                 href="/plan-trip"
                 className="hover:text-brand-gold transition-colors text-left focus-visible:ring-1 focus-visible:ring-brand-gold rounded inline-block"
               >
