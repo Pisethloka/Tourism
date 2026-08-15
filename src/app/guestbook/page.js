@@ -352,7 +352,7 @@ export default function GuestbookPage() {
 
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-brand-gold/20 pb-6 mb-6 relative z-10">
                 <div className="flex items-center space-x-4">
-                  <div className="w-14 h-14 rounded-full bg-brand-gold/20 border-2 border-brand-gold/40 flex items-center justify-center font-bold text-brand-gold-dark font-cormorant text-xl shrink-0 shadow-md">
+                  <div className="w-14 h-14 rounded-full bg-brand-gold/20 border-2 border-brand-gold/40 flex items-center justify-center font-bold text-brand-gold-dark font-sans text-xl shrink-0 shadow-md">
                     {activeCarouselItem.name
                       .split(" ")
                       .map((n) => n[0])
@@ -362,7 +362,7 @@ export default function GuestbookPage() {
                   </div>
                   <div>
                     <div className="flex items-center space-x-2.5">
-                      <h4 className="font-cormorant text-2xl sm:text-3xl font-medium text-brand-dark tracking-wide uppercase">
+                      <h4 className="font-sans text-xl sm:text-2xl font-bold text-stone-900 tracking-tight">
                         {activeCarouselItem.name}
                       </h4>
                       {activeCarouselItem.isMyNote && (
@@ -475,7 +475,7 @@ export default function GuestbookPage() {
                           </div>
                           <div>
                             <div className="flex items-center space-x-2">
-                              <h4 className="font-cormorant text-2xl font-medium text-brand-dark tracking-wide uppercase">
+                              <h4 className="font-sans text-lg sm:text-xl font-bold text-stone-900 tracking-tight">
                                 {rev.name}
                               </h4>
                               {rev.isMyNote && (
