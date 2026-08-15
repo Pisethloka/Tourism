@@ -618,14 +618,13 @@ export default function GuestbookPage() {
               <span className="flex-grow h-[1px] bg-gradient-to-l from-transparent via-[#C59E3F] to-[#C59E3F]" />
             </div>
 
-            {/* Header Title & Description (Single crisp line, high-definition serif) */}
+            {/* Header Title & Description */}
             <div className="text-center space-y-2">
-              <h3 className="font-cinzel text-2xl sm:text-3xl md:text-[2.15rem] font-medium tracking-[0.14em] text-[#1A140E] uppercase leading-tight antialiased">
+              <h3 className="font-sans text-2xl sm:text-3xl md:text-[2.15rem] font-bold tracking-tight text-[#1A140E] uppercase leading-tight antialiased">
                 WRITE YOUR GUESTBOOK
               </h3>
               <p className="font-sans text-xs sm:text-sm text-stone-500 font-normal max-w-md mx-auto leading-relaxed antialiased">
-                Pen your memories, recommendations, or reflections for honored
-                guests exploring the Kingdom of Cambodia.
+                Share your memories, recommendations, or reflections from exploring Cambodia.
               </p>
             </div>
 
