@@ -620,10 +620,10 @@ export default function GuestbookPage() {
 
             {/* Header Title & Description */}
             <div className="text-center space-y-2">
-              <h3 className="font-sans text-2xl sm:text-3xl md:text-[2.15rem] font-bold tracking-tight text-[#1A140E] uppercase leading-tight antialiased">
+              <h3 className="font-cormorant text-3xl sm:text-4xl font-normal text-brand-dark uppercase tracking-wider leading-tight">
                 WRITE YOUR GUESTBOOK
               </h3>
-              <p className="font-sans text-xs sm:text-sm text-stone-500 font-normal max-w-md mx-auto leading-relaxed antialiased">
+              <p className="font-sans text-xs sm:text-sm text-stone-500 font-normal max-w-md mx-auto leading-relaxed">
                 Share your memories, recommendations, or reflections from exploring Cambodia.
               </p>
             </div>
