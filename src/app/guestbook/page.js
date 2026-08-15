@@ -221,8 +221,9 @@ export default function GuestbookPage() {
             {/* Left Overall Rating Box - Perfectly Centered & Aligned Baseline Numbers */}
             <div className="md:col-span-5 flex flex-col items-center justify-center p-6 sm:p-8 bg-white/95 rounded-2xl border border-brand-gold/30 text-center shadow-xs w-full">
               <span
-                className="font-sans text-6xl sm:text-7xl font-extrabold text-brand-gold-dark leading-none block text-center tracking-tight lining-nums tabular-nums"
+                className="font-sans text-6xl sm:text-7xl font-extrabold !text-[#120e0a] text-black leading-none block text-center tracking-tight lining-nums tabular-nums"
                 style={{
+                  color: "#120e0a",
                   fontVariantNumeric: "lining-nums tabular-nums",
                   fontFeatureSettings: '"lnum" 1, "tnum" 1',
                 }}

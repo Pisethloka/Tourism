@@ -505,7 +505,8 @@ export default function MapPage() {
                 No Destinations Found
               </p>
               <p className="text-sm text-stone-600">
-                Try adjusting your search query or filters to discover more sites.
+                Try adjusting your search query or filters to discover more
+                sites.
               </p>
             </div>
           )}
@@ -543,7 +544,8 @@ export default function MapPage() {
           </h2>
           <div className="w-20 h-[1px] bg-brand-gold mx-auto" />
           <p className="font-sans text-base sm:text-lg md:text-xl text-stone-700 max-w-2xl mx-auto leading-relaxed font-normal">
-            Explore Cambodia's famous landmarks, temples, and coastal destinations on an interactive map.
+            Explore Cambodia's famous landmarks, temples, and coastal
+            destinations on an interactive map.
           </p>
         </div>
 

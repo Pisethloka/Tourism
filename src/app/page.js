@@ -328,7 +328,7 @@ export default function HomePage() {
               </Link>
             </div>
 
-            {/* Slide indicators */}
+            {/* Slide indicators (Slide dots)*/}
             <div className="absolute top-4 right-4 flex space-x-1.5 z-10">
               {slideshowImages.map((_, idx) => (
                 <button

@@ -14,7 +14,6 @@ const killingFields = "/assets/killing_fields.png";
 const tonleSap = "/assets/tonle_sap.png";
 const yeakLaom = "/assets/yeak_laom.png";
 const banteaySrei = "/assets/banteay_srei.png";
-const watThmey = "/assets/wat_thmey.png";
 const bayonTemplePhoto = "/assets/bayon_temple_photo.jpg";
 const tuolSlengPhoto = "/assets/tuol_sleng_photo.jpg";
 const bokorHillPhoto = "/assets/bokor_hill_photo.jpg";
@@ -44,8 +43,6 @@ const IMAGE_MAP = {
   "royal-palace": phnomPenhPalace,
   killingFields,
   "killing-fields": killingFields,
-  watThmey,
-  "wat-thmey": watThmey,
   banteaySrei,
   "banteay-srei": banteaySrei,
   yeakLaom,

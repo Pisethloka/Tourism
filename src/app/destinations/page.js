@@ -31,14 +31,8 @@ import {
 } from "lucide-react";
 import { fetchDestinations } from "../../services/api";
 
-// Hero Banner Image & Destination Images
+// Hero Banner Image
 const heroAngkor = "/assets/hero_angkor.png";
-const bayonTemplePhoto = "/assets/bayon_temple_photo.jpg";
-const kohRongSanloemPhoto = "/assets/koh_rong_sanloem_photo.jpg";
-const preahVihearPhoto = "/assets/preah_vihear_photo.jpg";
-const bokorHillPhoto = "/assets/bokor_hill_photo.jpg";
-const tuolSlengPhoto = "/assets/tuol_sleng_photo.jpg";
-const cardamomMountainsPhoto = "/assets/cardamom_mountains_photo.jpg";
 
 function DestinationsContent() {
   const searchParams = useSearchParams();
@@ -433,27 +427,7 @@ const DestinationCard = memo(({ item, isExpanded, onToggle, onClose }) => {
         onClick={onToggle}
       >
         <img
-          src={
-            item.id === "cardamom-mountains" ||
-            item.title?.toLowerCase().includes("cardamom")
-              ? cardamomMountainsPhoto
-              : item.id === "tuol-sleng" ||
-                  item.title?.toLowerCase().includes("tuol sleng")
-                ? tuolSlengPhoto
-                : item.id === "bokor-hill" ||
-                    item.title?.toLowerCase().includes("bokor")
-                  ? bokorHillPhoto
-                  : item.id === "preah-vihear" ||
-                      item.title?.toLowerCase().includes("preah vihear")
-                    ? preahVihearPhoto
-                    : item.id === "koh-rong" ||
-                        item.title?.toLowerCase().includes("koh rong")
-                      ? kohRongSanloemPhoto
-                      : item.id === "bayon-temple" ||
-                          item.title?.toLowerCase().includes("bayon")
-                        ? bayonTemplePhoto
-                        : item.image
-          }
+          src={item.image || heroAngkor}
           alt={item.title}
           className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           loading="lazy"
