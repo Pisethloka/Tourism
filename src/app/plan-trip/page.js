@@ -482,14 +482,14 @@ export default function PlanTripPage() {
             </div>
           </section>
 
-          {/* SECTION 1: Pacing & Companions */}
+          {/* SECTION 1: Trip Duration & Travelers */}
           <section className="bg-[#FAF8F5] border border-brand-gold/35 p-6 md:p-10 rounded-3xl shadow-md space-y-6">
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 rounded-full bg-brand-dark flex items-center justify-center text-white text-xs font-bold font-mono shadow-xs">
                 1
               </div>
               <h3 className="font-cormorant text-2xl md:text-3xl font-normal uppercase tracking-wider text-brand-dark">
-                JOURNEY PACING & COMPANIONS
+                TRIP DURATION & TRAVELERS
               </h3>
             </div>
 
@@ -507,7 +507,7 @@ export default function PlanTripPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-4 p-6 sm:p-8 bg-[#FAF8F5]/90 rounded-2xl border border-brand-gold/30 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
                 <label className="font-cormorant text-xl font-normal tracking-wide text-brand-dark uppercase block text-center">
-                  Duration of Your Journey
+                  Number of Days
                 </label>
 
                 <div className="flex items-center justify-center space-x-6 py-2">
@@ -540,14 +540,13 @@ export default function PlanTripPage() {
                 </div>
 
                 <p className="font-sans text-xs text-brand-dark/65 text-center leading-relaxed font-normal max-w-xs mx-auto">
-                  Minimum 3 days. Recommend at least 7 days to absorb Siem Reap
-                  and the southern coast.
+                  Choose between 3 to 21 days. We recommend at least 7 days to visit Siem Reap and the islands.
                 </p>
               </div>
 
               <div className="space-y-4 p-6 sm:p-8 bg-[#FAF8F5]/90 rounded-2xl border border-brand-gold/30 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
                 <label className="font-cormorant text-xl font-normal tracking-wide text-brand-dark uppercase block text-center">
-                  Number of Honored Guests
+                  Number of Guests
                 </label>
 
                 <div className="flex items-center justify-center space-x-6 py-2">
@@ -580,8 +579,7 @@ export default function PlanTripPage() {
                 </div>
 
                 <p className="font-sans text-xs text-brand-dark/65 text-center leading-relaxed font-normal max-w-xs mx-auto">
-                  Private transfers are designed for intimate groups of up to 10
-                  guests.
+                  Select 1 to 10 travelers for your private trip.
                 </p>
               </div>
             </div>
